@@ -1,14 +1,21 @@
 require 'rails'
+require 'rest_client'
 require "innsights/version"
 
 module Innsights
   
   autoload :Report, 'innsights/report'
-  autoload :User, 'innsights/user'
-  autoload :Group, 'innsights/group'
+  autoload :User,   'innsights/user'
+  autoload :Group,  'innsights/group'
+  autoload :Action, 'innsights/action'
+  autoload :Client, 'innsights/client'
   
   mattr_accessor :user_call,  :user_id, :user_display, 
                  :group_call, :group_id, :group_display
+  
+  
+  mattr_accessor :client
+  @@client = Client.new('http://127.0.0.1:3000')
   
   def self.setup(&block)
     self.instance_eval(&block)

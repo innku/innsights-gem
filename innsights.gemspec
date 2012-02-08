@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   
   # Runtime dependencies
   s.add_runtime_dependency "rails", '>=3.0.0'
+  s.add_runtime_dependency "rest-client"
   
   # Development dependencies
   # s.add_development_dependency "factory_girl_rails"

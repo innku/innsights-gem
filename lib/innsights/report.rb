@@ -1,7 +1,7 @@
 module Innsights
   class Report
     
-    attr_accessor :upon, :report, :klass, :user, :timestamp
+    attr_accessor :event_name, :action_name, :created_at, :report_user, :klass
     
     def initialize(klass_name)
       @klass = eval("Rails::Application::#{klass_name.to_s.classify}")
@@ -15,12 +15,12 @@ module Innsights
       @action_name = name
     end
     
-    def timestamp(name)
-      @timestamp = name
+    def timestamp(value)
+      @created_at = value
     end
     
     def user(user_klass_name)
-      @user = user_klass_name
+      @report_user = user_klass_name
     end
         
     def commit
@@ -29,12 +29,12 @@ module Innsights
         cattr_accessor :innsights_reports unless defined?(@@insights_reports)
         self.innsights_reports ||= {}
         self.innsights_reports[action] = report
-        send "after_#{event}", lambda { self.innsights_reports[action].run }
+        send "after_#{event}", lambda { |record| self.innsights_reports[action].run(record) }
       end
     end
     
-    def run
-      ## Code that posts to Innsights app goes here
+    def run(record)
+      Innsights.client.report(Action.new(self, record).params)
     end
     
   end
