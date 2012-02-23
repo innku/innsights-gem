@@ -4,18 +4,52 @@ require "innsights/version"
 
 module Innsights
   
-  autoload :Report, 'innsights/report'
-  autoload :User,   'innsights/user'
-  autoload :Group,  'innsights/group'
-  autoload :Action, 'innsights/action'
-  autoload :Client, 'innsights/client'
+  module Helpers
+    autoload :Tasks,          'innsights/helpers/tasks'
+    autoload :Config,         'innsights/helpers/config'
+  end
   
-  mattr_accessor :user_call,  :user_id, :user_display, 
-                 :group_call, :group_id, :group_display
+  module Actions
+    autoload :User,   'innsights/actions/user'
+    autoload :Group,  'innsights/actions/group'
+  end
   
+  module Config
+    autoload :Report,       'innsights/config/report'
+    autoload :User,         'innsights/config/user'
+    autoload :Group,        'innsights/config/group'
+  end
   
+  autoload :Action,       'innsights/action'
+  autoload :Client,       'innsights/client'
+
+  ## Configuration defaults
+  mattr_accessor :user_call
+  @@user_call = :user
+  
+  mattr_accessor :user_id
+  @@user_id = :id
+  
+  mattr_accessor :user_display
+  @@user_display = :to_s
+  
+  mattr_accessor :group_call
+  @@group_call = nil
+  
+  mattr_accessor :group_id
+  @@group_id = :id
+  
+  mattr_accessor :group_display
+  @@group_display = :to_s
+  
+  mattr_accessor :reports
+  @@reports = []
+  
+  @@url = {:development => 'http://127.0.0.1:5000', 
+           :production => 'innsights.herokuapp.com'}[Rails.env.to_sym]
+    
   mattr_accessor :client
-  @@client = Client.new('http://127.0.0.1:3000')
+  @@client = Client.new(@@url)
   
   def self.setup(&block)
     self.instance_eval(&block)
@@ -23,13 +57,17 @@ module Innsights
   
   def self.user(call=:user, &block)
     self.user_call = call.to_sym
-    User.class_eval(&block)
+    Config::User.class_eval(&block) if block_given? 
   end
   
-  def self.watch(klass_name, params={}, &block)
-    report = Report.new(params[:class] || klass_name)
+  def self.watch(klass, params={}, &block)
+    report = Config::Report.new(params[:class] || klass)
     report.instance_eval(&block)
     report.commit
   end
   
+  if defined?(Rails)
+    require 'innsights/railtie'
+  end
+    
 end

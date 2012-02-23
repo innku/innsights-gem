@@ -1,58 +1,21 @@
 module Innsights
   class Action
-    
+    include Innsights::Helpers::Config
+
     def initialize(report, record)
       @report = report
       @record = record
-      @name = report.event_name
-      @created_at = record.send(report.created_at)
-      @user = user
-      @group = group
+      @name   = dsl_attr(report.action_name)
+      @created_at = dsl_attr(report.created_at, @record)
+      @user = Actions::User.new(@report, @record)
+      @group = Actions::Group.new(@user)
     end
     
-    def params
+    def as_hash
       result = {:name => @name, :created_at => @created_at}
-      result = result.merge({:user => @user}) if @user
-      result = result.merge({:group => @group}) if @group
+      result = result.merge({:user => @user.as_hash}) if @user.valid?
+      result = result.merge({:group => @group.as_hash}) if @group.valid?
       {:report => result}
-    end
-    
-    protected
-    
-    def user
-      if @report.report_user
-        @user ||= {:app_id => user_id, :display => user_display}
-      end
-    end
-    
-    def group
-      if user && Innsights.group_call
-        @group ||= {:app_id => group_id, :display => group_display}
-      end
-    end
-    
-    def action_user
-      @action_user ||= @record.send(@report.report_user)
-    end
-    
-    def action_group
-      @action_group ||= action_user.send(Innsights.group_call)
-    end
-    
-    def group_id
-      action_group.send(Innsights.group_id)
-    end
-    
-    def group_display
-      action_group.send(Innsights.group_display)
-    end
-    
-    def user_id
-      action_user.send(Innsights.user_id)
-    end
-    
-    def user_display
-      action_user.send(Innsights.user_display)
     end
     
   end
