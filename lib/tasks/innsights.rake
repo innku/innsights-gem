@@ -1,6 +1,5 @@
 include Innsights::Helpers::Tasks
 include ActionView::Helpers::NumberHelper if defined?(Rails)
-I18n.locale = :en
 
 namespace :innsights do
   desc 'Pushes historic data to Innsights account'
