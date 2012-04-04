@@ -29,7 +29,9 @@ module Innsights
     end
     
     def run(record)
-      Innsights.client.report(Action.new(self, record).as_hash)
+      if Innsights.enabled
+        Innsights.client.report(Action.new(self, record).as_hash)
+      end
     end
     
   end

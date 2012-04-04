@@ -45,10 +45,13 @@ module Innsights
   mattr_accessor :reports
   @@reports = []
   
-  @@url = { :development => 'http://127.0.0.1:5000',
-            :test => 'http://127.0.0.1:5000',
-            :staging => 'innsights.herokuapp.com',
-            :production => 'innsights.herokuapp.com'}[Rails.env.to_sym]
+  mattr_accessor :enabled
+  @@enabled = { development: false, test: false, staging:true, production:true }[Rails.env.to_sym]
+  
+  @@url = { development: 'http://127.0.0.1:5000',
+            test: 'http://127.0.0.1:5000',
+            staging: 'innsights.herokuapp.com',
+            production: 'innsights.herokuapp.com' }[Rails.env.to_sym]
     
   mattr_accessor :client
   @@client = Client.new(@@url)

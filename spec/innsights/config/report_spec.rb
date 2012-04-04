@@ -53,7 +53,13 @@ describe Innsights::Config::Report do
       Innsights.stub!(:client) { @client }
     end
     it 'calls the report method of the gems client' do
+      Innsights.enabled = true
       @client.should_receive(:report)
+      report.run(nil)
+    end
+    it 'doesnt call the report method when configuration is disabled' do
+      Innsights.enabled = false
+      @client.should_not_receive(:report)
       report.run(nil)
     end
   end
