@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "rails", '>=3.0.0'
   s.add_runtime_dependency "rest-client"
   s.add_runtime_dependency "ruby-progressbar"
+  s.add_runtime_dependency "highline"
   
   # Development dependencies
   # s.add_development_dependency "factory_girl_rails"

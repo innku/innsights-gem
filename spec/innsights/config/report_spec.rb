@@ -9,7 +9,6 @@ describe Innsights::Config::Report do
   let(:report) { Innsights::Config::Report.new(Dummy) }
   
   describe '.initialize' do
-    
     let(:default_obj) { Innsights::Config::Report.new(Dummy) }
     
     it 'sets the created_at default' do
@@ -24,7 +23,6 @@ describe Innsights::Config::Report do
     it 'sets the klass to param' do
       default_obj.klass.should == Dummy
     end
-    
   end
   
   describe '#commit' do    

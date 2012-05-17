@@ -1,5 +1,6 @@
 require 'rails'
 require 'rest_client'
+require 'highline/import'
 require "innsights/version"
 
 module Innsights
@@ -48,16 +49,36 @@ module Innsights
   mattr_accessor :enabled
   @@enabled = { development: false, test: false, staging:true, production:true }[Rails.env.to_sym]
   
-  @@url = { development: 'http://127.0.0.1:5000',
-            test: 'http://127.0.0.1:5000',
-            staging: 'innsights.herokuapp.com',
-            production: 'innsights.herokuapp.com' }[Rails.env.to_sym]
-    
+  mattr_accessor :debugging
+  @@debugging = false
+  
+  mattr_accessor :url
+  @@url = { development:  "sitestest.com",
+            test:         "sitestest.com",
+            staging:      "sitestest.com",
+            production:   "sitestest.com" }[Rails.env.to_sym]
+  
+  def self.app_subdomain
+    @@app_subdomain ||= credentials["app"]
+  end
+
+  def self.app_token
+    @@app_token ||= credentials["token"]
+  end
+
+  def self.credentials
+    @@credentials ||= YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+  end
+  
+  def self.app_url
+    "#{app_subdomain}." << @@url << "/#{Rails.env}"
+  end
+  
   mattr_accessor :client
-  @@client = Client.new(@@url)
   
   def self.setup(&block)
     self.instance_eval(&block)
+    self.client = Client.new(url, app_subdomain, app_token, Rails.env)
   end
   
   def self.user(call=:user, &block)
