@@ -22,8 +22,12 @@ module Innsights
       def dsl_attr(strat, params={})
         params[:is_method] = params[:is_method].nil? ? true : params[:is_method]
         if strat.is_a?(String) || strat.is_a?(Symbol)
-          return strat unless params[:is_method]
-          return params[:record].send(:try, strat) if params[:record].present?
+          begin
+            return strat unless params[:is_method]
+            return params[:record].send(:try, strat) if params[:record].present?
+          rescue NoMethodError
+            nil
+          end
         elsif strat.is_a?(Proc)
           return strat.call(params[:record])
         end
