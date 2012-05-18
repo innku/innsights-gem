@@ -47,16 +47,13 @@ module Innsights
   @@reports = []
   
   mattr_accessor :enabled
-  @@enabled = { development: false, test: false, staging:true, production:true }[Rails.env.to_sym]
+  @@enabled = { development: true, test: true, staging:true, production:true }[Rails.env.to_sym]
   
   mattr_accessor :debugging
   @@debugging = false
   
   mattr_accessor :url
-  @@url = { development:  "sitestest.com",
-            test:         "sitestest.com",
-            staging:      "sitestest.com",
-            production:   "sitestest.com" }[Rails.env.to_sym]
+  @@url = "sitestest.com"
   
   def self.app_subdomain
     @@app_subdomain ||= credentials["app"]
