@@ -8,7 +8,7 @@ module Innsights
     end
     
     def as_hash
-      {:app_id => app_id, :display => display}
+      {:id => app_id, :display => display}
     end
     
     def valid?
