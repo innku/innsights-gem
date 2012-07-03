@@ -11,7 +11,7 @@ module Innsights
     end
     
     def as_hash
-      {:app_id => app_id, :display => display } if valid?
+      {:id => app_id, :display => display } if valid?
     end
     
     def valid?

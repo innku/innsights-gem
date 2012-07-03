@@ -55,34 +55,64 @@ module Innsights
   mattr_accessor :url
   @@url = "sitestest.com"
   
+  mattr_accessor :client
+  
+  # Configured subdomain of the client app
+  # @return [String] subdomain of current app
   def self.app_subdomain
     @@app_subdomain ||= credentials["app"]
   end
-
+  
+  # Configured token of client app
+  # @return [String] authentication token of app
   def self.app_token
     @@app_token ||= credentials["token"]
   end
 
+  # Configuration variables of client app
+  # @return [Hash] containing the subdomain and authentication token of app
   def self.credentials
     @@credentials ||= YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
   end
   
+  # Final url to post actions to, includes the rails app environment
+  # @return [String] contains app subdomain, innsights url and client app environment
   def self.app_url
     "#{app_subdomain}." << @@url << "/#{Rails.env}"
   end
   
-  mattr_accessor :client
+  # Sets testing environment on for local server development
+  # @param [true,false] on testing on or off
+  # @return [String] with local server url if on, nil if off
+  def self.test_mode=(on)
+    @@url = 'innsights.dev' if on
+  end
   
+  # Main configuration method to create all event watchers
+  # @yield Configuration for
+  #   * App user class
+  #   * Appp action reports
   def self.setup(&block)
     self.instance_eval(&block)
     self.client = Client.new(url, app_subdomain, app_token, Rails.env)
   end
   
-  def self.user(call=:user, &block)
-    self.user_call = call.to_sym
+  # Sets up the user class and configures the display and group
+  # @yield Configuration for
+  #   * display
+  #   * id
+  #   * group
+  def self.user(klass, &block)
+    self.user_call = klass.to_s.downcase.to_sym
     Config::User.class_eval(&block) if block_given? 
   end
-  
+
+  # Sets up an event observer for creating an action on Innsights
+  # @yield Configuration for
+  #   * Action Name
+  #   * Timestamp
+  #   * User call
+  #   * Event Trigger
   def self.watch(klass, params={}, &block)
     report = Config::Report.new(params[:class] || klass)
     report.instance_eval(&block)
