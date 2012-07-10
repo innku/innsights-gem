@@ -12,12 +12,11 @@ module Innsights
     end
     
     def as_hash
-      debugger
       result = {:name => @name }
       result = result.merge({:created_at => @created_at}) if @created_at.present?
       result = result.merge({:user => @user.as_hash}) if @user.valid?
       result = result.merge({:group => @group.as_hash}) if @group.valid?
-      {:action => result}
+      {:report => result}
     end
     
   end

@@ -1,0 +1,14 @@
+lib/innsights.rb 6fcc201a594a26ef89bf784b585daaf87081846f
+lib/innsights/action.rb dfa1435c0f243191612710154c8b3311474833a5
+lib/innsights/client.rb bcc2aed1745a7409fdb5a72287df156fad82c22b
+lib/innsights/railtie.rb c69217b21e4ab5049fc00a75a7a8512972bbe217
+lib/innsights/version.rb b244e4c6b6e59641a7b079a733d97357b1a6a43f
+lib/innsights/config/user.rb 4c7f7d0feaa7ecc30ef456087ac3e7994f20efdf
+lib/innsights/actions/user.rb c078f798433a893dca795cffc57855d6ef390a54
+lib/innsights/config/group.rb 77edce508dd74c63e9fb564d6709671499af6af9
+lib/innsights/helpers/tasks.rb fcd8c27abfddc557ecdbf959a56a9c728ca61bec
+lib/innsights/actions/group.rb 248f8064ad1f63d124e991c8b148af4d2b7cbe0a
+lib/innsights/config/report.rb e094a4fffadeaa8388aba30090658439c62486da
+lib/innsights/helpers/config.rb 5ab213a4303bc1c9997e322cf720e47c4bd88079
+lib/generators/innsights/install/install_generator.rb fb64f4090e98e97a03699f4cc962306e4fcd126a
+lib/generators/innsights/install/templates/innsights.rb 31adfdeacab14b922a59161efae0a375a05efd6d

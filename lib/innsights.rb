@@ -84,7 +84,9 @@ module Innsights
   # Sets testing environment on for local server development
   # @param [true,false] on testing on or off
   # @return [String] with local server url if on, nil if off
+  mattr_reader :test_mode
   def self.test_mode=(on)
+    @@test_mode = on
     @@url = 'innsights.dev' if on
   end
   

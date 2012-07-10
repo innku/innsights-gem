@@ -5,9 +5,8 @@ module Innsights
     source_root File.expand_path('../templates', __FILE__)
     
     def ensure_new_app
-      if File.exists?(File.join(Rails.root, 'config/innsights.yml'))
-        puts warning
-        exit
+      if File.exists?(File.join(Rails.root, 'config/innsights.yml')) && !Innsights.test_mode
+        puts warning && exit
       end
     end
     
