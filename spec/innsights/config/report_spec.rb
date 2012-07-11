@@ -55,7 +55,22 @@ describe Innsights::Config::Report do
       @client.should_receive(:report)
       report.run(nil)
     end
-    it 'doesnt call the report method when configuration is disabled' do
+
+    it "does not enqueues the job when there is no option setted" do
+      Innsights.enabled = true
+      Resque.should_not_receive(:enqueue)
+      Innsights.queue_system.should == nil
+      report.run(nil)
+    end
+
+    it "enqueues the job with resque when the option is set" do
+      Innsights.enabled = true
+      Innsights.queue_system = :resque
+      Resque.should_receive(:enqueue)
+      report.run(nil)
+    end
+
+    it "doesnt call the report method when configuration is disabled" do
       Innsights.enabled = false
       @client.should_not_receive(:report)
       report.run(nil)

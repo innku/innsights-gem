@@ -57,6 +57,10 @@ module Innsights
   
   mattr_accessor :client
   
+  mattr_accessor :queue_system
+  @@queue_system = nil
+  @@supported_queue_systems = [:delayed_job, :resque]
+
   # Configured subdomain of the client app
   # @return [String] subdomain of current app
   def self.app_subdomain
@@ -120,6 +124,13 @@ module Innsights
     report.instance_eval(&block)
     report.commit
   end
+
+  # Sets up the user class and configures the display and group
+  # @param [:resque, :delayed_job]
+  def self.queue(queue='')
+	self.queue_system = queue if @@supported_queue_systems.include?(queue)
+  end
+  
   
   if defined?(Rails)
     require 'innsights/railtie'

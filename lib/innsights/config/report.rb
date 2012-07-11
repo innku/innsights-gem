@@ -1,14 +1,17 @@
+require 'resque'
+require_relative './workers/run_report'
+
 module Innsights
   class Config::Report
     include Helpers::Config
-    
+
     dsl_attr :event_name,  :upon
     dsl_attr :action_name, :report
     dsl_attr :created_at,  :timestamp
     dsl_attr :report_user, :user
-    
+
     attr_accessor :klass
-    
+
     def initialize(klass)
       @klass = klass
       @action_name = klass.name
@@ -16,7 +19,7 @@ module Innsights
       @event_name = :create
       @report_user = :user
     end
-    
+
     def commit
       report, action, event = self, @action_name, @event_name
       Innsights.reports << report
@@ -27,12 +30,16 @@ module Innsights
         send "after_#{event}", lambda { |record| self.innsights_reports[action].run(record) }
       end
     end
-    
+
     def run(record)
       if Innsights.enabled
-        Innsights.client.report(Action.new(self, record).as_hash)
+        action = Action.new(self, record).as_hash
+        if Innsights.queue_system == :resque
+          Resque.enqueue(RunReport, action)
+        else
+          Innsights.client.report(action)
+        end
       end
     end
-    
   end
 end
