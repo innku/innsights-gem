@@ -102,6 +102,13 @@ module Innsights
     self.instance_eval(&block)
     self.client = Client.new(url, app_subdomain, app_token, Rails.env)
   end
+
+  # Extra configuration for custom experience
+  # @yield Configuration for
+  #   * Queue system
+  def self.config(&block)
+    self.instance_eval(&block)
+  end
   
   # Sets up the user class and configures the display and group
   # @yield Configuration for
@@ -120,7 +127,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.watch(klass, params={}, &block)
-    report = Config::Report.new(params[:class] || klass)
+    reportsetup = Config::Report.new(params[:class] || klass)
     report.instance_eval(&block)
     report.commit
   end
@@ -129,6 +136,10 @@ module Innsights
   # @param [:resque, :delayed_job]
   def self.queue(queue='')
 	self.queue_system = queue if @@supported_queue_systems.include?(queue)
+  end
+
+  def self.test(test_mode='')
+    self.test_mode = test_mode
   end
   
   
