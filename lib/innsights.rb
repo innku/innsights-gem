@@ -106,8 +106,12 @@ module Innsights
   # Extra configuration for custom experience
   # @yield Configuration for
   #   * Queue system
-  def self.config(&block)
-    self.instance_eval(&block)
+  #   * Test mode
+  def self.config(*envs, &block)
+    self.instance_eval(&block) if envs.blank?
+    envs.each do |env| 
+      self.instance_eval(&block) if Rails.env == env.to_s
+    end
   end
   
   # Sets up the user class and configures the display and group
@@ -127,7 +131,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.watch(klass, params={}, &block)
-    reportsetup = Config::Report.new(params[:class] || klass)
+    report = Config::Report.new(params[:class] || klass)
     report.instance_eval(&block)
     report.commit
   end
