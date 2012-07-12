@@ -32,10 +32,15 @@ module Innsights
     end
 
     def run(record)
+      puts record.class
       if Innsights.enabled
         action = Action.new(self, record).as_hash
-        if Innsights.queue_system == :resque
+
+        case Innsights.queue_system
+        when :resque
           Resque.enqueue(RunReport, action)
+        when :delayed_job
+          Innsights.client.delay.report(action)
         else
           Innsights.client.report(action)
         end
