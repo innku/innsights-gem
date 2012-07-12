@@ -17,6 +17,7 @@ module Innsights
   
   module Config
     autoload :Report,       'innsights/config/report'
+    autoload :CustomReport, 'innsights/config/custom_report'
     autoload :User,         'innsights/config/user'
     autoload :Group,        'innsights/config/group'
   end
@@ -136,6 +137,17 @@ module Innsights
     report.commit
   end
 
+  # Sets up an event observer for creating an custom action on Innsights
+  # @yield Configuration for
+  #   * Action Name
+  #   * Timestamp
+  #   * User call
+  #   * Event Trigger
+  def self.on(catalyst, &block)
+    report = Config::CustomReport.new(catalyst)
+    report.instance_eval(&block)
+    report.commit
+  end
   # Sets up the user class and configures the display and group
   # @param [:resque, :delayed_job]
   def self.queue(queue='')

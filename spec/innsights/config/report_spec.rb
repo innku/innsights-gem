@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'delayed_job_active_record'
 
 describe Innsights::Config::Report do
 
@@ -67,6 +68,14 @@ describe Innsights::Config::Report do
       Innsights.enabled = true
       Innsights.queue_system = :resque
       Resque.should_receive(:enqueue)
+      report.run(nil)
+    end
+
+    it "enqueues the job with delayed_job when the option is set" do
+      Innsights.enabled = true
+      Innsights.queue_system = :delayed_job
+      Innsights.client.stub_chain(:delay, :report).and_return(true)
+      Innsights.client.should_receive(:delay)
       report.run(nil)
     end
 
