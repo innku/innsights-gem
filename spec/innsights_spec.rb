@@ -74,8 +74,8 @@ describe Innsights do
       Innsights.test_mode = true
     end
     it 'sets the apropiate methods'  do
-      Innsights::Config::CustomReport.any_instance.should_receive(:report).with('User Created')
-      Innsights::Config::CustomReport.any_instance.should_receive(:user).with(:current_user)
+      Innsights::Config::ControllerReport.any_instance.should_receive(:report).with('User Created')
+      Innsights::Config::ControllerReport.any_instance.should_receive(:user).with(:current_user)
       Innsights.on "users#create" do
         report 'User Created'
         user   :current_user
@@ -83,7 +83,7 @@ describe Innsights do
     end
 
     it 'commits the report' do
-    Innsights::Config::CustomReport.any_instance.should_receive(:commit)
+    Innsights::Config::ControllerReport.any_instance.should_receive(:commit)
     Innsights.on "users#create" do
         report 'User Created'
         user   :current_user
