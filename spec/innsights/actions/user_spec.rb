@@ -10,6 +10,21 @@ describe Innsights::Actions::User do
       report.user :fake
       lambda { Innsights::Actions::User.new(report, post) }.should raise_error(NoMethodError)
     end
+    it 'Acts on an object that has a user' do
+      report.report_user = :user
+      Post.any_instance.should_receive(:user).and_return(:user)
+      Innsights::Actions::User.new(report, post)
+    end
+
+    it 'Acts on the directly on a user when indicated' do
+      report.is_user true
+      Post.any_instance.should_not_receive(:user)
+      report.should_receive(:act_on_user).and_return(true)
+      u = Innsights::Actions::User.new(report, user)
+      u.object.should == user
+    end
+
+
   end
   
   describe '#valid?' do
@@ -27,7 +42,7 @@ describe Innsights::Actions::User do
   describe '#as_hash' do
     it 'returns the right user hash attributes' do
       app_user = Innsights::Actions::User.new(report, post)
-      app_user.as_hash.should == {:app_id => user.id, :display => user.to_s }
+      app_user.as_hash.should == {:id => user.id, :display => user.to_s }
     end
   end
   

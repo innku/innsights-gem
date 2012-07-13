@@ -7,7 +7,11 @@ module Innsights
     def initialize(report, record)
       @report = report
       @record = record
-      @object = dsl_attr(@report.report_user, :record => @record)
+      if @report.act_on_user == true
+        @object = @record
+      else
+        @object = dsl_attr(@report.report_user, :record => @record)
+      end
     end
     
     def as_hash

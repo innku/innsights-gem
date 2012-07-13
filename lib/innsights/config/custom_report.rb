@@ -8,6 +8,7 @@ module Innsights
     dsl_attr :action_name, :report #User created
     dsl_attr :created_at,  :timestamp
     dsl_attr :report_user, :user #current_dude
+    dsl_attr :act_on_user, :is_user
 
     attr_accessor :controller, :action, :klass
 
@@ -17,6 +18,7 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
+      @act_on_user = :false
     end
 
     def commit
