@@ -1,29 +1,19 @@
-require 'resque'
-require_relative './workers/run_report'
 module Innsights
-  class Config::CustomReport
-    include Helpers::Config
+  class Config::ControllerReport < Config::Report
 
-    dsl_attr :event_name,  :catalyst #users#create
-    dsl_attr :action_name, :report #User created
-    dsl_attr :created_at,  :timestamp
-    dsl_attr :report_user, :user #current_dude
-    dsl_attr :act_on_user, :is_user
+    dsl_attr :event_name,  :catalyst 
 
-    attr_accessor :controller, :action, :klass
+    attr_accessor :controller, :action
 
     def initialize(catalyst)
       @controller, @action = catalyst.split('#')
       @catalyst = catalyst
-      @created_at = :created_at
-      @event_name = :create
-      @report_user = :user
-      @act_on_user = :false
+      super()
     end
 
     def commit
       report, report_action = self, @action_name
-      klass = "#{@controller.titleize}Controller".safe_constantize
+      klass = controller_class
       unless klass.nil?
         Innsights.reports << report
         add_report_to_innsights(klass, report_action, report)
@@ -50,22 +40,13 @@ module Innsights
       end
     end
 
-    def run(record)
-      if Innsights.enabled
-        action = Action.new(self, record).as_hash
+    private
 
-        case Innsights.queue_system
-        when :resque
-          Resque.enqueue(RunReport, action)
-        when :delayed_job
-          Innsights.client.delay.report(action)
-        else
-          Innsights.client.report(action)
-        end
-      end
+    def controller_class
+      "#{@controller.titleize}Controller".safe_constantize
     end
-
   end
 end
+
 
 

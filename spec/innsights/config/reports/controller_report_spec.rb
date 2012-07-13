@@ -2,9 +2,9 @@ require 'spec_helper'
 require 'delayed_job_active_record'
 require 'action_controller'
 
-describe Innsights::Config::CustomReport do
+describe Innsights::Config::ControllerReport do
 
-  let(:report) { Innsights::Config::CustomReport.new("users#create") }
+  let(:report) { Innsights::Config::ControllerReport.new("users#create") }
 
   describe '.initialize' do
     it 'sets the created_at default' do

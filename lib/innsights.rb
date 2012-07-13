@@ -16,8 +16,9 @@ module Innsights
   end
   
   module Config
-    autoload :Report,       'innsights/config/report'
-    autoload :CustomReport, 'innsights/config/custom_report'
+    autoload :Report,       'innsights/config/reports/report'
+    autoload :ModelReport, 'innsights/config/reports/model_report'
+    autoload :ControllerReport, 'innsights/config/reports/controller_report'
     autoload :User,         'innsights/config/user'
     autoload :Group,        'innsights/config/group'
   end
@@ -132,7 +133,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.watch(klass, params={}, &block)
-    report = Config::Report.new(params[:class] || klass)
+    report = Config::ModelReport.new(params[:class] || klass)
     report.instance_eval(&block)
     report.commit
   end
@@ -144,7 +145,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.on(catalyst, &block)
-    report = Config::CustomReport.new(catalyst)
+    report = Config::ControllerReport.new(catalyst)
     report.instance_eval(&block)
     report.commit
   end

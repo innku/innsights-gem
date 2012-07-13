@@ -1,5 +1,5 @@
 require 'resque'
-require_relative './workers/run_report'
+require_relative './../workers/run_report'
 
 module Innsights
   class Config::Report
@@ -11,31 +11,20 @@ module Innsights
     dsl_attr :report_user, :user
     dsl_attr :act_on_user, :is_user
     
-
     attr_accessor :klass
 
-    def initialize(klass)
-      @klass = klass
-      @action_name = klass.name
+    def initialize(klass=nil)
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
       @act_on_user = :false
-    end
-
-    def commit
-      report, action, event = self, @action_name, @event_name
-      Innsights.reports << report
-      @klass.instance_eval do
-        cattr_accessor :innsights_reports unless defined?(@@insights_reports)
-        self.innsights_reports ||= {}
-        self.innsights_reports[action] = report
-        send "after_#{event}", lambda { |record| self.innsights_reports[action].run(record) }
+      unless klass.nil?
+        @klass = klass
+        @action_name = klass.name
       end
     end
 
     def run(record)
-      puts record.class
       if Innsights.enabled
         action = Action.new(self, record).as_hash
 

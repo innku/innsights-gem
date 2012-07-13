@@ -26,24 +26,6 @@ describe Innsights::Config::Report do
     end
   end
   
-  describe '#commit' do    
-    it 'adds the report to applications reports array' do
-      report.commit
-      Innsights.reports.should include(report)
-    end
-    it 'defines innsights_reports for the reported class' do
-      report.commit
-      report.klass.should respond_to(:innsights_reports)
-    end
-    it 'associates event name with report object' do
-      report.commit
-      report.klass.innsights_reports[report.action_name].should == report
-    end
-    it 'send a block to after_create on the report klass' do
-      report.klass.should_receive(:after_create)
-      report.commit
-    end
-  end
   
   describe '#run' do
     before do
