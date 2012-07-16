@@ -42,10 +42,6 @@ describe Innsights::Config::ControllerReport do
         Innsights.reports.should_receive(:<<).with(report)
         report.commit
       end
-      it 'Adds the report to Innsights method to the class' do
-        report.should_receive(:add_report_to_innsights)
-        report.commit
-      end
       it 'Adds the method to the action' do
         report.should_receive(:add_after_filter)
         report.commit
@@ -60,15 +56,15 @@ describe Innsights::Config::ControllerReport do
       end
       it 'Opens the class' do
         UsersController.should_receive(:instance_eval)
-        report.add_report_to_innsights(UsersController,  "User Created", report)
+        report.add_report_to_innsights(UsersController,  "User Created", report, 'create')
       end
       it 'Adds the innsights_reports accessor' do
-        report.add_report_to_innsights(UsersController,  "User Created", report)
+        report.add_report_to_innsights(UsersController,  "User Created", report, 'create')
         lambda { UsersController.innsights_reports}.should_not raise_error
       end
       it 'created a report_to_innsights instance method' do
-        report.add_report_to_innsights(UsersController,  "User Created", report)
-        UsersController.instance_methods.include?(:report_to_innsights).should == true
+        report.add_report_to_innsights(UsersController,  "User Created", report, 'create')
+        UsersController.instance_methods.include?(:report_to_innsights_create).should == true
       end
     end
 
@@ -85,7 +81,7 @@ describe Innsights::Config::ControllerReport do
       it 'Should also call report_to_innsights when calling the desired action' do
         report.add_after_filter(UsersController,  "User Created")
         f = UsersController._process_action_callbacks.select{|f| f.kind == :after}
-        f.first.filter.should == :report_to_innsights
+        f.first.filter.should == :report_to_innsights_create
       end
     end
   end

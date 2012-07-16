@@ -16,27 +16,27 @@ module Innsights
       klass = controller_class
       unless klass.nil?
         Innsights.reports << report
-        add_report_to_innsights(klass, report_action, report)
-        add_after_filter(klass, action)
+        add_report_to_innsights(klass, report_action, report, action)
       end
     end
 
 
-    def add_report_to_innsights(klass, report_action, report)
+    def add_report_to_innsights(klass, report_action, report, action)
+      user = report_user
       klass.instance_eval do
         cattr_accessor :innsights_reports unless defined?(@@insights_reports)
         self.innsights_reports ||= {}
         self.innsights_reports[report_action] = report
-        send :define_method, "report_to_innsights" do
-          lambda {|r| self.innsights_reports[report_action].run(r)}.call(current_user)
+        send :define_method, "report_to_innsights_#{action}" do
+          lambda {|r| self.innsights_reports[report_action].run(r)}.call(user)
         end
-        send :after_filter, :report_to_innsights, only: :new
       end
+      add_after_filter(klass, action)
     end
 
     def add_after_filter(klass, action)
       klass.class_eval do
-        send :after_filter, :report_to_innsights, only: action.to_sym
+        send :after_filter, "report_to_innsights_#{action}".to_sym, only: [action.to_sym]
       end
     end
 

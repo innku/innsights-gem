@@ -3,10 +3,10 @@ require 'delayed_job_active_record'
 
 describe Innsights::Config::ModelReport do
   before do 
-    class Dummy; end
-    Dummy.stub!(:after_create)
+    class TestApp; end
+    TestApp.stub!(:after_create)
   end
-  let(:report) { Innsights::Config::ModelReport.new(Dummy) }
+  let(:report) { Innsights::Config::ModelReport.new(TestApp) }
   
   describe '#commit' do    
     it 'adds the report to applications reports array' do
@@ -19,7 +19,7 @@ describe Innsights::Config::ModelReport do
     end
     it 'associates event name with report object' do
       report.commit
-      Dummy.innsights_reports[report.action_name].should == report
+      TestApp.innsights_reports[report.action_name].should == report
     end
     it 'send a block to after_create on the report klass' do
       report.klass.should_receive(:after_create)
