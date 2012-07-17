@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "ruby-progressbar"
   s.add_runtime_dependency "highline"
   s.add_runtime_dependency "resque"
-  s.add_runtime_dependency "delayed_job_active_record"
+  s.add_runtime_dependency "delayed_job"
   s.add_runtime_dependency "daemons"
   
   # Development dependencies

@@ -62,11 +62,13 @@ Innsights.setup do
   # Options: 
   #   queue (Default nil): Speficies a queue_system(:resque, :delayed_job) for reporting to Innsights
   #   test  (Default false): Used for setting the enviroment on test mode
-  #     
+  #
+  # NOTE: if using delayed_job please check https://github.com/collectiveidea/delayed_job/wiki/Backends 
+  # and install the apropiate backend dependency on your application
   
   # config :development do
   #   queue :resque
   #   test  true
   # end
-
+  #
 end
