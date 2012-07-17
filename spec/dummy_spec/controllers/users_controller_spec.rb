@@ -10,7 +10,7 @@ describe UsersController do
     before do
       Innsights.setup do
         on 'users#index' do
-          report 'user_created'
+          report 'user_index'
           user   :current_user
           is_user true
         end
@@ -39,6 +39,20 @@ describe UsersController do
         f = UsersController._process_action_callbacks.select{|f| f.kind == :after}.first
         f.filter.should == :report_to_innsights_index
         f.per_key[:if].should == ["action_name == 'index'"]
+      end
+
+      it 'Can report from multiple actions' do
+        Innsights.setup do
+          on 'users#new' do
+            report 'user_new'
+            user   :current_user
+            is_user true
+          end
+        end
+        UsersController.any_instance.should_receive(:report_to_innsights_index)
+        UsersController.any_instance.should_receive(:report_to_innsights_new)
+        get 'index'
+        get 'new'
       end
     end
 
