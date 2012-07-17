@@ -29,7 +29,7 @@ describe Innsights::Actions::Group do
     it 'returns the right group hash' do
       action_user = Innsights::Actions::User.new(report, post)
       action_group = Innsights::Actions::Group.new(action_user)
-      action_group.as_hash.should == {:app_id => group.id, :display => group.to_s}
+      action_group.as_hash.should == {:id => group.id, :display => group.to_s}
     end
   end
   

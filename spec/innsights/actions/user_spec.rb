@@ -6,9 +6,10 @@ describe Innsights::Actions::User do
   let(:post) { Post.create(:title => 'New post', :user => user ) }
   
   describe '#initialize' do
-    it 'throws a no method error upon defining non existing methods' do
+    it 'rescues the no method error upon defining non existing methods' do
+      #Stoped working on  g diff 3ea350d da77793   
       report.user :fake
-      lambda { Innsights::Actions::User.new(report, post) }.should raise_error(NoMethodError)
+      lambda { Innsights::Actions::User.new(report, post) }.should_not raise_error(NoMethodError)
     end
     it 'Acts on an object that has a user' do
       report.report_user = :user
