@@ -2,35 +2,34 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :post
-    uri: http://127.0.0.1:5000/api/actions.json
-    body: ! '{"report":{"name":"Post","created_at":"2012-02-23 08:11:00 -0600","user":{"app_id":1,"display":"Adrian"},"group":{"app_id":1,"display":"Innku"}}}'
+    uri: http://subdoamin.url.com:80/test/api/actions.json
+    body: report[name]=Post&report[created_at]=2012-02-23%2008%3A11%3A00%20-0600&report[user][app_id]=1&report[user][display]=Adrian&report[group][app_id]=1&report[group][display]=Innku&authenticity_token=1234
     headers:
       accept:
       - application/json
       accept-encoding:
       - gzip, deflate
       content-type:
-      - application/json
+      - application/x-www-form-urlencoded
       content-length:
-      - '145'
+      - '199'
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
-      code: 200
-      message: OK
+      code: 301
+      message: Moved Permanently
     headers:
-      content-type:
-      - application/json; charset=utf-8
-      x-ua-compatible:
-      - IE=Edge
-      etag:
-      - ! '"f87a93d9a5c6bd34b77384765024ad30"'
-      cache-control:
-      - max-age=0, private, must-revalidate
-      x-request-id:
-      - dd480c86a216acacc7210fafa97ff111
-      x-runtime:
-      - '0.122793'
       server:
-      - thin 1.3.1 codename Triple Espresso
-    body: ! '{"name":"Post","created_at":"2012-02-23 08:11:00 -0600","user":{"app_id":1,"display":"Adrian"},"group":{"app_id":1,"display":"Innku"},"created_date":"2012-02-23","group_id":"0","user_id":"0","id":1,"redis_action_name":"post"}'
+      - nginx/1.0.10
+      date:
+      - Mon, 30 Jul 2012 18:25:15 GMT
+      content-type:
+      - text/html
+      content-length:
+      - '185'
+      connection:
+      - keep-alive
+      location:
+      - http://search.url.com/test/api/actions.json
+    body: ! "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+      bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx/1.0.10</center>\r\n</body>\r\n</html>\r\n"
     http_version: '1.1'

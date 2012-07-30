@@ -11,6 +11,7 @@ require File.join(File.dirname(__FILE__), 'support', 'ar')
 VCR.config do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
   c.stub_with :webmock # or :fakeweb
+  c.ignore_localhost = true
 end
 
 

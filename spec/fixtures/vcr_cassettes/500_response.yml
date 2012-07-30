@@ -2,185 +2,34 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :post
-    uri: http://127.0.0.1:5000/api/actions.json
-    body: ! '{"report":{"name":"Post","created_at":"2012-02-23 08:11:00 -0600","user":{"app_id":1,"display":"Adrian"},"group":{"app_id":1,"display":"Innku"}}}'
+    uri: http://subdoamin.url.com:80/test/api/actions.json
+    body: report[name]=Post&report[created_at]=2012-02-23%2008%3A11%3A00%20-0600&report[user][app_id]=1&report[user][display]=Adrian&report[group][app_id]=1&report[group][display]=Innku&authenticity_token=1234
     headers:
       accept:
       - application/json
       accept-encoding:
       - gzip, deflate
       content-type:
-      - application/json
+      - application/x-www-form-urlencoded
       content-length:
-      - '145'
+      - '199'
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
-      code: 500
-      message: Internal Server Error
+      code: 301
+      message: Moved Permanently
     headers:
+      server:
+      - nginx/1.0.10
+      date:
+      - Mon, 30 Jul 2012 18:27:04 GMT
       content-type:
-      - text/html; charset=utf-8
+      - text/html
       content-length:
-      - '13850'
-      x-request-id:
-      - c8eb2d72b5b108179b2044b638e4a860
-      x-runtime:
-      - '0.188802'
+      - '185'
       connection:
       - keep-alive
-      server:
-      - thin 1.3.1 codename Triple Espresso
-    body: ! "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n  <meta charset=\"utf-8\"
-      />\n  <title>Action Controller: Exception caught</title>\n  <style>\n    body
-      { background-color: #fff; color: #333; }\n\n    body, p, ol, ul, td {\n      font-family:
-      helvetica, verdana, arial, sans-serif;\n      font-size:   13px;\n      line-height:
-      18px;\n    }\n\n    pre {\n      background-color: #eee;\n      padding: 10px;\n
-      \     font-size: 11px;\n      white-space: pre-wrap;\n    }\n\n    a { color:
-      #000; }\n    a:visited { color: #666; }\n    a:hover { color: #fff; background-color:#000;
-      }\n  </style>\n</head>\n<body>\n\n<h1>\n  RuntimeError\n    in Api::ActionsController#{&quot;report&quot;=&gt;{&quot;name&quot;=&gt;&quot;Post&quot;,
-      &quot;created_at&quot;=&gt;&quot;2012-02-23 08:11:00 -0600&quot;, &quot;user&quot;=&gt;{&quot;app_id&quot;=&gt;1,
-      &quot;display&quot;=&gt;&quot;Adrian&quot;}, &quot;group&quot;=&gt;{&quot;app_id&quot;=&gt;1,
-      &quot;display&quot;=&gt;&quot;Innku&quot;}}}\n</h1>\n<pre>Something went wrong</pre>\n\n\n<p><code>Rails.root:
-      /Users/Adrian/Code/Innku/innsights</code></p>\n\n<div id=\"traces\">\n    <a
-      href=\"#\" onclick=\"document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Application-Trace').style.display='block';;
-      return false;\">Application Trace</a> |\n    <a href=\"#\" onclick=\"document.getElementById('Application-Trace').style.display='none';document.getElementById('Full-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='block';;
-      return false;\">Framework Trace</a> |\n    <a href=\"#\" onclick=\"document.getElementById('Application-Trace').style.display='none';document.getElementById('Framework-Trace').style.display='none';document.getElementById('Full-Trace').style.display='block';;
-      return false;\">Full Trace</a> \n\n    <div id=\"Application-Trace\" style=\"display:
-      block;\">\n      <pre><code>app/controllers/api/actions_controller.rb:4:in `create'</code></pre>\n
-      \   </div>\n    <div id=\"Framework-Trace\" style=\"display: none;\">\n      <pre><code>actionpack
-      (3.2.1) lib/action_controller/metal/implicit_render.rb:4:in `send_action'\nactionpack
-      (3.2.1) lib/abstract_controller/base.rb:167:in `process_action'\nactionpack
-      (3.2.1) lib/action_controller/metal/rendering.rb:10:in `process_action'\nactionpack
-      (3.2.1) lib/abstract_controller/callbacks.rb:18:in `block in process_action'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:403:in `_run__695503858955800567__process_action__2590059270191559850__callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:405:in `__run_callback'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:81:in `run_callbacks'\nactionpack (3.2.1)
-      lib/abstract_controller/callbacks.rb:17:in `process_action'\nactionpack (3.2.1)
-      lib/action_controller/metal/rescue.rb:29:in `process_action'\nactionpack (3.2.1)
-      lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'\nactivesupport
-      (3.2.1) lib/active_support/notifications.rb:123:in `block in instrument'\nactivesupport
-      (3.2.1) lib/active_support/notifications/instrumenter.rb:20:in `instrument'\nactivesupport
-      (3.2.1) lib/active_support/notifications.rb:123:in `instrument'\nactionpack
-      (3.2.1) lib/action_controller/metal/instrumentation.rb:29:in `process_action'\nactionpack
-      (3.2.1) lib/action_controller/metal/params_wrapper.rb:205:in `process_action'\nactionpack
-      (3.2.1) lib/abstract_controller/base.rb:121:in `process'\nactionpack (3.2.1)
-      lib/abstract_controller/rendering.rb:45:in `process'\nactionpack (3.2.1) lib/action_controller/metal.rb:203:in
-      `dispatch'\nactionpack (3.2.1) lib/action_controller/metal/rack_delegation.rb:14:in
-      `dispatch'\nactionpack (3.2.1) lib/action_controller/metal.rb:246:in `block
-      in action'\nactionpack (3.2.1) lib/action_dispatch/routing/route_set.rb:66:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/routing/route_set.rb:66:in `dispatch'\nactionpack
-      (3.2.1) lib/action_dispatch/routing/route_set.rb:30:in `call'\njourney (1.0.1)
-      lib/journey/router.rb:68:in `block in call'\njourney (1.0.1) lib/journey/router.rb:56:in
-      `each'\njourney (1.0.1) lib/journey/router.rb:56:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/routing/route_set.rb:589:in `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/best_standards_support.rb:17:in
-      `call'\nrack (1.4.1) lib/rack/etag.rb:23:in `call'\nrack (1.4.1) lib/rack/conditionalget.rb:35:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/head.rb:14:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/params_parser.rb:21:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/flash.rb:242:in `call'\nrack (1.4.1)
-      lib/rack/session/abstract/id.rb:205:in `context'\nrack (1.4.1) lib/rack/session/abstract/id.rb:200:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/cookies.rb:338:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/callbacks.rb:28:in
-      `block in call'\nactivesupport (3.2.1) lib/active_support/callbacks.rb:405:in
-      `_run__4402323192637548029__call__3570642963577057746__callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:405:in `__run_callback'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:81:in `run_callbacks'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/callbacks.rb:27:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/reloader.rb:65:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/remote_ip.rb:31:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'\nrailties
-      (3.2.1) lib/rails/rack/logger.rb:26:in `call_app'\nrailties (3.2.1) lib/rails/rack/logger.rb:16:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/request_id.rb:22:in
-      `call'\nrack (1.4.1) lib/rack/methodoverride.rb:21:in `call'\nrack (1.4.1) lib/rack/runtime.rb:17:in
-      `call'\nactivesupport (3.2.1) lib/active_support/cache/strategy/local_cache.rb:72:in
-      `call'\nrack (1.4.1) lib/rack/lock.rb:15:in `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/static.rb:53:in
-      `call'\nrailties (3.2.1) lib/rails/engine.rb:479:in `call'\nrailties (3.2.1)
-      lib/rails/application.rb:220:in `call'\nrailties (3.2.1) lib/rails/railtie/configurable.rb:30:in
-      `method_missing'\nthin (1.3.1) lib/thin/connection.rb:80:in `block in pre_process'\nthin
-      (1.3.1) lib/thin/connection.rb:78:in `catch'\nthin (1.3.1) lib/thin/connection.rb:78:in
-      `pre_process'\nthin (1.3.1) lib/thin/connection.rb:53:in `process'\nthin (1.3.1)
-      lib/thin/connection.rb:38:in `receive_data'\neventmachine (0.12.10) lib/eventmachine.rb:256:in
-      `run_machine'\neventmachine (0.12.10) lib/eventmachine.rb:256:in `run'\nthin
-      (1.3.1) lib/thin/backends/base.rb:61:in `start'\nthin (1.3.1) lib/thin/server.rb:159:in
-      `start'\nthin (1.3.1) lib/thin/controllers/controller.rb:86:in `start'\nthin
-      (1.3.1) lib/thin/runner.rb:185:in `run_command'\nthin (1.3.1) lib/thin/runner.rb:151:in
-      `run!'\nthin (1.3.1) bin/thin:6:in `&lt;top (required)&gt;'\n/Users/Adrian/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/thin:19:in
-      `load'\n/Users/Adrian/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/thin:19:in
-      `&lt;main&gt;'</code></pre>\n    </div>\n    <div id=\"Full-Trace\" style=\"display:
-      none;\">\n      <pre><code>app/controllers/api/actions_controller.rb:4:in `create'\nactionpack
-      (3.2.1) lib/action_controller/metal/implicit_render.rb:4:in `send_action'\nactionpack
-      (3.2.1) lib/abstract_controller/base.rb:167:in `process_action'\nactionpack
-      (3.2.1) lib/action_controller/metal/rendering.rb:10:in `process_action'\nactionpack
-      (3.2.1) lib/abstract_controller/callbacks.rb:18:in `block in process_action'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:403:in `_run__695503858955800567__process_action__2590059270191559850__callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:405:in `__run_callback'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:385:in `_run_process_action_callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:81:in `run_callbacks'\nactionpack (3.2.1)
-      lib/abstract_controller/callbacks.rb:17:in `process_action'\nactionpack (3.2.1)
-      lib/action_controller/metal/rescue.rb:29:in `process_action'\nactionpack (3.2.1)
-      lib/action_controller/metal/instrumentation.rb:30:in `block in process_action'\nactivesupport
-      (3.2.1) lib/active_support/notifications.rb:123:in `block in instrument'\nactivesupport
-      (3.2.1) lib/active_support/notifications/instrumenter.rb:20:in `instrument'\nactivesupport
-      (3.2.1) lib/active_support/notifications.rb:123:in `instrument'\nactionpack
-      (3.2.1) lib/action_controller/metal/instrumentation.rb:29:in `process_action'\nactionpack
-      (3.2.1) lib/action_controller/metal/params_wrapper.rb:205:in `process_action'\nactionpack
-      (3.2.1) lib/abstract_controller/base.rb:121:in `process'\nactionpack (3.2.1)
-      lib/abstract_controller/rendering.rb:45:in `process'\nactionpack (3.2.1) lib/action_controller/metal.rb:203:in
-      `dispatch'\nactionpack (3.2.1) lib/action_controller/metal/rack_delegation.rb:14:in
-      `dispatch'\nactionpack (3.2.1) lib/action_controller/metal.rb:246:in `block
-      in action'\nactionpack (3.2.1) lib/action_dispatch/routing/route_set.rb:66:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/routing/route_set.rb:66:in `dispatch'\nactionpack
-      (3.2.1) lib/action_dispatch/routing/route_set.rb:30:in `call'\njourney (1.0.1)
-      lib/journey/router.rb:68:in `block in call'\njourney (1.0.1) lib/journey/router.rb:56:in
-      `each'\njourney (1.0.1) lib/journey/router.rb:56:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/routing/route_set.rb:589:in `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/best_standards_support.rb:17:in
-      `call'\nrack (1.4.1) lib/rack/etag.rb:23:in `call'\nrack (1.4.1) lib/rack/conditionalget.rb:35:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/head.rb:14:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/params_parser.rb:21:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/flash.rb:242:in `call'\nrack (1.4.1)
-      lib/rack/session/abstract/id.rb:205:in `context'\nrack (1.4.1) lib/rack/session/abstract/id.rb:200:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/cookies.rb:338:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/callbacks.rb:28:in
-      `block in call'\nactivesupport (3.2.1) lib/active_support/callbacks.rb:405:in
-      `_run__4402323192637548029__call__3570642963577057746__callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:405:in `__run_callback'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:385:in `_run_call_callbacks'\nactivesupport
-      (3.2.1) lib/active_support/callbacks.rb:81:in `run_callbacks'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/callbacks.rb:27:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/reloader.rb:65:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/remote_ip.rb:31:in `call'\nactionpack (3.2.1)
-      lib/action_dispatch/middleware/debug_exceptions.rb:16:in `call'\nactionpack
-      (3.2.1) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'\nrailties
-      (3.2.1) lib/rails/rack/logger.rb:26:in `call_app'\nrailties (3.2.1) lib/rails/rack/logger.rb:16:in
-      `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/request_id.rb:22:in
-      `call'\nrack (1.4.1) lib/rack/methodoverride.rb:21:in `call'\nrack (1.4.1) lib/rack/runtime.rb:17:in
-      `call'\nactivesupport (3.2.1) lib/active_support/cache/strategy/local_cache.rb:72:in
-      `call'\nrack (1.4.1) lib/rack/lock.rb:15:in `call'\nactionpack (3.2.1) lib/action_dispatch/middleware/static.rb:53:in
-      `call'\nrailties (3.2.1) lib/rails/engine.rb:479:in `call'\nrailties (3.2.1)
-      lib/rails/application.rb:220:in `call'\nrailties (3.2.1) lib/rails/railtie/configurable.rb:30:in
-      `method_missing'\nthin (1.3.1) lib/thin/connection.rb:80:in `block in pre_process'\nthin
-      (1.3.1) lib/thin/connection.rb:78:in `catch'\nthin (1.3.1) lib/thin/connection.rb:78:in
-      `pre_process'\nthin (1.3.1) lib/thin/connection.rb:53:in `process'\nthin (1.3.1)
-      lib/thin/connection.rb:38:in `receive_data'\neventmachine (0.12.10) lib/eventmachine.rb:256:in
-      `run_machine'\neventmachine (0.12.10) lib/eventmachine.rb:256:in `run'\nthin
-      (1.3.1) lib/thin/backends/base.rb:61:in `start'\nthin (1.3.1) lib/thin/server.rb:159:in
-      `start'\nthin (1.3.1) lib/thin/controllers/controller.rb:86:in `start'\nthin
-      (1.3.1) lib/thin/runner.rb:185:in `run_command'\nthin (1.3.1) lib/thin/runner.rb:151:in
-      `run!'\nthin (1.3.1) bin/thin:6:in `&lt;top (required)&gt;'\n/Users/Adrian/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/thin:19:in
-      `load'\n/Users/Adrian/.rbenv/versions/1.9.2-p290/lib/ruby/gems/1.9.1/bin/thin:19:in
-      `&lt;main&gt;'</code></pre>\n    </div>\n</div>\n\n\n\n<h2 style=\"margin-top:
-      30px\">Request</h2>\n<p><b>Parameters</b>: <pre>{&quot;report&quot;=&gt;{&quot;name&quot;=&gt;&quot;Post&quot;,\n
-      &quot;created_at&quot;=&gt;&quot;2012-02-23 08:11:00 -0600&quot;,\n &quot;user&quot;=&gt;{&quot;app_id&quot;=&gt;1,\n
-      &quot;display&quot;=&gt;&quot;Adrian&quot;},\n &quot;group&quot;=&gt;{&quot;app_id&quot;=&gt;1,\n
-      &quot;display&quot;=&gt;&quot;Innku&quot;}},\n &quot;format&quot;=&gt;&quot;json&quot;}</pre></p>\n\n<p><a
-      href=\"#\" onclick=\"document.getElementById('session_dump').style.display='block';
-      return false;\">Show session dump</a></p>\n<div id=\"session_dump\" style=\"display:none\"><pre></pre></div>\n\n<p><a
-      href=\"#\" onclick=\"document.getElementById('env_dump').style.display='block';
-      return false;\">Show env dump</a></p>\n<div id=\"env_dump\" style=\"display:none\"><pre>GATEWAY_INTERFACE:
-      &quot;CGI/1.2&quot;\nHTTP_ACCEPT: &quot;application/json&quot;\nHTTP_ACCEPT_ENCODING:
-      &quot;gzip, deflate&quot;\nREMOTE_ADDR: &quot;127.0.0.1&quot;\nSERVER_NAME:
-      &quot;127.0.0.1&quot;\nSERVER_PROTOCOL: &quot;HTTP/1.1&quot;</pre></div>\n\n\n<h2
-      style=\"margin-top: 30px\">Response</h2>\n<p><b>Headers</b>: <pre>None</pre></p>\n\n\n\n</body>\n</html>\n"
+      location:
+      - http://search.url.com/test/api/actions.json
+    body: ! "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+      bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx/1.0.10</center>\r\n</body>\r\n</html>\r\n"
     http_version: '1.1'

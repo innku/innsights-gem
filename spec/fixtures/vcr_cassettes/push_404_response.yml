@@ -2,35 +2,42 @@
 - !ruby/struct:VCR::HTTPInteraction
   request: !ruby/struct:VCR::Request
     method: :post
-    uri: http://127.0.0.1:5000/api/actions/push.json
-    body: ! "--110250\r\nContent-Disposition: form-data; name=\"file\"; filename=\"test_upload.json\"\r\nContent-Type:
-      application/json\r\n\r\n[{\"report\":{\"group\":{\"display\":\"Innku\",\"app_id\":1},\"created_at\":\"2012-02-23
-      08:11:00 -0600\",\"name\":\"Post\",\"user\":{\"display\":\"Adrian\",\"app_id\":1}}}]\r\n--110250--\r\n"
+    uri: http://subdoamin.url.com:80/test/api/actions/push.json
+    body: !binary |-
+      LS03OTM4MTgNCkNvbnRlbnQtRGlzcG9zaXRpb246IGZvcm0tZGF0YTsgbmFt
+      ZT0iZmlsZSI7IGZpbGVuYW1lPSJ0ZXN0X3VwbG9hZC5qc29uIg0KQ29udGVu
+      dC1UeXBlOiBhcHBsaWNhdGlvbi9qc29uDQoNClt7InJlcG9ydCI6eyJncm91
+      cCI6eyJkaXNwbGF5IjoiSW5ua3UiLCJhcHBfaWQiOjF9LCJjcmVhdGVkX2F0
+      IjoiMjAxMi0wMi0yMyAwODoxMTowMCAtMDYwMCIsIm5hbWUiOiJQb3N0Iiwi
+      dXNlciI6eyJkaXNwbGF5IjoiQWRyaWFuIiwiYXBwX2lkIjoxfX19XQ0KLS03
+      OTM4MTgNCkNvbnRlbnQtRGlzcG9zaXRpb246IGZvcm0tZGF0YTsgbmFtZT0i
+      YXV0aGVudGljaXR5X3Rva2VuIg0KDQoxMjM0DQotLTc5MzgxOC0tDQo=
     headers:
       accept:
-      - ! '*/*; q=0.5, application/xml'
+      - application/json
       accept-encoding:
       - gzip, deflate
-      content-length:
-      - '279'
       content-type:
-      - multipart/form-data; boundary=110250
+      - multipart/form-data; boundary=793818
+      content-length:
+      - '356'
   response: !ruby/struct:VCR::Response
     status: !ruby/struct:VCR::ResponseStatus
-      code: 404
-      message: Not Found
+      code: 301
+      message: Moved Permanently
     headers:
-      content-type:
-      - application/json; charset=utf-8
-      x-ua-compatible:
-      - IE=Edge
-      cache-control:
-      - no-cache
-      x-request-id:
-      - b4b906ddfef8be52ca3387b0704d6d31
-      x-runtime:
-      - '0.030187'
       server:
-      - thin 1.3.1 codename Triple Espresso
-    body: ! ' '
+      - nginx/1.0.10
+      date:
+      - Mon, 30 Jul 2012 18:27:12 GMT
+      content-type:
+      - text/html
+      content-length:
+      - '185'
+      connection:
+      - keep-alive
+      location:
+      - http://search.url.com/test/api/actions/push.json
+    body: ! "<html>\r\n<head><title>301 Moved Permanently</title></head>\r\n<body
+      bgcolor=\"white\">\r\n<center><h1>301 Moved Permanently</h1></center>\r\n<hr><center>nginx/1.0.10</center>\r\n</body>\r\n</html>\r\n"
     http_version: '1.1'
