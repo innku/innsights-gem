@@ -23,20 +23,13 @@ module Innsights
 
     def add_report_to_innsights(klass, report_action, report, action)
       user = report_user
-      klass.instance_eval do
+      klass.class_eval do
         cattr_accessor :innsights_reports unless defined?(@@insights_reports)
         self.innsights_reports ||= {}
         self.innsights_reports[report_action] = report
-        send :define_method, "report_to_innsights_#{action}" do
-          lambda {|r| self.innsights_reports[report_action].run(r)}.call(user)
-        end
-      end
-      add_after_filter(klass, action)
-    end
-
-    def add_after_filter(klass, action)
-      klass.class_eval do
-        send :after_filter, "report_to_innsights_#{action}".to_sym, only: [action.to_sym]
+        send  :after_filter,
+              lambda {|r| self.innsights_reports[report_action].run(r)}.call(user), 
+              :only => action.to_sym
       end
     end
 
