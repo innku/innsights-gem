@@ -3,7 +3,6 @@ require 'delayed_job'
 require 'action_controller'
 
 describe Innsights::Config::ControllerReport do
-
   before do
     Innsights.client = Innsights::Client.new("url.com", 'subdoamin', '1234', 'test') 
     Innsights.client.stub(:report).and_return { true }
@@ -35,6 +34,11 @@ describe Innsights::Config::ControllerReport do
     before do
       report.action_name = "User Created"
       report.event_name = 'users#create'
+    end
+    context 'With an invalid class' do
+      it 'Does not raises an error' do
+        lambda{ report.commit }.should_not raise_error
+      end
     end
     context 'With a valid class' do
       before do 
