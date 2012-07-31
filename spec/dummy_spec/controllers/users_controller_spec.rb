@@ -19,26 +19,14 @@ describe UsersController do
 
     context 'In the corresponding action' do
       it 'Reports to innsights' do
-        UsersController.any_instance.should_receive(:report_to_innsights_index)
+        UsersController.innsights_reports['user_index'].should_receive(:run).with(:current_user)
         get 'index'
-      end
-
-      it 'Responds correcty when the the report_user is a user' do
-        UsersController.any_instance.should_receive(:report_to_innsights_index)
-        get 'index'
-      end
-
-      it 'Has a the apropiate after_filter' do
-        get 'index'
-        f = UsersController._process_action_callbacks.select{|f| f.kind == :after}
-        f.first.filter.should == :report_to_innsights_index
       end
 
       it 'It only adds the filter to the apropiate action' do
         get 'index'
         f = UsersController._process_action_callbacks.select{|f| f.kind == :after}.first
-        f.filter.should == :report_to_innsights_index
-        f.per_key[:if].should == ["action_name == 'index'"]
+        f.options[:only].should == :index
       end
 
       it 'Can report from multiple actions' do
@@ -49,8 +37,8 @@ describe UsersController do
             is_user true
           end
         end
-        UsersController.any_instance.should_receive(:report_to_innsights_index)
-        UsersController.any_instance.should_receive(:report_to_innsights_new)
+        UsersController.innsights_reports['user_index'].should_receive(:run).with(:current_user)
+        UsersController.innsights_reports['user_new'].should_receive(:run).with(:current_user)
         get 'index'
         get 'new'
       end
