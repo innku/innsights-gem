@@ -28,7 +28,8 @@ module Innsights
         self.innsights_reports ||= {}
         self.innsights_reports[report_action] = report
         send  :after_filter,
-              lambda {|r| self.innsights_reports[report_action].run(user)}, 
+              lambda {|record| 
+          self.innsights_reports[report_action].run(record.send(user))}, 
               :only => action.to_sym
       end
     end

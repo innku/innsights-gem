@@ -19,7 +19,7 @@ describe UsersController do
 
     context 'In the corresponding action' do
       it 'Reports to innsights' do
-        UsersController.innsights_reports['user_index'].should_receive(:run).with(:current_user)
+        UsersController.innsights_reports['user_index'].should_receive(:run)
         get 'index'
       end
 
@@ -37,8 +37,8 @@ describe UsersController do
             is_user true
           end
         end
-        UsersController.innsights_reports['user_index'].should_receive(:run).with(:current_user)
-        UsersController.innsights_reports['user_new'].should_receive(:run).with(:current_user)
+        UsersController.innsights_reports['user_index'].should_receive(:run)
+        UsersController.innsights_reports['user_new'].should_receive(:run)
         get 'index'
         get 'new'
       end
