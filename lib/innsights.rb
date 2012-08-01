@@ -22,6 +22,8 @@ module Innsights
     autoload :User,         'innsights/config/user'
     autoload :Group,        'innsights/config/group'
   end
+
+  autoload :ErrorMessage,        'innsights/error_message.rb'
   
   autoload :Action,       'innsights/action'
   autoload :Client,       'innsights/client'

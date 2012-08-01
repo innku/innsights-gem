@@ -12,7 +12,7 @@ module Innsights
       begin
         api_client['/api/actions.json'].post *processed_params(params, @token)
       rescue RestClient::Exception => e
-        err "[Innsights] Sorry, we are currently having an error. We are moving to get this fixed", e
+        puts Innsights::ErrorMessage.error_msg(e)
       end
     end
     
@@ -21,7 +21,7 @@ module Innsights
         params = {:file => file}
         patient_client['/api/actions/push.json'].post *processed_params(params, @token)
       rescue RestClient::Exception => e
-        err "[Innsights] Sorry, we are currently having an error. We are moving to get this fixed", e
+        puts Innsights::ErrorMessage.error_msg(e)
       end
     end
     
@@ -34,23 +34,11 @@ module Innsights
         response = client['/api/apps.json'].post(params, :content_type => :json, :accept => :json)
         JSON.parse response
       rescue RestClient::Exception => e
-        err "[Innsights] Sorry, we are currently having an error. We are moving to get this fixed", e
-      end
-    end
-    
-    def self.err(msg, e)
-      if Innsights.debugging
-        puts "[Innsights Debugging] " << e.message
-      else
-        puts msg
+        puts Innsights::ErrorMessage.error_msg(e)
       end
     end
     
     private
-    
-    def err(msg, e)
-      self.class.err(msg, e)
-    end
     
     def self.prompt_credentials
       [ask("Username: "), ask("Password: "){|q| q.echo = false}]

@@ -34,7 +34,7 @@ module Innsights
                 }, 
                 :only => action.to_sym
         else 
-          puts "[Innsights] Sorry, we are currently having an error. We are moving to get this fixed"
+          puts Innsights::ErrorMessage.error_msg
         end
       end
     end
