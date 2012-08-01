@@ -16,6 +16,15 @@ describe Innsights::Config::ControllerReport do
     it 'sets the created_at default' do
       report.action.should  == "create"
     end
+    context 'Error handling' do
+      it 'Does not crash if there is no pound sign' do
+        lambda{ 
+          report = Innsights::Config::ControllerReport.new("userscreate") 
+          report.commit
+          report.run(report.report_user)
+        }.should_not raise_error
+      end
+    end
   end
 
   describe '.dsl_attrs' do
@@ -75,6 +84,30 @@ describe Innsights::Config::ControllerReport do
       report.add_report_to_innsights(UsersController,  "User Created", report, 'create')
       f = UsersController._process_action_callbacks.select{|f| f.kind == :after}
       f.first.options[:only].should == :create
+    end
+    context 'Error handling' do
+      before do
+        class PersonsController
+        end
+      end
+      let(:report) { Innsights::Config::ControllerReport.new("persons#create") }
+      it 'Does not crash when there is no after_filter method' do
+        lambda { 
+          report.add_report_to_innsights(PersonsController,  "Person Created", report, 'create') 
+        }.should_not raise_error
+      end
+      it 'Does not crash if the class does not have action methods' do
+        lambda { 
+          report.add_report_to_innsights(PersonsController,  "User Created", report, "asdas") 
+        }.should_not raise_error
+      end
+      it 'Does not crash if the controller action does not exist' do
+        lambda { 
+          report.add_report_to_innsights(UsersController,  "User Created", report, "asdas") 
+          report.add_report_to_innsights(UsersController,  "User Created", report, nil) 
+        }.should_not raise_error
+
+      end
     end
   end
 end

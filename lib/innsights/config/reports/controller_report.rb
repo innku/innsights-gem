@@ -24,13 +24,18 @@ module Innsights
     def add_report_to_innsights(klass, report_action, report, action)
       user = report_user
       klass.class_eval do
-        cattr_accessor :innsights_reports unless defined?(@@insights_reports)
-        self.innsights_reports ||= {}
-        self.innsights_reports[report_action] = report
-        send  :after_filter,
-              lambda {|record| 
-          self.innsights_reports[report_action].run(record.send(user))}, 
-              :only => action.to_sym
+        if self.respond_to?(:after_filter) && self.new.action_methods && !action.nil?
+          cattr_accessor :innsights_reports unless defined?(@@insights_reports)
+          self.innsights_reports ||= {}
+          self.innsights_reports[report_action] = report
+          send  :after_filter,
+                lambda {|record| 
+                   self.innsights_reports[report_action].run(record.send(user))
+                }, 
+                :only => action.to_sym
+        else 
+          puts "[Innsights] Sorry, we are currently having an error. We are moving to get this fixed"
+        end
       end
     end
 
