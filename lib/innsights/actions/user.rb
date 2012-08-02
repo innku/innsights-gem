@@ -7,7 +7,7 @@ module Innsights
     def initialize(report, record)
       @report = report
       @record = record
-      if @report.act_on_user == true
+      if @record.class.to_s.downcase.to_sym == Innsights.user_call
         @object = @record
       else
         @object = dsl_attr(@report.report_user, :record => @record)

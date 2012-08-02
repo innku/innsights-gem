@@ -16,7 +16,6 @@ describe 'Report Model from Controller' do
         on 'users#index' do
           report 'user_index'
           user   :current_user
-          is_user true
         end
       end
     end

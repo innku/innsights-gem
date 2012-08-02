@@ -43,13 +43,9 @@ Innsights.setup do
   # Params:
   #   "controller#action": Speficies the controller and actions when it should report to innsights
   #
-  # Options:
-  #   is_user(Detault false): Set to true if it will act directly on a user 
-  #
   # on 'user#new' do
   #   report 'New User'
   #   user   :current_user
-  #   is_user true
   # end
 
 

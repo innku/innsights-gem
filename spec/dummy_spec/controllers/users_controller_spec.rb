@@ -12,7 +12,6 @@ describe UsersController do
         on 'users#index' do
           report 'user_index'
           user   :current_user
-          is_user true
         end
       end
     end
@@ -34,7 +33,6 @@ describe UsersController do
           on 'users#new' do
             report 'user_new'
             user   :current_user
-            is_user true
           end
         end
         UsersController.innsights_reports['user_index'].should_receive(:run)

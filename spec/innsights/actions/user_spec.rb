@@ -7,7 +7,6 @@ describe Innsights::Actions::User do
   
   describe '#initialize' do
     it 'rescues the no method error upon defining non existing methods' do
-      #Stoped working on  g diff 3ea350d da77793   
       report.user :fake
       lambda { Innsights::Actions::User.new(report, post) }.should_not raise_error(NoMethodError)
     end
@@ -18,9 +17,8 @@ describe Innsights::Actions::User do
     end
 
     it 'Acts on the directly on a user when indicated' do
-      report.is_user true
+      Innsights.user_call = :user
       Post.any_instance.should_not_receive(:user)
-      report.should_receive(:act_on_user).and_return(true)
       u = Innsights::Actions::User.new(report, user)
       u.object.should == user
     end
