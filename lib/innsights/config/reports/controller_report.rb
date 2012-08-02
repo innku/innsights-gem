@@ -6,9 +6,9 @@ module Innsights
     attr_accessor :controller, :action
 
     def initialize(catalyst)
+      super()
       @controller, @action = catalyst.split('#')
       @catalyst = catalyst
-      super()
     end
 
     def commit
