@@ -5,10 +5,21 @@ module Innsights
     end
 
     def add_report_to_innsights(klass, action, report, event)
-      klass.instance_eval do
-        report.simple_class_setup(self, action, report)
-        send "after_#{event}", lambda { |record| self.innsights_reports[action].run(record) }
+      if valid_for_report?
+        klass.instance_eval do
+          report.simple_class_setup(self, action, report)
+          send "after_#{event}", 
+               lambda { |record| self.innsights_reports[action].run(record) }
+        end
+      else
+        puts Innsights::ErrorMessage.error_msg
       end
+    end
+
+    private
+
+    def valid_for_report?
+      klass.respond_to?("after_#{@event_name}")
     end
   end
 
