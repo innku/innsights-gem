@@ -4,6 +4,7 @@ describe Innsights do
 
   describe "#queue" do
     it "can't set it to a not suported queue system" do
+      Innsights.queue_system = nil
       Innsights.queue :other_queue_system
       Innsights.queue_system.should == nil
     end
