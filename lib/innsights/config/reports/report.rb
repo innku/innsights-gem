@@ -37,11 +37,11 @@ module Innsights
       end
     end
     
-    def simple_class_setup(klass, report_action, report)
-        Innsights.reports << report
+    def simple_class_setup(klass, report_action)
+        Innsights.reports << self
         klass.cattr_accessor :innsights_reports unless defined?(@@insights_reports)
         klass.innsights_reports ||= {}
-        klass.innsights_reports[report_action] = report
+        klass.innsights_reports[report_action] = self
     end
   end
 end
