@@ -26,4 +26,16 @@ describe Innsights::Config::ModelReport do
       report.commit
     end
   end
+
+  describe '.valid_for_push?' do
+    it 'Returns false if not valid' do
+      report.should_receive(:event_name) {:upload}
+      report.valid_for_push?.should == false
+    end
+
+    it 'Returns true if valid' do
+      report.should_receive(:event_name) {:create}
+      report.valid_for_push?.should == true
+    end
+  end
 end

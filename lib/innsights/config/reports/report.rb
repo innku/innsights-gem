@@ -43,5 +43,9 @@ module Innsights
         klass.innsights_reports ||= {}
         klass.innsights_reports[report_action] = self
     end
+
+    def valid_for_push?
+      false
+    end
   end
 end

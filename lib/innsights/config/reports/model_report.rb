@@ -16,7 +16,9 @@ module Innsights
       end
     end
 
-    private
+    def valid_for_push?
+      [:create].include? self.event_name
+    end
 
     def valid_for_report?
       klass.respond_to?("after_#{@event_name}")
