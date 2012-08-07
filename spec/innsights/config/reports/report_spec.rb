@@ -33,6 +33,15 @@ describe Innsights::Config::Report do
       Innsights::Action.stub!(:new) { mock("Innsights::Action", :as_hash => {}) }
       Innsights.stub!(:client) { @client }
     end
+    it 'Sets the record to report_user when no param is passed' do
+      Innsights::Action.should_receive(:new).with(report, report.report_user)
+      report.run(nil)
+    end
+    it 'Uses the passed record when specified' do
+      user = User.new
+      Innsights::Action.should_receive(:new).with(report, user)
+      report.run(user)
+    end
     it 'calls the report method of the gems client' do
       Innsights.enabled = true
       @client.should_receive(:report)

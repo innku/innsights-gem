@@ -16,8 +16,11 @@ VCR.config do |c|
 end
 
 RSpec.configure do |config|
-
+  config.before(:all) do
+    Innsights.test_mode = true
+  end
 end
+
 Innsights.setup do
   config :development do
     queue :resque

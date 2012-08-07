@@ -22,7 +22,8 @@ module Innsights
       end
     end
 
-    def run(record)
+    def run(record=nil)
+      record ||= @report_user
       if Innsights.enabled
         action = Action.new(self, record).as_hash
 
