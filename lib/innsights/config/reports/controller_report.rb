@@ -32,7 +32,7 @@ module Innsights
     def setup_class_for_innsights_report(klass, report_action, report, action)
       user = report_user
       klass.class_eval do
-        report.simple_class_setup(self, report_action, report)
+        report.simple_class_setup(self, report_action)
         send  :after_filter,
           lambda {|record| self.innsights_reports[report_action].run(record.send(user)) }, 
           :only => action.to_sym

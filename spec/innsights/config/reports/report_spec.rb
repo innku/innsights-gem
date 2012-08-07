@@ -67,5 +67,11 @@ describe Innsights::Config::Report do
       report.run(nil)
     end
   end
+
+  describe '.valid_for_push?' do
+    it 'Is not valid for push' do
+      report.valid_for_push?.should == false
+    end
+  end
   
 end
