@@ -14,16 +14,14 @@ describe 'Generic Report' do
   it 'Can report a manual action' do
     Innsights.stub_chain(:client, :report)
     Innsights.client.should_receive(:report)
-    report = Innsights::Config::GenericReport.new('Mention', user)
-    report.run
+    Innsights.report('Mention', user).run
   end
 
   it 'Can create a custom create action' do
     User.class_eval do
       after_create :manual_create
       def manual_create
-        report = Innsights::Config::GenericReport.new('Mention', self)
-        report.run
+        Innsights.report('Mention', self).run
       end
     end
     Innsights.stub_chain(:client, :report)

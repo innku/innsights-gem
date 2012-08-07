@@ -91,6 +91,27 @@ describe Innsights do
       end
     end
   end
+
+  describe '#report' do
+    let(:user) { User.create }
+
+    before do
+      @report = Innsights::Config::GenericReport.new("Report name", user)
+      Innsights::Config::GenericReport.stub!(:new){@report}
+    end
+
+    it 'Generates a Generic Report' do
+      Innsights::Config::GenericReport.should_receive(:new).with("Report Name", user)
+      Innsights.report("Report Name", user)
+    end
+    it 'Commits the report' do
+      @report.should_receive(:commit)
+      Innsights.report("Report Name", user)
+    end
+    it 'Returns the report' do
+      Innsights.report("Report Name", user).should == @report
+    end
+  end
   
 
 end

@@ -152,6 +152,7 @@ module Innsights
     report.instance_eval(&block)
     report.commit
   end
+
   # Sets up the user class and configures the display and group
   # @param [:resque, :delayed_job]
   def self.queue(queue='')
@@ -162,6 +163,11 @@ module Innsights
     self.test_mode = test_mode
   end
   
+  def self.report(name, user)
+    report = Innsights::Config::GenericReport.new(name, user)
+    report.commit
+    report
+  end
   
   if defined?(Rails)
     require 'innsights/railtie'
