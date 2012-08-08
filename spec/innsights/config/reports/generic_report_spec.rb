@@ -16,6 +16,28 @@ describe Innsights::Config::GenericReport do
     it 'Sets the user' do
       report.report_user.should == user
     end
+    context 'Can instanciate' do
+      it 'With only the action name as parameter ' do
+        r = Innsights::Config::GenericReport.new("Mention")
+        r.action_name.should == "Mention"
+      end
+      it 'With action name and user as parameters ' do
+        r = Innsights::Config::GenericReport.new("Mention", user)
+        r.action_name.should == "Mention"
+        r.report_user.should == user
+      end
+      it 'With the action name and an option hash as paramets' do
+        time = Time.now
+        r = Innsights::Config::GenericReport.new("Mention", user: user, created_at: time)
+        r.action_name.should == "Mention"
+        r.report_user.should == user
+        r.created_at.should == time
+      end
+      it 'Does not modify unspecified options' do
+        r = Innsights::Config::GenericReport.new("Mention", created_at: Time.now)
+        r.report_user.should == :user
+      end
+    end
   end
 
   describe '.commit' do
