@@ -5,12 +5,17 @@ module Innsights
     
     def push(report)
       if report.valid_for_push?
-        report_actions = []
-        puts "==Preparing #{report.klass} records=="
-        progress_actions report.klass do |record|
-          report_actions << Innsights::Action.new(report, record).as_hash
+        begin
+          actions = []
+          puts "==Preparing #{report.klass} records=="
+          progress_actions report.klass do |record|
+            actions << Innsights::Action.new(report, record).as_hash
+          end 
+          upload_content(actions.to_json) if actions.any?
+          true
+        rescue Exception => e
+          puts Innsights::ErrorMessage.error_msg(e)
         end
-        upload_content(report_actions.to_json) if report_actions.any?
       end
     end
     

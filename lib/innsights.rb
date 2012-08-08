@@ -58,7 +58,7 @@ module Innsights
   @@debugging = false
   
   mattr_accessor :url
-  @@url = "sitestest.com"
+  @@url = "innsights.me"
   
   mattr_accessor :client
   
