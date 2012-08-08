@@ -27,6 +27,7 @@ module Innsights
   autoload :ErrorMessage,        'innsights/error_message.rb'
   
   autoload :Action,       'innsights/action'
+  autoload :Metric,       'innsights/metric'
   autoload :Client,       'innsights/client'
 
   ## Configuration defaults

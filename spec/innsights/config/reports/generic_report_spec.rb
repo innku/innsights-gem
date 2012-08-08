@@ -16,7 +16,7 @@ describe Innsights::Config::GenericReport do
     it 'Sets the user' do
       report.report_user.should == user
     end
-    context 'Can instanciate' do
+    describe 'Can instantiate' do
       it 'With only the action name as parameter ' do
         r = Innsights::Config::GenericReport.new("Mention")
         r.action_name.should == "Mention"
@@ -36,6 +36,20 @@ describe Innsights::Config::GenericReport do
       it 'Does not modify unspecified options' do
         r = Innsights::Config::GenericReport.new("Mention", created_at: Time.now)
         r.report_user.should == :user
+      end
+      describe 'Can add metrics' do
+        it 'Without metrics' do
+          r = Innsights::Config::GenericReport.new("Mention")
+          r.metrics.should be_blank
+        end
+        it 'With a single metic' do
+          r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100})
+          r.metrics.should == {kg: 100}
+        end
+        it 'With multiple metrics' do
+          r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100, money: 200})
+          r.metrics.should == {kg: 100, money: 200}
+        end
       end
     end
   end

@@ -10,7 +10,7 @@ module Innsights
     dsl_attr :created_at,  :timestamp
     dsl_attr :report_user, :user
     
-    attr_accessor :klass
+    attr_accessor :klass, :metrics
 
     def initialize(klass=nil)
       @created_at = :created_at
