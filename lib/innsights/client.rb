@@ -54,7 +54,7 @@ module Innsights
     end
     
     def patient_client
-      @patient_client ||= RestClient::Resource.new(api_url,:timeout => 90000000,:open_timeout => 90000000)
+      @patient_client ||= RestClient::Resource.new(api_url, :timeout => nil)
     end
     
     def api_url

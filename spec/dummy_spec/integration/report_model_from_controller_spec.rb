@@ -4,6 +4,7 @@ describe 'Report Model from Controller' do
   before do 
     Innsights::Config::ModelReport.any_instance.stub(:run){true}
     Innsights::Config::ControllerReport.any_instance.stub(:run){true}
+    Innsights.stub_chain(:client,:report).and_return(true)
     Innsights.setup do
       user User do
         display :name

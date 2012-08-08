@@ -19,6 +19,7 @@ module Innsights
     autoload :Report,       'innsights/config/reports/report'
     autoload :ModelReport, 'innsights/config/reports/model_report'
     autoload :ControllerReport, 'innsights/config/reports/controller_report'
+    autoload :GenericReport, 'innsights/config/reports/generic_report'
     autoload :User,         'innsights/config/user'
     autoload :Group,        'innsights/config/group'
   end
@@ -151,6 +152,7 @@ module Innsights
     report.instance_eval(&block)
     report.commit
   end
+
   # Sets up the user class and configures the display and group
   # @param [:resque, :delayed_job]
   def self.queue(queue='')
@@ -161,6 +163,11 @@ module Innsights
     self.test_mode = test_mode
   end
   
+  def self.report(name, user)
+    report = Innsights::Config::GenericReport.new(name, user)
+    report.commit
+    report
+  end
   
   if defined?(Rails)
     require 'innsights/railtie'
