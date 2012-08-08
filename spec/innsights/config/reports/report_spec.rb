@@ -4,13 +4,13 @@ require 'delayed_job'
 describe Innsights::Config::Report do
 
   before do 
-    class Dummy; end
-    Dummy.stub!(:after_create)
+    class DummyClass; end
+    DummyClass.stub!(:after_create)
   end
-  let(:report) { Innsights::Config::Report.new(Dummy) }
+  let(:report) { Innsights::Config::Report.new(DummyClass) }
   
   describe '.initialize' do
-    let(:default_obj) { Innsights::Config::Report.new(Dummy) }
+    let(:default_obj) { Innsights::Config::Report.new(DummyClass) }
     
     it 'sets the created_at default' do
       default_obj.created_at.should  == :created_at
@@ -22,7 +22,7 @@ describe Innsights::Config::Report do
       default_obj.report_user.should == :user
     end
     it 'sets the klass to param' do
-      default_obj.klass.should == Dummy
+      default_obj.klass.should == DummyClass
     end
   end
   

@@ -19,16 +19,20 @@ ActiveRecord::Schema.define(:version => 1) do
 end
 
 class Company < ActiveRecord::Base
+  attr_accessible :name
   def to_s
-    @name
+    self.name
   end
 end
 class User < ActiveRecord::Base 
+  attr_accessible :name, :company
   belongs_to :company
+
   def to_s
-    @name
+    self.name
   end
 end
 class Post < ActiveRecord::Base
+  attr_accessible :title, :user
   belongs_to :user
 end

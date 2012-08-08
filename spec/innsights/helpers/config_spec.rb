@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Innsights::Helpers::Config do
   
   let :klass do
-    class Dummy
+    class DummyClass
       include Innsights::Helpers::Config
     end 
   end

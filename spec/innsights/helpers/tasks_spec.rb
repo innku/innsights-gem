@@ -24,8 +24,7 @@ describe Innsights::Helpers::Tasks do
         Innsights::Helpers::Tasks.push(report)
       end
       it 'Upload the contents when there are reports' do
-        action_hash = {:report=>{:name=>"Post", :created_at=>Time.now}}
-        Innsights::Helpers::Tasks.should_receive(:upload_content).with([action_hash].to_json)
+        Innsights::Helpers::Tasks.should_receive(:upload_content)
         Innsights::Helpers::Tasks.push(report)
       end
       it 'Does not upload the contents when there are no reports' do
