@@ -1,13 +1,29 @@
 module Innsights
   class Config::GenericReport < Config::Report
-    def initialize(action_name, app_user)
+    def initialize(action_name, options=nil)
       super()
       @action_name = action_name
-      @report_user = app_user
+      set_options(options)
     end
 
     def commit
       Innsights.reports << self
+    end
+
+    private
+    def set_options(options)
+      if options.class == Hash
+        option_equivalences.each do |self_k, api_k|
+          self.instance_variable_set("@#{self_k}", options[api_k]) if options[api_k]
+        end
+      else
+        @report_user = options
+      end
+
+    end
+
+    def option_equivalences
+      {created_at: :created_at, report_user: :user, metrics: :metrics }
     end
   end
 end

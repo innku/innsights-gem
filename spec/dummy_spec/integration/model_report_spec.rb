@@ -3,7 +3,7 @@ require 'dummy_app_spec_helper'
 describe 'Model Report' do
   before do 
     Innsights.setup do
-      user User do
+      user Dude do
         display :username
       end
     end
@@ -15,7 +15,7 @@ describe 'Model Report' do
       Innsights::ErrorMessage.should_receive(:error_msg)
       lambda{
         Innsights.setup do
-          watch User do
+          watch Dude do
             upon :alter
           end
         end

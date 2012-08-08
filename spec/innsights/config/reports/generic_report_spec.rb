@@ -16,6 +16,42 @@ describe Innsights::Config::GenericReport do
     it 'Sets the user' do
       report.report_user.should == user
     end
+    describe 'Can instantiate' do
+      it 'With only the action name as parameter ' do
+        r = Innsights::Config::GenericReport.new("Mention")
+        r.action_name.should == "Mention"
+      end
+      it 'With action name and user as parameters ' do
+        r = Innsights::Config::GenericReport.new("Mention", user)
+        r.action_name.should == "Mention"
+        r.report_user.should == user
+      end
+      it 'With the action name and an option hash as paramets' do
+        time = Time.now
+        r = Innsights::Config::GenericReport.new("Mention", user: user, created_at: time)
+        r.action_name.should == "Mention"
+        r.report_user.should == user
+        r.created_at.should == time
+      end
+      it 'Does not modify unspecified options' do
+        r = Innsights::Config::GenericReport.new("Mention", created_at: Time.now)
+        r.report_user.should == :user
+      end
+      describe 'Can add metrics' do
+        it 'Without metrics' do
+          r = Innsights::Config::GenericReport.new("Mention")
+          r.metrics.should be_blank
+        end
+        it 'With a single metic' do
+          r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100})
+          r.metrics.should == {kg: 100}
+        end
+        it 'With multiple metrics' do
+          r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100, money: 200})
+          r.metrics.should == {kg: 100, money: 200}
+        end
+      end
+    end
   end
 
   describe '.commit' do

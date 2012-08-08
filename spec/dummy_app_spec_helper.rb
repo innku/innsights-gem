@@ -9,6 +9,7 @@ require 'bundler/setup'
 require 'vcr'
 require 'innsights'
 
+require File.join(File.dirname(__FILE__), 'support', 'ar')
 
 VCR.config do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
