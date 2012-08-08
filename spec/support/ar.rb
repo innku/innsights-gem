@@ -1,6 +1,9 @@
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
 ActiveRecord::Schema.define(:version => 1) do
+  create_table :dudes do |t|
+    t.string :name
+  end
   create_table :companies do |t|
     t.string :name
   end

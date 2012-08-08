@@ -6,7 +6,7 @@ describe 'Report Model from Controller' do
     Innsights::Config::ControllerReport.any_instance.stub(:run){true}
     Innsights.stub_chain(:client,:report).and_return(true)
     Innsights.setup do
-      user User do
+      user Dude do
         display :name
       end
     end
@@ -14,26 +14,26 @@ describe 'Report Model from Controller' do
   context 'When a controller action should report' do
     before do
       Innsights.setup do
-        on 'users#index' do
-          report 'user_index'
-          user   :current_user
+        on 'dudes#index' do
+          report 'dude_index'
+          user   :current_dude
         end
       end
     end
     it 'Without a reporting model, it only reports the controller' do
       Innsights::Config::ControllerReport.any_instance.should_receive(:run)
       Innsights::Config::ModelReport.any_instance.should_not_receive(:run)
-      get users_path
+      get dudes_path
     end
     it 'With a reporting model it reports the model and controller' do
       Innsights.setup do
-        watch User do
+        watch Dude do
           report 'Tweet'
         end
       end
       Innsights::Config::ControllerReport.any_instance.should_receive(:run)
       Innsights::Config::ModelReport.any_instance.should_receive(:run)
-      get users_path
+      get dudes_path
     end
 
   end
@@ -42,18 +42,18 @@ describe 'Report Model from Controller' do
     it 'Without a reporting model, it does not report anything' do
       Innsights::Config::ControllerReport.any_instance.should_not_receive(:run)
       Innsights::Config::ModelReport.any_instance.should_not_receive(:run)
-      get users_path
+      get dudes_path
 
     end
     it 'With a reporting model, it reports the model' do
       Innsights.setup do
-        watch User do
+        watch Dude do
           report 'Tweet'
         end
       end
       Innsights::Config::ControllerReport.any_instance.should_not_receive(:run)
       Innsights::Config::ModelReport.any_instance.should_receive(:run)
-      get users_path
+      get dudes_path
     end
   end
 end

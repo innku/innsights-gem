@@ -1,3 +1,3 @@
 Dummy::Application.routes.draw do
-  resources :users, only: [:index, :new]
+  resources :dudes, only: [:index, :new]
 end

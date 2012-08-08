@@ -1,7 +1,7 @@
-class UsersController < ApplicationController 
+class DudesController < ApplicationController 
   respond_to :json
   def index
-    User.create
+    Dude.create
     respond_with a: nil
   end
 
@@ -10,11 +10,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    User.create
+    Dude.create
     respond_with a: nil
   end
   
-  def current_user
-    User.first
+  def current_dude
+    Dude.first
   end
 end
