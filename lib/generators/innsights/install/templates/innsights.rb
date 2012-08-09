@@ -37,6 +37,16 @@ Innsights.setup do
   # watch User do
   #   report :registration
   # end
+  #
+  # Metrics can also be reported
+  #
+  # watch Car do
+  #   report 'Buy Car'
+  #   metrics do
+  #     kg    :weight
+  #     money :price
+  #   end
+  # end
   
   ## Controller actions can also repost to Innsights
   

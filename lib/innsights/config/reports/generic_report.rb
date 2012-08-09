@@ -12,7 +12,7 @@ module Innsights
 
     private
     def set_options(options)
-      if options.class == Hash
+      if options.is_a?(Hash)
         option_equivalences.each do |self_k, api_k|
           self.instance_variable_set("@#{self_k}", options[api_k]) if options[api_k]
         end

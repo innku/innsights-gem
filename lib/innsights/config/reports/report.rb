@@ -16,6 +16,7 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
+      @metrics = {}
       unless klass.nil?
         @klass = klass
         @action_name = klass.name
@@ -38,6 +39,11 @@ module Innsights
       end
     end
     
+    def measure(measure, with=nil)
+      with ||= {with: measure}
+      metrics.merge!({measure.to_sym => with[:with]})
+    end
+
     def simple_class_setup(klass, report_action)
         Innsights.reports << self
         klass.cattr_accessor :innsights_reports unless defined?(@@insights_reports)

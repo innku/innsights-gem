@@ -70,6 +70,30 @@ describe Innsights do
     end
   end
 
+  describe '#watch' do
+    before do 
+      class DummyClass; end
+      @report = Innsights::Config::ModelReport.new(DummyClass)
+      Innsights::Config::ModelReport.stub!(:new){@report}
+    end
+    it 'Creates the report with a class when there is a param' do
+      Innsights::Config::ModelReport.should_receive(:new).with(DummyClass)
+      Innsights.watch('Foo',{class: DummyClass}){}
+    end
+    it 'Creates the report with a class when there is no param' do
+      Innsights::Config::ModelReport.should_receive(:new).with(DummyClass)
+      Innsights.watch(DummyClass){}
+    end
+    it 'Evals the report instance' do
+      @report.should_receive(:instance_eval)
+      Innsights.watch(DummyClass){}
+    end
+    it 'Commit the report' do
+      @report.should_receive(:commit)
+      Innsights.watch(DummyClass){}
+    end
+  end
+
   describe "#after" do
     before do
       Innsights.test_mode = true
@@ -112,6 +136,4 @@ describe Innsights do
       Innsights.report("Report Name", user).should == @report
     end
   end
-  
-
 end

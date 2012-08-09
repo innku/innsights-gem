@@ -26,7 +26,6 @@ describe Innsights::Config::Report do
     end
   end
   
-  
   describe '#run' do
     before do
       @client = mock("Innsights::Client", :report => nil)
@@ -74,6 +73,22 @@ describe Innsights::Config::Report do
       Innsights.enabled = false
       @client.should_not_receive(:report)
       report.run(nil)
+    end
+  end
+
+  describe '.measure' do
+    it 'Adds the measure to the metrics' do
+      report.measure :kg, with: :weight
+      report.metrics.should == {kg: :weight}
+    end
+    it 'Sets the default method when no param passed for it' do
+      report.measure :kg
+      report.metrics.should == {kg: :kg}
+    end
+    it 'Can add multiple metrics' do
+      report.measure :kg, with: :weight
+      report.measure :money, with: :price
+      report.metrics.should == {kg: :weight, money: :price}
     end
   end
 

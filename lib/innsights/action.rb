@@ -24,7 +24,9 @@ module Innsights
     end
 
     def metrics_hash
-      Hash[@metrics.map{|m| m.as_array}] if @metrics.present?
+      if @metrics.present? && @record.present?
+        Hash[@metrics.map{|m| m.as_array_for_user(@record)}] 
+      end
     end
 
     
