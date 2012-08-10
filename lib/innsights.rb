@@ -22,6 +22,7 @@ module Innsights
     autoload :GenericReport,    'innsights/config/reports/generic_report'
     autoload :User,             'innsights/config/user'
     autoload :Group,            'innsights/config/group'
+    autoload :Options,            'innsights/config/option'
   end
 
   autoload :ErrorMessage,       'innsights/error_message.rb'
@@ -29,6 +30,8 @@ module Innsights
   autoload :Action,             'innsights/action'
   autoload :Metric,             'innsights/metric'
   autoload :Client,             'innsights/client'
+
+  include Config::Options
 
   ## Configuration defaults
   mattr_accessor :user_call
@@ -53,7 +56,7 @@ module Innsights
   @@reports = []
   
   mattr_accessor :enabled
-  @@enabled = { development: true, test: true, staging:true, production:true }[Rails.env.to_sym]
+  @@enabled = { development: true, test: true, staging:true, production:true }[self.env.to_sym]
   
   mattr_accessor :debugging
   @@debugging = false
@@ -88,7 +91,7 @@ module Innsights
   # Final url to post actions to, includes the rails app environment
   # @return [String] contains app subdomain, innsights url and client app environment
   def self.app_url
-    "#{app_subdomain}." << @@url << "/#{Rails.env}"
+    "#{app_subdomain}." << @@url << "/#{self.env}"
   end
 
   # Defines the url for test_mode
@@ -112,7 +115,7 @@ module Innsights
   #   * Appp action reports
   def self.setup(&block)
     self.instance_eval(&block)
-    self.client = Client.new(url, app_subdomain, app_token, Rails.env)
+    self.client = Client.new(url, app_subdomain, app_token, self.env)
   end
 
   # Extra configuration for custom experience
@@ -122,7 +125,7 @@ module Innsights
   def self.config(*envs, &block)
     self.instance_eval(&block) if envs.blank?
     envs.each do |env| 
-      self.instance_eval(&block) if Rails.env == env.to_s
+      self.instance_eval(&block) if self.env == env.to_s
     end
   end
   
@@ -181,7 +184,7 @@ module Innsights
     report
   end
   
-  if defined?(Rails)
+  if rails?
     require 'innsights/railtie'
   end
     
