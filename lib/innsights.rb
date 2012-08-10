@@ -6,29 +6,29 @@ require "innsights/version"
 module Innsights
   
   module Helpers
-    autoload :Tasks,          'innsights/helpers/tasks'
-    autoload :Config,         'innsights/helpers/config'
+    autoload :Tasks,            'innsights/helpers/tasks'
+    autoload :Config,           'innsights/helpers/config'
   end
   
   module Actions
-    autoload :User,   'innsights/actions/user'
-    autoload :Group,  'innsights/actions/group'
+    autoload :User,             'innsights/actions/user'
+    autoload :Group,            'innsights/actions/group'
   end
   
   module Config
-    autoload :Report,       'innsights/config/reports/report'
-    autoload :ModelReport, 'innsights/config/reports/model_report'
+    autoload :Report,           'innsights/config/reports/report'
+    autoload :ModelReport,      'innsights/config/reports/model_report'
     autoload :ControllerReport, 'innsights/config/reports/controller_report'
-    autoload :GenericReport, 'innsights/config/reports/generic_report'
-    autoload :User,         'innsights/config/user'
-    autoload :Group,        'innsights/config/group'
+    autoload :GenericReport,    'innsights/config/reports/generic_report'
+    autoload :User,             'innsights/config/user'
+    autoload :Group,            'innsights/config/group'
   end
 
-  autoload :ErrorMessage,        'innsights/error_message.rb'
+  autoload :ErrorMessage,       'innsights/error_message.rb'
   
-  autoload :Action,       'innsights/action'
-  autoload :Metric,       'innsights/metric'
-  autoload :Client,       'innsights/client'
+  autoload :Action,             'innsights/action'
+  autoload :Metric,             'innsights/metric'
+  autoload :Client,             'innsights/client'
 
   ## Configuration defaults
   mattr_accessor :user_call
@@ -90,6 +90,12 @@ module Innsights
   def self.app_url
     "#{app_subdomain}." << @@url << "/#{Rails.env}"
   end
+
+  # Defines the url for test_mode
+  # @return [String] contains the test url
+  def self.test_url
+    "innsights.dev"
+  end
   
   # Sets testing environment on for local server development
   # @param [true,false] on testing on or off
@@ -97,7 +103,7 @@ module Innsights
   mattr_reader :test_mode
   def self.test_mode=(on)
     @@test_mode = on
-    @@url = 'innsights.dev' if on
+    @@url = test_url if on
   end
   
   # Main configuration method to create all event watchers
@@ -157,13 +163,18 @@ module Innsights
   # Sets up the user class and configures the display and group
   # @param [:resque, :delayed_job]
   def self.queue(queue='')
-	self.queue_system = queue if @@supported_queue_systems.include?(queue)
+    if @@supported_queue_systems.include?(queue)
+      self.queue_system = queue 
+    end
   end
 
   def self.test(test_mode='')
     self.test_mode = test_mode
   end
   
+  # Creates and commit a GenericReport
+  # @param [:name, :user]
+  # @return [Innsights::Config::GenericReport]
   def self.report(name, user)
     report = Innsights::Config::GenericReport.new(name, user)
     report.commit

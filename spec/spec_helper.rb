@@ -16,10 +16,8 @@ end
 
 
 RSpec.configure do |config|
-  config.before(:all) do
-    Innsights.test_mode = true
-  end
   config.before(:each) do
+    Innsights.test_mode = true
     Post.destroy_all
     User.destroy_all
     Company.destroy_all

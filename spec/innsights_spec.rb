@@ -2,26 +2,49 @@ require 'spec_helper'
 
 describe Innsights do
 
-  describe "#queue" do
-    it "can't set it to a not suported queue system" do
-      Innsights.queue_system = nil
-      Innsights.queue :other_queue_system
-      Innsights.queue_system.should == nil
+  describe '#app_url' do
+    before do
+      Innsights.stub!(:credentials){{"app" => "subdomain", "token" => "token"}}
     end
-    it "supports resque" do
-      Innsights.queue :resque
-      Innsights.queue_system.should == :resque
-    end
-    it "supports delayed_job" do
-      Innsights.queue :delayed_job
-      Innsights.queue_system.should == :delayed_job
+    it 'Returns the full app url' do
+      url = "#{Innsights.app_subdomain}.#{Innsights.url}/#{Rails.env}"
+      Innsights.app_url.should == url
     end
   end
 
   describe "#test_mode" do
-    it 'calls the test_mode= method' do
-      Innsights.should_receive(:test_mode=)
-      Innsights.test "on"
+    before { Innsights.url = 'something.com' }
+
+    it 'Sets the test_mode variable' do
+      Innsights.test_mode=true
+      Innsights.test_mode.should == true
+    end
+    it 'Sets the test_url when test_mode is true' do
+      Innsights.test_mode=true
+      Innsights.url.should == 'innsights.dev'
+    end
+    it 'Does not sets the test_url when test_mode is not true' do
+      Innsights.test_mode=false
+      Innsights.url.should_not == 'innsights.dev'
+    end
+  end
+
+  describe "#setup" do
+    before do
+      Innsights.stub!(:credentials){{"app" => "subdomain", "token" => "token"}}
+    end
+    it 'Evals the instance with the block'  do
+      Innsights.stub!(:instance_eval)
+      Innsights.should_receive(:instance_eval)
+      Innsights.setup{}
+    end
+    it 'Creates a client' do
+      Innsights::Client.should_receive(:new)
+      Innsights.setup{}
+    end
+    it 'Sets the client' do
+      Innsights.should_receive(:client=).with(instance_of(Innsights::Client))
+      Innsights.setup{}
     end
   end
 
@@ -70,6 +93,21 @@ describe Innsights do
     end
   end
 
+  describe '#user' do
+    it 'Sets the user call depending on the class' do
+      Innsights.should_receive(:user_call=).with(:user)
+      Innsights.user(User)
+    end
+    it 'Evals the User class when block is given' do
+      Innsights::Config::User.should_receive(:class_eval)
+      Innsights.user(User){}
+    end
+    it 'Does not eval the User class when no block is given' do
+      Innsights::Config::User.should_not_receive(:class_eval)
+      Innsights.user(User)
+    end
+  end
+
   describe '#watch' do
     before do 
       class DummyClass; end
@@ -94,7 +132,7 @@ describe Innsights do
     end
   end
 
-  describe "#after" do
+  describe "#on" do
     before do
       Innsights.test_mode = true
     end
@@ -106,13 +144,35 @@ describe Innsights do
         user   :current_user
       end
     end
-
     it 'commits the report' do
-    Innsights::Config::ControllerReport.any_instance.should_receive(:commit)
-    Innsights.on "users#create" do
+      Innsights::Config::ControllerReport.any_instance.should_receive(:commit)
+      Innsights.on "users#create" do
         report 'User Created'
         user   :current_user
       end
+    end
+  end
+
+  describe "#queue" do
+    it "can't set it to a not suported queue system" do
+      Innsights.queue_system = nil
+      Innsights.queue :other_queue_system
+      Innsights.queue_system.should == nil
+    end
+    it "supports resque" do
+      Innsights.queue :resque
+      Innsights.queue_system.should == :resque
+    end
+    it "supports delayed_job" do
+      Innsights.queue :delayed_job
+      Innsights.queue_system.should == :delayed_job
+    end
+  end
+
+  describe "#test" do
+    it 'calls the test_mode= method' do
+      Innsights.should_receive(:test_mode=)
+      Innsights.test "on"
     end
   end
 
