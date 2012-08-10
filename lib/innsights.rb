@@ -87,9 +87,11 @@ module Innsights
 
   # Configuration variables of client app
   # @return [Hash] containing the subdomain and authentication token of app
-  def self.credentials
-    @@credentials ||= YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+  def self.credentials(cred=nil)
+    cred ||= credentials_from_yaml if rails?
+    @@credentials ||= cred 
   end
+
   
   # Final url to post actions to, includes the rails app environment
   # @return [String] contains app subdomain, innsights url and client app environment
@@ -185,4 +187,9 @@ module Innsights
     require 'innsights/railtie'
   end
     
+  private 
+
+  def self.credentials_from_yaml
+    YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+  end
 end

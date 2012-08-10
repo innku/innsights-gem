@@ -2,6 +2,27 @@ require 'spec_helper'
 
 describe Innsights do
 
+  describe '#credentials' do
+    before do
+      Innsights.class_variable_set("@@credentials", nil)
+    end
+    let(:credential_hash) { {app: 'app', token: 'token'} }
+    context 'With Rails' do
+      it 'Sets the credentials from the YAML file' do
+        Innsights.should_receive(:credentials_from_yaml){credential_hash}
+        Innsights.credentials.should == credential_hash
+      end
+    end
+    context 'Without Rails' do
+      before { Innsights.stub(:rails?){false} }
+      it 'Sets the credentials from a hash' do
+        Innsights.should_not_receive(:credentials_from_yaml)
+        Innsights.credentials(credential_hash)
+        Innsights.credentials.should == credential_hash
+      end
+    end
+  end
+
   describe '#app_url' do
     before do
       Innsights.stub!(:credentials){{"app" => "subdomain", "token" => "token"}}
