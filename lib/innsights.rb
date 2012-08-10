@@ -64,6 +64,9 @@ module Innsights
   mattr_accessor :url
   @@url = "innsights.me"
   
+  mattr_accessor :test_url
+  @@test_url = "innsights.dev"
+
   mattr_accessor :client
   
   mattr_accessor :queue_system
@@ -93,12 +96,6 @@ module Innsights
   def self.app_url
     "#{app_subdomain}." << @@url << "/#{self.env}"
   end
-
-  # Defines the url for test_mode
-  # @return [String] contains the test url
-  def self.test_url
-    "innsights.dev"
-  end
   
   # Sets testing environment on for local server development
   # @param [true,false] on testing on or off
@@ -106,7 +103,7 @@ module Innsights
   mattr_reader :test_mode
   def self.test_mode=(on)
     @@test_mode = on
-    @@url = test_url if on
+    @@url = @@test_url if on
   end
   
   # Main configuration method to create all event watchers
