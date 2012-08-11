@@ -30,6 +30,8 @@ module Innsights
           end
         elsif strat.is_a?(Proc)
           return strat.call(params[:record])
+        else
+          return strat
         end
       end
     end
