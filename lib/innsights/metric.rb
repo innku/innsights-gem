@@ -7,22 +7,27 @@ module Innsights
       @value = value
     end
 
-    def as_array_for_user user
-      [@name, process_value_for_user(user)]
+    def as_array record=nil
+      if processed = process_value(record)
+        [@name, processed]
+      else
+        nil
+      end
     end
 
-    def process_value_for_user user
+    def process_value record=nil
       if value.is_a?(Fixnum)
         value
       elsif value.is_a?(Proc)
-        value.call user rescue nil
+        value.call record rescue nil
       elsif value.is_a?(String) || value.is_a?(Symbol)
         begin
-          user.send(value.to_sym) 
+          record.send(value.to_sym) 
         rescue NoMethodError
           nil
         end
       end
     end
+
   end
 end
