@@ -24,7 +24,7 @@ module Innsights
     end
 
     def run(record=nil)
-      if Innsights.enabled
+      if Innsights.enabled?
         action = Action.new(self, record).as_hash
 
         case Innsights.queue_system

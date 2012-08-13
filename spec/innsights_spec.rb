@@ -111,6 +111,14 @@ describe Innsights do
           queue :resque
         end
       end
+      it 'Sets the enabled attr for the enviroment' do
+        Innsights.stub(:env){'super_development'}
+        Innsights.config :super_development do
+          enable false
+          test :on
+        end
+        Innsights.enable_hash[:super_development].should == false
+      end
     end
   end
 
@@ -216,5 +224,43 @@ describe Innsights do
     it 'Returns the report' do
       Innsights.report("Report Name", user).should == @report
     end
+  end
+
+  describe 'enable' do
+    it 'Sets the enable variable based on the enviroment'  do
+      Innsights.enable :test, false
+      Innsights.enable_hash[:test].should == false
+    end
+    it 'Uses the env_scope if no enviroment is passed' do
+      Innsights.env_scope = :development
+      Innsights.enable false
+      Innsights.enable_hash[:development].should == false
+    end
+    it 'Sets the value for all enviroments when there no specific env' do
+      Innsights.env_scope = nil
+      Innsights.enable false
+      Innsights.enable_hash.each do |k,v|
+        Innsights.enable_hash[k].should == false
+      end
+    end
+  end
+
+  describe 'enabled?' do
+    before do
+      Innsights.stub(:env){'development'}
+    end
+    it 'Returns true when the current_env is enabled' do
+      Innsights.enable :development, true
+      Innsights.enabled?.should == true
+    end
+    it 'Returns false when the current_env is not enabled' do
+      Innsights.enable :development, false
+      Innsights.enabled?.should == false
+    end 
+    it 'Returns false when there is no key that matches the current_env' do
+      Innsights.stub(:env){'testing'}
+      Innsights.enabled?.should == false
+    end
+
   end
 end

@@ -55,8 +55,8 @@ module Innsights
   mattr_accessor :reports
   @@reports = []
   
-  mattr_accessor :enabled
-  @@enabled = { development: true, test: true, staging:true, production:true }[self.env.to_sym]
+  mattr_accessor :enable_hash
+  @@enable_hash = { development: true, test: true, staging:true, production:true }
   
   mattr_accessor :debugging
   @@debugging = false
@@ -68,6 +68,7 @@ module Innsights
   @@test_url = "innsights.dev"
 
   mattr_accessor :client
+  mattr_accessor :env_scope
   
   mattr_accessor :queue_system
   @@queue_system = nil
@@ -124,9 +125,12 @@ module Innsights
   def self.config(*envs, &block)
     self.instance_eval(&block) if envs.blank?
     envs.each do |env| 
+      @@env_scope = env
       self.instance_eval(&block) if self.env == env.to_s
+      @@env_scope = nil
     end
   end
+
   
   # Sets up the user class and configures the display and group
   # @yield Configuration for
@@ -182,7 +186,22 @@ module Innsights
     report.commit
     report
   end
-  
+
+  def self.enable(env=nil, param)
+    env ||= @@env_scope
+    if env.present?
+      @@enable_hash[env.to_sym] = param 
+    else
+      @@enable_hash.each do |env, v|
+        @@enable_hash[env.to_sym] = param
+      end
+    end
+  end
+
+  def self.enabled?
+    @@enable_hash[self.env.to_sym] == true
+  end
+
   if rails?
     require 'innsights/railtie'
   end

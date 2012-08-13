@@ -42,27 +42,27 @@ describe Innsights::Config::Report do
       report.run(user)
     end
     it 'calls the report method of the gems client' do
-      Innsights.enabled = true
+      Innsights.stub!(:enabled?){true}
       @client.should_receive(:report)
       report.run(nil)
     end
 
     it "does not enqueues the job when there is no option setted" do
-      Innsights.enabled = true
+      Innsights.stub!(:enabled?){true}
       Resque.should_not_receive(:enqueue)
       Innsights.queue_system.should == nil
       report.run(nil)
     end
 
     it "enqueues the job with resque when the option is set" do
-      Innsights.enabled = true
+      Innsights.stub!(:enabled?){true}
       Innsights.queue_system = :resque
       Resque.should_receive(:enqueue)
       report.run(nil)
     end
 
     it "enqueues the job with delayed_job when the option is set" do
-      Innsights.enabled = true
+      Innsights.stub!(:enabled?){true}
       Innsights.queue_system = :delayed_job
       Innsights.client.stub_chain(:delay, :report).and_return(true)
       Innsights.client.should_receive(:delay)
@@ -70,7 +70,7 @@ describe Innsights::Config::Report do
     end
 
     it "doesnt call the report method when configuration is disabled" do
-      Innsights.enabled = false
+      Innsights.stub!(:enabled?){false}
       @client.should_not_receive(:report)
       report.run(nil)
     end
