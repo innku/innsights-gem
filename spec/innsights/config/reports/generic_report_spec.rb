@@ -68,7 +68,7 @@ describe Innsights::Config::GenericReport do
     context 'With a report user' do
       it 'It users the report_user as the record' do
         Innsights::Action.stub_chain(:new, :as_hash)
-        Innsights::Action.should_receive(:new).with(report, user)
+        Innsights::Action.should_receive(:new).with(report, nil)
         report.run
       end
     end

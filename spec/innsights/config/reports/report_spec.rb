@@ -33,7 +33,7 @@ describe Innsights::Config::Report do
       Innsights.stub!(:client) { @client }
     end
     it 'Sets the record to report_user when no param is passed' do
-      Innsights::Action.should_receive(:new).with(report, report.report_user)
+      Innsights::Action.should_receive(:new).with(report, nil)
       report.run(nil)
     end
     it 'Uses the passed record when specified' do

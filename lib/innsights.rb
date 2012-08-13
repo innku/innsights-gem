@@ -177,8 +177,8 @@ module Innsights
   # Creates and commit a GenericReport
   # @param [:name, :user]
   # @return [Innsights::Config::GenericReport]
-  def self.report(name, user)
-    report = Innsights::Config::GenericReport.new(name, user)
+  def self.report(name, options={})
+    report = Innsights::Config::GenericReport.new(name, options)
     report.commit
     report
   end

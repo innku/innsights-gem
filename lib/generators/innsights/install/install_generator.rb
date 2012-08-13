@@ -12,7 +12,11 @@ module Innsights
     
     def generate_config
       @config = Innsights::Client.create(processed_app_name)
-      template 'innsights.yml', 'config/innsights.yml'
+      if @config.nil?
+        abort "Wrong username or password." 
+      else
+        template 'innsights.yml', 'config/innsights.yml'
+      end
     end
     
     def generate_initializer

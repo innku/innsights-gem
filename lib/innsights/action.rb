@@ -16,16 +16,16 @@ module Innsights
     
     def as_hash
       result = {:name => @name }
-      result = result.merge({:created_at => @created_at}) if @created_at.present?
-      result = result.merge({:user => @user.as_hash}) if @user.valid?
-      result = result.merge({:group => @group.as_hash}) if @group.valid?
-      result = result.merge({:metrics => metrics_hash}) if @metrics.present?
+      result.merge!({:created_at => @created_at}) if @created_at.present?
+      result.merge!({:user => @user.as_hash})     if @user.valid?
+      result.merge!({:group => @group.as_hash})   if @group.valid?
+      result.merge!({:metrics => metrics_hash})   if @metrics.present?
       {:report => result}
     end
 
     def metrics_hash
-      if @metrics.present? && @record.present?
-        Hash[@metrics.map{|m| m.as_array_for_user(@record)}] 
+      if @metrics.present?
+        Hash[@metrics.map{|m| m.as_array(@record)}] 
       end
     end
 

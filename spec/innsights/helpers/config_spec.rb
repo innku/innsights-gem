@@ -33,6 +33,13 @@ describe Innsights::Helpers::Config do
       object.block_tag { 'Im in a block' }
       object.block.should be_a_kind_of(Proc)
     end
+
+    it 'is able to assign a any other type' do
+      klass.dsl_attr :name, :name_tag
+      object = klass.new
+      object.name_tag 100
+      object.name.should == 100
+    end
   end
   
 end
