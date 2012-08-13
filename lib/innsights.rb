@@ -34,6 +34,37 @@ module Innsights
   include Config::Options
 
   ## Configuration defaults
+  mattr_accessor :client
+
+  mattr_accessor :debugging
+  @@debugging = false
+
+  mattr_accessor :enable_hash
+  @@enable_hash = { development: true, test: true, staging:true, production:true }
+
+  mattr_accessor :env_scope
+
+  mattr_accessor :group_call
+  @@group_call = nil
+
+  mattr_accessor :group_display
+  @@group_display = :to_s
+
+  mattr_accessor :group_id
+  @@group_id = :id
+
+  mattr_accessor :queue_system
+  @@queue_system = nil
+
+  mattr_accessor :reports
+  @@reports = []
+  
+  mattr_accessor :test_url
+  @@test_url = "innsights.dev"
+
+  mattr_accessor :url
+  @@url = "innsights.me"
+
   mattr_accessor :user_call
   @@user_call = :user
   
@@ -43,35 +74,6 @@ module Innsights
   mattr_accessor :user_display
   @@user_display = :to_s
   
-  mattr_accessor :group_call
-  @@group_call = nil
-  
-  mattr_accessor :group_id
-  @@group_id = :id
-  
-  mattr_accessor :group_display
-  @@group_display = :to_s
-  
-  mattr_accessor :reports
-  @@reports = []
-  
-  mattr_accessor :enable_hash
-  @@enable_hash = { development: true, test: true, staging:true, production:true }
-  
-  mattr_accessor :debugging
-  @@debugging = false
-  
-  mattr_accessor :url
-  @@url = "innsights.me"
-  
-  mattr_accessor :test_url
-  @@test_url = "innsights.dev"
-
-  mattr_accessor :client
-  mattr_accessor :env_scope
-  
-  mattr_accessor :queue_system
-  @@queue_system = nil
   @@supported_queue_systems = [:delayed_job, :resque]
 
   # Configured subdomain of the client app
