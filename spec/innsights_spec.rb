@@ -12,19 +12,19 @@ describe Innsights do
     end
   end
 
-  describe "#test_mode" do
+  describe "#mode" do
     before { Innsights.url = 'something.com' }
 
-    it 'Sets the test_mode variable' do
-      Innsights.test_mode=true
+    it 'Sets the mode variable' do
+      Innsights.mode :test
       Innsights.test_mode.should == true
     end
-    it 'Sets the test_url when test_mode is true' do
-      Innsights.test_mode=true
+    it 'Sets the test_url when mode is test' do
+      Innsights.mode :test
       Innsights.url.should == 'innsights.dev'
     end
-    it 'Does not sets the test_url when test_mode is not true' do
-      Innsights.test_mode=false
+    it 'Does not sets the test_url when mode is not test or staging' do
+      Innsights.mode :production
       Innsights.url.should_not == 'innsights.dev'
     end
   end
@@ -134,7 +134,7 @@ describe Innsights do
 
   describe "#on" do
     before do
-      Innsights.test_mode = true
+      Innsights.mode :test
     end
     it 'sets the apropiate methods'  do
       Innsights::Config::ControllerReport.any_instance.should_receive(:report).with('User Created')
@@ -166,13 +166,6 @@ describe Innsights do
     it "supports delayed_job" do
       Innsights.queue :delayed_job
       Innsights.queue_system.should == :delayed_job
-    end
-  end
-
-  describe "#test" do
-    it 'calls the test_mode= method' do
-      Innsights.should_receive(:test_mode=)
-      Innsights.test "on"
     end
   end
 

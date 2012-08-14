@@ -26,14 +26,13 @@ module Innsights
     def run(record=nil)
       if Innsights.enabled
         action = Action.new(self, record).as_hash
-
         case Innsights.queue_system
-        when :resque
-          Resque.enqueue(RunReport, action)
-        when :delayed_job
-          Innsights.client.delay.report(action)
-        else
-          Innsights.client.report(action)
+          when :resque
+            Resque.enqueue(RunReport, action)
+          when :delayed_job
+            Innsights.client.delay.report(action)
+          else
+            Innsights.client.report(action)
         end
       end
     end
@@ -44,10 +43,10 @@ module Innsights
     end
 
     def simple_class_setup(klass, report_action)
-        Innsights.reports << self
-        klass.cattr_accessor :innsights_reports unless defined?(@@insights_reports)
-        klass.innsights_reports ||= {}
-        klass.innsights_reports[report_action] = self
+      Innsights.reports << self
+      klass.cattr_accessor :innsights_reports unless defined?(@@insights_reports)
+      klass.innsights_reports ||= {}
+      klass.innsights_reports[report_action] = self
     end
 
     def valid_for_push?

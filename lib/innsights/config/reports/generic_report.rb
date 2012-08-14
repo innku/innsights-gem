@@ -11,6 +11,7 @@ module Innsights
     end
 
     private
+    
     def set_options(options)
       if options.is_a?(Hash)
         option_equivalences.each do |self_k, api_k|
@@ -19,7 +20,6 @@ module Innsights
       else
         @report_user = options
       end
-
     end
 
     def option_equivalences

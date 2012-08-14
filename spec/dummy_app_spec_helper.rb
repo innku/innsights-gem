@@ -18,7 +18,7 @@ end
 
 RSpec.configure do |config|
   config.before(:all) do
-    Innsights.test_mode = true
+    Innsights.mode :test
   end
 end
 
