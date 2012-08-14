@@ -61,6 +61,12 @@ module Innsights
   mattr_accessor :url
   @@url = "innsights.me"
   
+  mattr_accessor :test_url
+  @@test_url = "innsights.dev"
+  
+  mattr_accessor :staging_url
+  @@staging_url = "innsights.info"
+  
   mattr_accessor :client
   
   mattr_accessor :queue_system
@@ -90,20 +96,16 @@ module Innsights
   def self.app_url
     "#{app_subdomain}." << @@url << "/#{Rails.env}"
   end
-
-  # Defines the url for test_mode
-  # @return [String] contains the test url
-  def self.test_url
-    "innsights.dev"
-  end
   
   # Sets testing environment on for local server development
   # @param [true,false] on testing on or off
   # @return [String] with local server url if on, nil if off
   mattr_reader :test_mode
-  def self.test_mode=(on)
-    @@test_mode = on
-    @@url = test_url if on
+  def self.mode(mode)
+    if mode == :staging || mode == :test
+      @@test_mode = true
+      @@url = eval("#{mode}_url")
+    end
   end
   
   # Main configuration method to create all event watchers
@@ -166,10 +168,6 @@ module Innsights
     if @@supported_queue_systems.include?(queue)
       self.queue_system = queue 
     end
-  end
-
-  def self.test(test_mode='')
-    self.test_mode = test_mode
   end
   
   # Creates and commit a GenericReport
