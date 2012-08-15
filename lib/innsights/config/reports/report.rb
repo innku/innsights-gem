@@ -9,6 +9,7 @@ module Innsights
     dsl_attr :action_name, :report
     dsl_attr :created_at,  :timestamp
     dsl_attr :report_user, :user
+    dsl_attr :report_group, :group
     
     attr_accessor :klass, :metrics
 
@@ -16,6 +17,7 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
+      @report_group = :group
       @metrics = {}
       unless klass.nil?
         @klass = klass

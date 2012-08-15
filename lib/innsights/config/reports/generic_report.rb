@@ -23,7 +23,10 @@ module Innsights
     end
 
     def option_equivalences
-      {created_at: :created_at, report_user: :user, metrics: :metrics }
+      {created_at: :created_at, 
+       report_user: :user, 
+       report_group: :group,
+       metrics: :metrics }
     end
   end
 end
