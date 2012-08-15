@@ -12,7 +12,7 @@ describe 'Model Report' do
   describe 'Error Handling' do
     it 'Does not crash with a wrong after_callback' do
       Innsights.stub_chain(:client,:report).and_return(true)
-      Innsights::ErrorMessage.should_receive(:error_msg)
+      Innsights::ErrorMessage.should_receive(:log)
       lambda{
         Innsights.setup do
           watch Dude do

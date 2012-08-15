@@ -1,20 +1,22 @@
 ActiveRecord::Base.establish_connection(:adapter => "sqlite3", :database => ":memory:")
 
-ActiveRecord::Schema.define(:version => 1) do
-  create_table :dudes do |t|
-    t.string :name
-  end
-  create_table :companies do |t|
-    t.string :name
-  end
-  create_table :users do |t|
-    t.string :name
-    t.references :company
-  end
-  create_table :posts do |t|
-    t.string :title
-    t.references :user
-    t.timestamps
+ActiveRecord::Migration.suppress_messages do
+  ActiveRecord::Schema.define(:version => 1) do
+    create_table :dudes do |t|
+      t.string :name
+    end
+    create_table :companies do |t|
+      t.string :name
+    end
+    create_table :users do |t|
+      t.string :name
+      t.references :company
+    end
+    create_table :posts do |t|
+      t.string :title
+      t.references :user
+      t.timestamps
+    end
   end
 end
 

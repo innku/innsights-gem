@@ -22,10 +22,11 @@ RSpec.configure do |config|
   end
 end
 
+Innsights.log_errors = false
 Innsights.setup do
   config :development do
-    queue :resque
-    test  true
+    queue      :resque
+    test       true
   end
 end
 

@@ -6,6 +6,8 @@ require 'active_support'
 require 'vcr'
 require 'innsights'
 
+Innsights.log_errors = false
+
 require File.join(File.dirname(__FILE__), 'support', 'ar')
 
 VCR.config do |c|
@@ -22,7 +24,6 @@ RSpec.configure do |config|
     User.destroy_all
     Company.destroy_all
   end
-
 end
 
 def json_fixture(filename)

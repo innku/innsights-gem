@@ -14,7 +14,7 @@ module Innsights
           upload_content(actions.to_json) if actions.any?
           true
         rescue Exception => e
-          puts Innsights::ErrorMessage.error_msg(e)
+          Innsights::ErrorMessage.log(e)
         end
       end
     end
@@ -30,7 +30,7 @@ module Innsights
           bar.inc if !percent.zero? && (count % percent).zero?
         end
       rescue NoMethodError => e
-        puts Innsights::ErrorMessage.error_msg(e)
+        Innsights::ErrorMessage.log(e)
       ensure 
         bar.finish
       end
@@ -44,7 +44,7 @@ module Innsights
           Innsights.client.push(file)
         end
       else
-        puts Innsights::ErrorMessage.error_msg_for("No client for Innsights. ")
+        Innsights::ErrorMessage.log("No client for Innsights.")
       end
     end
     

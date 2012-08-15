@@ -67,6 +67,9 @@ module Innsights
   mattr_accessor :staging_url
   @@staging_url = "innsights.info"
   
+  mattr_accessor :log_errors
+  @@log_errors = true
+  
   mattr_accessor :client
   
   mattr_accessor :queue_system

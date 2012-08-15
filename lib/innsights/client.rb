@@ -12,7 +12,7 @@ module Innsights
       begin
         api_client['/api/actions.json'].post *processed_params(params, @token)
       rescue RestClient::Exception => e
-        puts Innsights::ErrorMessage.error_msg(e)
+        Innsights::ErrorMessage.log(e)
       end
     end
     
@@ -21,7 +21,7 @@ module Innsights
         params = {:file => file}
         patient_client['/api/actions/push.json'].post *processed_params(params, @token)
       rescue RestClient::Exception => e
-        puts Innsights::ErrorMessage.error_msg(e)
+        puts Innsights::ErrorMessage.log(e)
       end
     end
     
@@ -34,7 +34,7 @@ module Innsights
         response = client['/api/apps.json'].post(params, :content_type => :json, :accept => :json)
         JSON.parse response
       rescue RestClient::Exception => e
-        puts Innsights::ErrorMessage.error_msg(e)
+        Innsights::ErrorMessage.log(e)
       end
     end
     

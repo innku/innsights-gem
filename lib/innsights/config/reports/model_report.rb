@@ -12,7 +12,7 @@ module Innsights
                lambda { |record| self.innsights_reports[action].run(record) }
         end
       else
-        puts Innsights::ErrorMessage.error_msg
+        Innsights::ErrorMessage.log
       end
     end
 

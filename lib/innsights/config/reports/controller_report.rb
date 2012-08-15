@@ -23,7 +23,7 @@ module Innsights
       if valid_for_report?
         setup_class_for_innsights_report(klass, report_action, report, action)
       else 
-        puts Innsights::ErrorMessage.error_msg
+        Innsights::ErrorMessage.log
       end
     end
 
