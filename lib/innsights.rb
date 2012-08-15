@@ -1,4 +1,4 @@
-require 'rails'
+require 'active_support/core_ext'
 require 'rest_client'
 require 'highline/import'
 require "innsights/version"
@@ -31,35 +31,39 @@ module Innsights
   autoload :Client,             'innsights/client'
 
   ## Configuration defaults
-  mattr_accessor :user_call
-  @@user_call = :user
-  
-  mattr_accessor :user_id
-  @@user_id = :id
-  
-  mattr_accessor :user_display
-  @@user_display = :to_s
-  
+  mattr_accessor :client
+
+  mattr_accessor :debugging
+  @@debugging = false
+
+  mattr_accessor :enable_hash
+  @@enable_hash = { development: true, test: true, staging:true, production:true }
+
+  mattr_accessor :env_scope
+
   mattr_accessor :group_call
   @@group_call = nil
-  
-  mattr_accessor :group_id
-  @@group_id = :id
-  
+
   mattr_accessor :group_display
   @@group_display = :to_s
-  
+
+  mattr_accessor :group_id
+  @@group_id = :id
+
+  mattr_accessor :queue_system
+  @@queue_system = nil
+
   mattr_accessor :reports
   @@reports = []
   
-  mattr_accessor :enabled
-  @@enabled = { development: true, test: true, staging:true, production:true }[Rails.env.to_sym]
-  
-  mattr_accessor :debugging
-  @@debugging = false
-  
+  mattr_accessor :test_url
+  @@test_url = "innsights.dev"
+
   mattr_accessor :url
   @@url = "innsights.me"
+
+  mattr_accessor :user_call
+  @@user_call = :user
   
   mattr_accessor :test_url
   @@test_url = "innsights.dev"
@@ -71,9 +75,15 @@ module Innsights
   @@log_errors = true
   
   mattr_accessor :client
+
+  mattr_accessor :user_id
+  @@user_id = :id
   
-  mattr_accessor :queue_system
-  @@queue_system = nil
+  mattr_accessor :user_display
+  @@user_display = :to_s
+
+  mattr_accessor :user_env
+  
   @@supported_queue_systems = [:delayed_job, :resque]
 
   # Configured subdomain of the client app
@@ -90,14 +100,21 @@ module Innsights
 
   # Configuration variables of client app
   # @return [Hash] containing the subdomain and authentication token of app
-  def self.credentials
-    @@credentials ||= YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+  def self.credentials(cred=nil)
+    if cred.is_a? Hash
+      @@credentials = cred 
+    elsif rails?
+      @@credentials ||= credentials_from_yaml
+    else
+      @@credentials 
+    end
   end
+
   
   # Final url to post actions to, includes the rails app environment
   # @return [String] contains app subdomain, innsights url and client app environment
   def self.app_url
-    "#{app_subdomain}." << @@url << "/#{Rails.env}"
+    "#{app_subdomain}." << @@url << "/#{self.current_env}"
   end
   
   # Sets testing environment on for local server development
@@ -117,7 +134,7 @@ module Innsights
   #   * Appp action reports
   def self.setup(&block)
     self.instance_eval(&block)
-    self.client = Client.new(url, app_subdomain, app_token, Rails.env)
+    self.client = Client.new(url, app_subdomain, app_token, self.current_env)
   end
 
   # Extra configuration for custom experience
@@ -127,9 +144,12 @@ module Innsights
   def self.config(*envs, &block)
     self.instance_eval(&block) if envs.blank?
     envs.each do |env| 
-      self.instance_eval(&block) if Rails.env == env.to_s
+      @@env_scope = env
+      self.instance_eval(&block) if self.current_env == env.to_s
+      @@env_scope = nil
     end
   end
+
   
   # Sets up the user class and configures the display and group
   # @yield Configuration for
@@ -181,9 +201,46 @@ module Innsights
     report.commit
     report
   end
-  
-  if defined?(Rails)
+
+  def self.enable(env=nil, param)
+    env ||= @@env_scope
+    if env.present?
+      @@enable_hash[env.to_sym] = param 
+    else
+      @@enable_hash.each do |env, v|
+        @@enable_hash[env.to_sym] = param
+      end
+    end
+  end
+
+  def self.enabled?
+    @@enable_hash[self.current_env.to_sym] == true
+  end
+
+  def self.enviroment env
+    self.user_env = env
+  end
+
+  def self.current_env
+    if self.user_env
+      self.user_env
+    elsif rails?
+      Rails.env
+    else
+      ENV['RACK_ENV']
+    end
+  end
+
+  def self.rails?
+    defined?(Rails)
+  end
+  if rails?
     require 'innsights/railtie'
   end
     
+  private 
+
+  def self.credentials_from_yaml
+    YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+  end
 end

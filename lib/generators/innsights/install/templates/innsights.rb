@@ -6,8 +6,16 @@ Innsights.setup do
   # Sample of the configuration using all defaults  
   
   # user :User do
-  #   group :company 
+  #   group :company
   # end
+  # 
+  # group :Company do
+  #  dispaly :name
+  #  id      :rfc
+  # end
+  #
+  #
+  # Innsight.report("asda", user: user, group: user.company)
   
   ## Report Configuration Sample
   # Specify user in every action you want a leaderboard
@@ -15,8 +23,10 @@ Innsights.setup do
   
   # watch Post do
   #   report  'Publication'
-  #   user    :user
+  #   user    :user    # post.user.school
+  #   group   :school  # post.school
   # end
+  # 
   #
   # watch Comment do
   #   report  'Mind Changer'

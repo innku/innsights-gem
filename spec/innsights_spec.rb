@@ -2,6 +2,27 @@ require 'spec_helper'
 
 describe Innsights do
 
+  describe '#credentials' do
+    before do
+      Innsights.class_variable_set("@@credentials", nil)
+    end
+    let(:credential_hash) { {'app' => 'app', 'token' => 'token'} }
+    context 'With Rails' do
+      it 'Sets the credentials from the YAML file' do
+        Innsights.should_receive(:credentials_from_yaml){credential_hash}
+        Innsights.credentials.should == credential_hash
+      end
+    end
+    context 'Without Rails' do
+      before { Innsights.stub(:rails?){false} }
+      it 'Sets the credentials from a hash' do
+        Innsights.should_not_receive(:credentials_from_yaml)
+        Innsights.credentials(credential_hash)
+        Innsights.credentials.should == credential_hash
+      end
+    end
+  end
+
   describe '#app_url' do
     before do
       Innsights.stub!(:credentials){{"app" => "subdomain", "token" => "token"}}
@@ -89,6 +110,14 @@ describe Innsights do
         Innsights.config :development do
           queue :resque
         end
+      end
+      it 'Sets the enabled attr for the enviroment' do
+        Innsights.stub(:current_env){'development'}
+        Innsights.config :development do
+          enable false
+          mode :test
+        end
+        Innsights.enable_hash[:development].should == false
       end
     end
   end
@@ -185,6 +214,68 @@ describe Innsights do
     end
     it 'Returns the report' do
       Innsights.report("Report Name", user: user).should == @report
+    end
+  end
+
+  describe 'enable' do
+    it 'Sets the enable variable based on the enviroment'  do
+      Innsights.enable :test, false
+      Innsights.enable_hash[:test].should == false
+    end
+    it 'Uses the env_scope if no enviroment is passed' do
+      Innsights.env_scope = :development
+      Innsights.enable false
+      Innsights.enable_hash[:development].should == false
+    end
+    it 'Sets the value for all enviroments when there no specific env' do
+      Innsights.env_scope = nil
+      Innsights.enable false
+      Innsights.enable_hash.each do |k,v|
+        Innsights.enable_hash[k].should == false
+      end
+    end
+  end
+
+  describe 'enabled?' do
+    before do
+      Innsights.stub(:current_env){'development'}
+    end
+    it 'Returns true when the current_env is enabled' do
+      Innsights.enable :development, true
+      Innsights.enabled?.should == true
+    end
+    it 'Returns false when the current_env is not enabled' do
+      Innsights.enable :development, false
+      Innsights.enabled?.should == false
+    end 
+    it 'Returns false when there is no key that matches the current_env' do
+      Innsights.stub(:env){'testing'}
+      Innsights.enabled?.should == false
+    end
+
+  end
+
+  describe '#enviroments' do
+    it 'Sets the user_env' do
+      Innsights.enviroment 'new_env'
+      Innsights.user_env.should == 'new_env'
+    end
+  end
+
+  describe '#current_env' do
+    it 'Returns the user env then speficied' do
+      Innsights.should_receive(:user_env).twice{'new_env'} 
+      Innsights.current_env.should == 'new_env'
+    end
+    it 'Returns the Rails env when rails is defined' do
+      Innsights.user_env = nil
+      Rails.should_receive(:env){'new_env'}
+      Innsights.current_env.should == 'new_env'
+    end
+    it 'Returns the Rack env when rails is not defined' do
+      ENV['RACK_ENV']= 'new_env'
+      Innsights.stub(:rails?)
+      Innsights.current_env.should == 'new_env'
     end
   end
 end
