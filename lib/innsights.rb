@@ -42,6 +42,9 @@ module Innsights
   
   mattr_accessor :group_call
   @@group_call = nil
+
+  mattr_accessor :group_class
+  @@group_class = :group
   
   mattr_accessor :group_id
   @@group_id = :id
@@ -141,7 +144,8 @@ module Innsights
     Config::User.class_eval(&block) if block_given? 
   end
 
-  def self.group(klass='', &block)
+  def self.group(klass, &block)
+    self.group_class = klass.to_s.underscore.to_sym
     Config::Group.class_eval(&block) if block_given? 
   end
 

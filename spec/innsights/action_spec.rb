@@ -16,6 +16,12 @@ describe Innsights::Action do
                                  .with(instance_of(Innsights::Actions::User))
         Innsights::Action.new(report, post)
       end
+      it 'Sets the group from the specified method called on the record' do
+        report.report_group = :school
+        Innsights::Actions::Group.should_receive(:new).with(post,  method: :school)
+        Innsights::Action.new(report, post)
+
+      end
       it 'Sets the group form user when there is no explicit group' do
         Innsights::Actions::Group.should_not_receive(:new).with(group)
         Innsights::Actions::Group.should_receive(:new)

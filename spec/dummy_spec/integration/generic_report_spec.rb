@@ -48,7 +48,7 @@ describe 'Generic Report' do
       Innsights.group_id = @old_id
       Innsights.group_display = @old_display
     end
-    it 'Calls the new specifiec id' do
+    it 'Calls the new specified id' do
       company.should_receive(:new_id)
       Innsights.report('Mention', user: dude, group: company).run
     end

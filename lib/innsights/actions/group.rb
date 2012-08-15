@@ -1,11 +1,13 @@
 module Innsights
   class Actions::Group
     
-    def initialize(param)
+    def initialize(param, options={})
       if param.is_a?(Innsights::Actions::User)
         @user_action = param
         @user = param.object
         @object = @user.send(:try, Innsights.group_call) if Innsights.group_call.present?
+      elsif options[:method].present?
+        @object = param.send(:try, options[:method]) 
       else
         @object = param
       end

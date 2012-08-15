@@ -109,6 +109,11 @@ describe Innsights do
   end
 
   describe '#group' do
+    it 'Sets the group_class' do
+      Innsights.should_receive(:group_class=).with(:school)
+      Innsights.group(:School){}
+    end
+
     it 'Evals the Group class when block is given' do
       Innsights::Config::Group.should_receive(:class_eval)
       Innsights.group(:Company){}
