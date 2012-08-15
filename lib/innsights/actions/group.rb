@@ -1,10 +1,14 @@
 module Innsights
   class Actions::Group
     
-    def initialize(user_action)
-      @user_action = user_action
-      @user = user_action.object
-      @object = @user.send(:try, Innsights.group_call) if Innsights.group_call.present?
+    def initialize(param)
+      if param.is_a?(Innsights::Actions::User)
+        @user_action = param
+        @user = param.object
+        @object = @user.send(:try, Innsights.group_call) if Innsights.group_call.present?
+      else
+        @object = param
+      end
     end
     
     def as_hash
@@ -12,7 +16,11 @@ module Innsights
     end
     
     def valid?
-      @user_action.valid? && @object.present?
+      if @user_action.present?
+        @user_action.valid? && @object.present?
+      else
+        @object.present?
+      end
     end
     
     private
