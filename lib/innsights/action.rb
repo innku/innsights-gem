@@ -3,15 +3,13 @@ module Innsights
     include Innsights::Helpers::Config
 
     def initialize(report, record)
-      @report = report
-      @record = record
-      @name   = dsl_attr(report.action_name, :record => @record, :is_method => false)
+      @report     = report
+      @record     = record
       @created_at = dsl_attr(report.created_at, :record => @record)
-      @user = Actions::User.new(@report, @record)
-      @group = Actions::Group.new(@user)
-      if report.metrics
-        @metrics = report.metrics.map{|k,v| Metric.new(k,v) } 
-      end
+      @user       = Actions::User.new(@report, @record)
+      @group      = get_group
+      @metrics    = get_metrics
+      @name       = dsl_attr(report.action_name, :record => @record, :is_method => false)
     end
     
     def as_hash
@@ -26,6 +24,22 @@ module Innsights
     def metrics_hash
       if @metrics.present?
         Hash[@metrics.map{|m| m.as_array(@record)}] 
+      end
+    end
+
+    private
+
+    def get_metrics
+      if @report && @report.metrics.present?
+        @metrics = @report.metrics.map{|k,v| Metric.new(k,v) } 
+      end
+    end
+
+    def get_group
+      if @report && @report.report_group.present?
+        Actions::Group.new(@report.report_group)
+      else
+        Actions::Group.new(@user)
       end
     end
 

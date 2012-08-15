@@ -17,7 +17,6 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
-      @report_group = :group
       @metrics = {}
       unless klass.nil?
         @klass = klass
