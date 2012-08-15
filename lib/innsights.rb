@@ -1,4 +1,4 @@
-require 'rails'
+require 'active_support/core_ext'
 require 'rest_client'
 require 'highline/import'
 require "innsights/version"
@@ -22,7 +22,6 @@ module Innsights
     autoload :GenericReport,    'innsights/config/reports/generic_report'
     autoload :User,             'innsights/config/user'
     autoload :Group,            'innsights/config/group'
-    autoload :Options,            'innsights/config/option'
   end
 
   autoload :ErrorMessage,       'innsights/error_message.rb'
@@ -30,8 +29,6 @@ module Innsights
   autoload :Action,             'innsights/action'
   autoload :Metric,             'innsights/metric'
   autoload :Client,             'innsights/client'
-
-  include Config::Options
 
   ## Configuration defaults
   mattr_accessor :client
@@ -73,6 +70,8 @@ module Innsights
   
   mattr_accessor :user_display
   @@user_display = :to_s
+
+  mattr_accessor :user_env
   
   @@supported_queue_systems = [:delayed_job, :resque]
 
@@ -91,15 +90,20 @@ module Innsights
   # Configuration variables of client app
   # @return [Hash] containing the subdomain and authentication token of app
   def self.credentials(cred=nil)
-    cred ||= credentials_from_yaml if rails?
-    @@credentials ||= cred 
+    if cred.is_a? Hash
+      @@credentials = cred 
+    elsif rails?
+      @@credentials ||= credentials_from_yaml
+    else
+      @@credentials 
+    end
   end
 
   
   # Final url to post actions to, includes the rails app environment
   # @return [String] contains app subdomain, innsights url and client app environment
   def self.app_url
-    "#{app_subdomain}." << @@url << "/#{self.env}"
+    "#{app_subdomain}." << @@url << "/#{self.current_env}"
   end
   
   # Sets testing environment on for local server development
@@ -117,7 +121,7 @@ module Innsights
   #   * Appp action reports
   def self.setup(&block)
     self.instance_eval(&block)
-    self.client = Client.new(url, app_subdomain, app_token, self.env)
+    self.client = Client.new(url, app_subdomain, app_token, self.current_env)
   end
 
   # Extra configuration for custom experience
@@ -128,7 +132,7 @@ module Innsights
     self.instance_eval(&block) if envs.blank?
     envs.each do |env| 
       @@env_scope = env
-      self.instance_eval(&block) if self.env == env.to_s
+      self.instance_eval(&block) if self.current_env == env.to_s
       @@env_scope = nil
     end
   end
@@ -201,9 +205,26 @@ module Innsights
   end
 
   def self.enabled?
-    @@enable_hash[self.env.to_sym] == true
+    @@enable_hash[self.current_env.to_sym] == true
   end
 
+  def self.enviroment env
+    self.user_env = env
+  end
+
+  def self.current_env
+    if self.user_env
+      self.user_env
+    elsif rails?
+      Rails.env
+    else
+      ENV['RACK_ENV']
+    end
+  end
+
+  def self.rails?
+    defined?(Rails)
+  end
   if rails?
     require 'innsights/railtie'
   end

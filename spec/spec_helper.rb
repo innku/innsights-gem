@@ -15,12 +15,20 @@ VCR.config do |c|
 end
 
 
+module Rails
+  def self.env
+    'test'
+  end
+end
 RSpec.configure do |config|
   config.before(:each) do
     Innsights.test_mode = true
+
     Post.destroy_all
     User.destroy_all
     Company.destroy_all
+
+
   end
 
 end

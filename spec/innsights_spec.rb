@@ -6,7 +6,7 @@ describe Innsights do
     before do
       Innsights.class_variable_set("@@credentials", nil)
     end
-    let(:credential_hash) { {app: 'app', token: 'token'} }
+    let(:credential_hash) { {'app' => 'app', 'token' => 'token'} }
     context 'With Rails' do
       it 'Sets the credentials from the YAML file' do
         Innsights.should_receive(:credentials_from_yaml){credential_hash}
@@ -112,12 +112,12 @@ describe Innsights do
         end
       end
       it 'Sets the enabled attr for the enviroment' do
-        Innsights.stub(:env){'super_development'}
-        Innsights.config :super_development do
+        Innsights.stub(:current_env){'development'}
+        Innsights.config :development do
           enable false
           test :on
         end
-        Innsights.enable_hash[:super_development].should == false
+        Innsights.enable_hash[:development].should == false
       end
     end
   end
@@ -247,7 +247,7 @@ describe Innsights do
 
   describe 'enabled?' do
     before do
-      Innsights.stub(:env){'development'}
+      Innsights.stub(:current_env){'development'}
     end
     it 'Returns true when the current_env is enabled' do
       Innsights.enable :development, true
@@ -262,5 +262,29 @@ describe Innsights do
       Innsights.enabled?.should == false
     end
 
+  end
+
+  describe '#enviroments' do
+    it 'Sets the user_env' do
+      Innsights.enviroment 'new_env'
+      Innsights.user_env.should == 'new_env'
+    end
+  end
+
+  describe '#current_env' do
+    it 'Returns the user env then speficied' do
+      Innsights.should_receive(:user_env).twice{'new_env'} 
+      Innsights.current_env.should == 'new_env'
+    end
+    it 'Returns the Rails env when rails is defined' do
+      Innsights.user_env = nil
+      Rails.should_receive(:env){'new_env'}
+      Innsights.current_env.should == 'new_env'
+    end
+    it 'Returns the Rack env when rails is not defined' do
+      ENV['RACK_ENV']= 'new_env'
+      Innsights.stub(:rails?)
+      Innsights.current_env.should == 'new_env'
+    end
   end
 end
