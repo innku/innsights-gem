@@ -141,6 +141,10 @@ module Innsights
     Config::User.class_eval(&block) if block_given? 
   end
 
+  def self.group(klass='', &block)
+    Config::Group.class_eval(&block) if block_given? 
+  end
+
   # Sets up an event observer for creating an action on Innsights
   # @yield Configuration for
   #   * Action Name

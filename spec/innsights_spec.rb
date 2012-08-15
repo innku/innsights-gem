@@ -108,6 +108,18 @@ describe Innsights do
     end
   end
 
+  describe '#group' do
+    it 'Evals the Group class when block is given' do
+      Innsights::Config::Group.should_receive(:class_eval)
+      Innsights.group(:Company){}
+    end
+
+    it 'Does not eval the Group class when no block is given' do
+      Innsights::Config::Group.should_not_receive(:class_eval)
+      Innsights.group(:Company)
+    end
+  end
+
   describe '#watch' do
     before do 
       class DummyClass; end
