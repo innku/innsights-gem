@@ -33,6 +33,9 @@ module Innsights
         client = RestClient::Resource.new("www.#{Innsights.url}", username, password)
         response = client['/api/apps.json'].post(params, :content_type => :json, :accept => :json)
         JSON.parse response
+
+      rescue RestClient::Unauthorized => e
+        Innsights::ErrorMessage.log("Wrong username or password.")
       rescue RestClient::Exception => e
         Innsights::ErrorMessage.log(e)
       end

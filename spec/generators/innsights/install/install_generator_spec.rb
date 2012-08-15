@@ -19,7 +19,7 @@ describe Innsights::InstallGenerator do
     it 'Exits with the correct message when there is no client' do
       Innsights::Client.stub!(:create){nil}
       generator.stub!(:abort)
-      generator.should_receive(:abort).with("Wrong username or password.")
+      generator.should_receive(:abort)
       generator.generate_config 
     end
     it 'Adds the template when there is a client' do
