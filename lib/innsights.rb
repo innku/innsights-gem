@@ -44,6 +44,12 @@ module Innsights
   mattr_accessor :group_call
   @@group_call = nil
 
+  mattr_accessor :group_class
+  @@group_class = :group
+  
+  mattr_accessor :group_id
+  @@group_id = :id
+  
   mattr_accessor :group_display
   @@group_display = :to_s
 
@@ -159,6 +165,11 @@ module Innsights
   def self.user(klass, &block)
     self.user_call = klass.to_s.downcase.to_sym
     Config::User.class_eval(&block) if block_given? 
+  end
+
+  def self.group(klass, &block)
+    self.group_class = klass.to_s.underscore.to_sym
+    Config::Group.class_eval(&block) if block_given? 
   end
 
   # Sets up an event observer for creating an action on Innsights

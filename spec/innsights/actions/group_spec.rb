@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe Innsights::Actions::Group do
-  before { Innsights.group_call = :company }
+  before do
+    Innsights.group_call = :company
+  end
   let!(:report) { Innsights::Config::Report.new(Post) }
   let(:group) { Company.create(:name => 'New Company') }
   let(:user) { User.create(:name => 'New user', :company => group) }
@@ -32,6 +34,25 @@ describe Innsights::Actions::Group do
       end
       it 'Sets the object ' do
         action_group.instance_variable_get("@object").should == user.company
+      end
+    end
+
+    context 'When it receives other object' do
+      before do
+        @company = Company.new(name: "Post Company")
+        post.stub!(:company){@company}
+        @action_group = Innsights::Actions::Group.new(post)
+      end
+      it 'Does not set the user_action' do
+        @action_group.instance_variable_get("@user_action").should == nil
+      end
+      it 'Does not set the user' do
+        @action_group.instance_variable_get("@user").should == nil
+      end
+      it 'Sets the object ' do
+        post.should_receive(:company)
+        action_group = Innsights::Actions::Group.new(post, method: :company)
+        action_group.instance_variable_get("@object").should == @company
       end
     end
   end
