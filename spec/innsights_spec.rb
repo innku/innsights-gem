@@ -84,7 +84,7 @@ describe Innsights do
     context "With an env parameter" do
       before { Rails.stub!(:env).and_return('test') }
 
-      it "sets the action for the specified enviroment" do
+      it "sets the action for the specified environment" do
         Innsights.should_receive(:queue).with(:resque)
         Innsights.should_receive(:test).with(:on)
         Innsights.config :test do
@@ -105,13 +105,13 @@ describe Innsights do
         end
       end
 
-      it "does not set the actions for other enviroments" do
+      it "does not set the actions for other environments" do
         Innsights.should_not_receive(:queue).with(:resque)
         Innsights.config :development do
           queue :resque
         end
       end
-      it 'Sets the enabled attr for the enviroment' do
+      it 'Sets the enabled attr for the environment' do
         Innsights.stub(:current_env){'development'}
         Innsights.config :development do
           enable false
@@ -235,16 +235,16 @@ describe Innsights do
   end
 
   describe 'enable' do
-    it 'Sets the enable variable based on the enviroment'  do
+    it 'Sets the enable variable based on the environment'  do
       Innsights.enable :test, false
       Innsights.enable_hash[:test].should == false
     end
-    it 'Uses the env_scope if no enviroment is passed' do
+    it 'Uses the env_scope if no environment is passed' do
       Innsights.env_scope = :development
       Innsights.enable false
       Innsights.enable_hash[:development].should == false
     end
-    it 'Sets the value for all enviroments when there no specific env' do
+    it 'Sets the value for all environments when there no specific env' do
       Innsights.env_scope = nil
       Innsights.enable false
       Innsights.enable_hash.each do |k,v|
@@ -272,9 +272,9 @@ describe Innsights do
 
   end
 
-  describe '#enviroments' do
+  describe '#environments' do
     it 'Sets the user_env' do
-      Innsights.enviroment 'new_env'
+      Innsights.environment 'new_env'
       Innsights.user_env.should == 'new_env'
     end
   end

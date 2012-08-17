@@ -228,7 +228,7 @@ module Innsights
     @@enable_hash[self.current_env.to_sym] == true
   end
 
-  def self.enviroment env
+  def self.environment env
     self.user_env = env
   end
 

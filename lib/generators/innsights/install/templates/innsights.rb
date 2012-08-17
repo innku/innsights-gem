@@ -72,12 +72,12 @@ Innsights.setup do
   ## Configuration can be done inside a config block
 
   # Params:
-  #   envs: Specify the config options for specific enviroments(:development, :test, :production). 
-  #         If no options env is pass, it will take effect on any enviroment
+  #   envs: Specify the config options for specific environments(:development, :test, :production). 
+  #         If no options env is pass, it will take effect on any environment
   #
   # Options: 
   #   queue (Default nil): Speficies a queue_system(:resque, :delayed_job) for reporting to Innsights
-  #   test  (Default false): Used for setting the enviroment on test mode
+  #   test  (Default false): Used for setting the environment on test mode
   #
   # NOTE: if using delayed_job please check https://github.com/collectiveidea/delayed_job/wiki/Backends 
   # and install the apropiate backend dependency on your application
