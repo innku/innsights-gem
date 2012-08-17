@@ -34,7 +34,13 @@ module Innsights
       klass.class_eval do
         report.simple_class_setup(self, report_action)
         send  :after_filter,
-          lambda {|record| self.innsights_reports[report_action].run(record.send(user)) }, 
+          lambda {|record| 
+            begin
+              self.innsights_reports[report_action].run(record.send(user)) 
+            rescue NoMethodError => e
+              Innsights::ErrorMessage.log("#{record} has no method #{user}")
+            end
+          }, 
           :only => action.to_sym
       end
     end
