@@ -34,7 +34,21 @@ module Innsights
           return strat
         end
       end
+
+      def process_object(record=nil, value)
+        if value.is_a?(Fixnum)
+          value
+        elsif value.is_a?(Proc)
+          value.call record rescue nil
+        elsif value.is_a?(String) || value.is_a?(Symbol)
+          begin
+            record.send(value.to_sym) 
+          rescue NoMethodError
+            nil
+          end
+        end
+      end
     end
-        
+
   end
 end

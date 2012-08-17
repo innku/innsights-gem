@@ -61,6 +61,20 @@ describe Innsights::Actions::Group do
         action_group.instance_variable_get("@object").should == @company
       end
     end
+
+    context 'When it receives options' do
+      it 'Calls the method on the object' do
+        post.should_receive(:id)
+        Innsights::Actions::Group.new(post, method: :id)
+      end
+      it 'Proccess the object if it is a proc' do
+        c = Company.create!
+        proccess = lambda{|r| c }
+        proccess.should_receive(:call).with(post){c}
+        group = Innsights::Actions::Group.new(post, method: proccess)
+        group.instance_variable_get("@object").should == c
+      end
+    end
   end
   
   

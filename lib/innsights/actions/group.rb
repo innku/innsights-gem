@@ -1,11 +1,12 @@
 module Innsights
   class Actions::Group
+    include Helpers::Config
     
     def initialize(param, options={})
       if param.is_a?(Innsights::Actions::User)
         setup_from_user(param)
       elsif options[:method].present?
-        @object = param.send(:try, options[:method]) 
+        @object = process_object(param, options[:method])
       else
         @object = param
       end

@@ -36,7 +36,7 @@ module Innsights
     end
 
     def get_group
-      if @record.present? && @report.report_group.is_a?(Symbol)
+      if @record.present? && (@report.report_group.is_a?(Symbol) || @report.report_group.is_a?(Proc))
         Actions::Group.new(@record, method: @report.report_group)
 
       elsif @report && @report.report_group.present?
