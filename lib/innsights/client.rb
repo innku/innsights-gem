@@ -9,39 +9,49 @@ module Innsights
     end
     
     def report(params)
+      safe_app_access do
+        api_client['/api/actions.json'].post(*processed_params(params, @token))
+      end
+    end
+    
+    def push(file)
+      safe_app_access do
+        params = {:file => file}
+        patient_client['/api/actions/push.json'].post(*processed_params(params, @token))
+      end
+    end
+    
+    def self.create(app_name)
+      safe_access do
+        params = {:name => app_name}
+        username, password = prompt_credentials
+        client = RestClient::Resource.new(Innsights.url, username, password)
+        response = client['/api/apps.json'].post(params, :content_type => :json, :accept => :json)
+        JSON.parse(response)
+      end
+    end
+    
+    private
+    
+    def safe_app_access(&block)
       begin
-        api_client['/api/actions.json'].post *processed_params(params, @token)
+        yield
+      rescue RestClient::Unauthorized => e
+        Innsights::ErrorMessage.log('Check your credentials. You do not have access to this app.')
       rescue RestClient::Exception => e
         Innsights::ErrorMessage.log(e)
       end
     end
     
-    def push(file)
+    def self.safe_access(&block)
       begin
-        params = {:file => file}
-        patient_client['/api/actions/push.json'].post *processed_params(params, @token)
-      rescue RestClient::Exception => e
-        puts Innsights::ErrorMessage.log(e)
-      end
-    end
-    
-    ## WWW should not be mandatory on url. Remove when not on dotcloud
-    def self.create(app_name)
-      begin
-        params = {:name => app_name}
-        username, password = prompt_credentials
-        client = RestClient::Resource.new("www.#{Innsights.url}", username, password)
-        response = client['/api/apps.json'].post(params, :content_type => :json, :accept => :json)
-        JSON.parse response
-
+        yield
       rescue RestClient::Unauthorized => e
         Innsights::ErrorMessage.log("Wrong username or password.")
       rescue RestClient::Exception => e
         Innsights::ErrorMessage.log(e)
       end
     end
-    
-    private
     
     def self.prompt_credentials
       [ask("Username: "), ask("Password: "){|q| q.echo = false}]
