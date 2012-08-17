@@ -21,7 +21,13 @@ describe Innsights::Actions::Group do
         action_group.instance_variable_get("@user").should == action_user.object
       end
       it 'Sets the group object' do
+        user.stub!(:school)
         action_group.instance_variable_get("@object").should == user.company
+      end
+      it 'Does not set the group object when there is no group_call' do
+        Innsights.stub!(:group_call){nil}
+        action_group = Innsights::Actions::Group.new(action_user)
+        action_group.instance_variable_get("@object").should == nil
       end
     end
     context 'When it receives a group' do

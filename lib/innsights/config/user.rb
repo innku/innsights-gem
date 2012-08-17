@@ -9,10 +9,21 @@ module Innsights
       Innsights.user_display = value.to_sym
     end
     
-    def self.group(value, &block)
+    def self.group(value)
       Innsights.group_call = value.to_sym
-      Config::Group.class_eval(&block) if block_given?
     end
     
   end
 end
+
+#user User do
+  #group :company
+#end
+
+#group Company do
+  #disply :name
+#end
+
+#watch Post do
+  #group :the_company
+#end

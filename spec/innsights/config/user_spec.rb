@@ -16,5 +16,12 @@ describe Innsights::Config::User do
       Innsights.user_display.should == :to_string
     end
   end
+
+  describe '.group' do
+    it 'changes the insights group_call' do
+      klass.group 'company'
+      Innsights.group_call.should == :company
+    end
+  end
   
 end

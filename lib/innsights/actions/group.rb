@@ -3,9 +3,7 @@ module Innsights
     
     def initialize(param, options={})
       if param.is_a?(Innsights::Actions::User)
-        @user_action = param
-        @user = param.object
-        @object = @user.send(:try, Innsights.group_call) if Innsights.group_call.present?
+        setup_from_user(param)
       elsif options[:method].present?
         @object = param.send(:try, options[:method]) 
       else
@@ -26,6 +24,12 @@ module Innsights
     end
     
     private
+
+    def setup_from_user(user)
+      @user_action = user
+      @user = user.object
+      @object = @user.send(:try, Innsights.group_call) if Innsights.group_call.present?
+    end
     
     def app_id
       @object.send(:try, Innsights.group_id)
