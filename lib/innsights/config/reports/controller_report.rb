@@ -45,11 +45,13 @@ module Innsights
       end
     end
 
+    # TODO: This is not the right way to require a controller
     def controller_class
-      "#{@controller.titleize}Controller".safe_constantize
+      "#{@controller.classify.pluralize}Controller".safe_constantize
     end
 
     private
+    
     def valid_for_report?
       klass = controller_class
       klass.respond_to?(:after_filter) && klass.new.action_methods && !action.nil?
