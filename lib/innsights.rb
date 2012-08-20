@@ -95,20 +95,20 @@ module Innsights
   # Configured subdomain of the client app
   # @return [String] subdomain of current app
   def self.app_subdomain
-    @@app_subdomain ||= credentials["app"]
+    @@app_subdomain ||= credentials[:app]
   end
   
   # Configured token of client app
   # @return [String] authentication token of app
   def self.app_token
-    @@app_token ||= credentials["token"]
+    @@app_token ||= credentials[:token]
   end
 
   # Configuration variables of client app
   # @return [Hash] containing the subdomain and authentication token of app
   def self.credentials(cred=nil)
     if cred.is_a? Hash
-      @@credentials = cred 
+      @@credentials = cred.symbolize_keys
     elsif rails?
       @@credentials ||= credentials_from_yaml
     else
@@ -252,6 +252,6 @@ module Innsights
   private 
 
   def self.credentials_from_yaml
-    YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"]
+    YAML.load(File.open(File.join(Rails.root, 'config/innsights.yml')))["credentials"].symbolize_keys
   end
 end

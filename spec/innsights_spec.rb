@@ -6,7 +6,7 @@ describe Innsights do
     before do
       Innsights.class_variable_set("@@credentials", nil)
     end
-    let(:credential_hash) { {'app' => 'app', 'token' => 'token'} }
+    let(:credential_hash) { {:app => 'app', :token => 'token'} }
     context 'With Rails' do
       it 'Sets the credentials from the YAML file' do
         Innsights.should_receive(:credentials_from_yaml){credential_hash}
@@ -52,7 +52,7 @@ describe Innsights do
 
   describe "#setup" do
     before do
-      Innsights.stub!(:credentials){{"app" => "subdomain", "token" => "token"}}
+      Innsights.stub!(:credentials){{:app => "subdomain", :token => "token"}}
     end
     it 'Evals the instance with the block'  do
       Innsights.stub!(:instance_eval)
