@@ -43,11 +43,11 @@ describe Innsights::Config::GenericReport do
       r.created_at.should == time
     end
     it 'Can add a single metic' do
-      r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100})
+      r = Innsights::Config::GenericReport.new("Mention", measure: {kg: 100})
       r.metrics.should == {kg: 100}
     end
     it 'Can add multiple metrics' do
-      r = Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100, money: 200})
+      r = Innsights::Config::GenericReport.new("Mention", measure: {kg: 100, money: 200})
       r.metrics.should == {kg: 100, money: 200}
     end
     it 'Does not modify unspecified options' do

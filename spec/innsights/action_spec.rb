@@ -31,7 +31,7 @@ describe Innsights::Action do
     end
     describe 'Metrics' do
       context 'With metrics' do
-        let(:report) { Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100, money: 200}) }
+        let(:report) { Innsights::Config::GenericReport.new("Mention", measure: {kg: 100, money: 200}) }
 
         it 'Creates the apropiate metrics' do
           Innsights::Metric.should_receive(:new).with(:kg, 100)
@@ -60,7 +60,7 @@ describe Innsights::Action do
   end
   describe '#as_hash' do
 
-    let(:report) { Innsights::Config::GenericReport.new("Post", metrics: {kg: 100}) }
+    let(:report) { Innsights::Config::GenericReport.new("Post", measure: {kg: 100}) }
     it 'works on full attributes' do
       action = Innsights::Action.new(report, post)
       action.as_hash.should == {:report => { :name => "Post", :created_at => post.created_at, 
@@ -94,7 +94,7 @@ describe Innsights::Action do
   end
 
   describe '.metrics_hash' do
-    let(:report) { Innsights::Config::GenericReport.new("Mention", metrics: {kg: 100, money: 200}) }
+    let(:report) { Innsights::Config::GenericReport.new("Mention", measure: {kg: 100, money: 200}) }
     it 'Returns the hash when there are metrics' do
       action = Innsights::Action.new(report, user)
       action.metrics_hash.should == {:kg => 100, money: 200}

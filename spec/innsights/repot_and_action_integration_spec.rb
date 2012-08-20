@@ -21,7 +21,7 @@ describe 'Report and Action integration' do
   end
   describe 'Generic Reports' do
     it 'Creates the correct hash when there is no record' do
-      report = Innsights::Config::GenericReport.new("Metric", metrics: {kg: 100, money: 200})
+      report = Innsights::Config::GenericReport.new("Metric", measure: {kg: 100, money: 200})
       hash = Innsights::Action.new(report, nil).as_hash
       hash[:report][:metrics].should == {kg: 100, money: 200}
     end

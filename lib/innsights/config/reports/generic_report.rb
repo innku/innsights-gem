@@ -26,7 +26,7 @@ module Innsights
       {created_at: :created_at, 
        report_user: :user, 
        report_group: :group,
-       metrics: :metrics }
+       metrics: :measure }
     end
   end
 end
