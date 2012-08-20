@@ -23,32 +23,29 @@ describe Innsights::Config::Report do
     it 'sets the klass to param' do
       default_obj.klass.should == DummyClass
     end
-    it 'Sets te condition based on the upon' do
-      default_obj.upon :create, if: lambda {|r| true}
-    end
   end
 
-  describe '#upon' do
+  describe '#report' do
     context 'When there is a condition' do
       it 'sets the event name' do
-        report.upon :something
-        report.event_name.should == :something
+        report.report :something
+        report.action_name.should == :something
       end
 
       it 'Set the condition' do
         condition = lambda {|r| true }
-        report.upon :something, if: condition
+        report.report :something, if: condition
         report.instance_variable_get("@condition").should == condition
       end
     end
     context 'When there is no condition' do
       it 'sets the event name' do
-        report.upon :something
-        report.event_name.should == :something
+        report.report :something
+        report.action_name.should == :something
       end
 
       it 'Does not set the condition' do
-        report.upon :something
+        report.report :something
         report.instance_variable_get("@condition").should == true
       end
     end

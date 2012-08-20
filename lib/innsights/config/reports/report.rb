@@ -25,8 +25,8 @@ module Innsights
       end
     end
 
-    def upon(action, options={})
-      @event_name = action
+    def report(action, options={})
+      @action_name = action
       @condition  = options[:if] if options[:if].present?
     end
 
