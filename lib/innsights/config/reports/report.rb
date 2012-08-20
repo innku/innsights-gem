@@ -17,6 +17,7 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
+      @condition = true
       @metrics = {}
       unless klass.nil?
         @klass = klass
@@ -24,8 +25,13 @@ module Innsights
       end
     end
 
+    def upon(action, options={})
+      @event_name = action
+      @condition  = options[:if] if options[:if].present?
+    end
+
     def run(record=nil)
-      if Innsights.enabled?
+      if Innsights.enabled? && self.valid?(record)
         action = Action.new(self, record).as_hash
         case Innsights.queue_system
           when :resque
@@ -48,6 +54,14 @@ module Innsights
       klass.cattr_accessor :innsights_reports unless defined?(@@insights_reports)
       klass.innsights_reports ||= {}
       klass.innsights_reports[report_action] = self
+    end
+
+    def valid?(record=nil)
+      if @condition.present?
+        dsl_attr(@condition, record: record) == true
+      else
+        true
+      end
     end
 
     def valid_for_push?

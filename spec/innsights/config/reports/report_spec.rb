@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'delayed_job'
 
 describe Innsights::Config::Report do
 
@@ -23,6 +22,35 @@ describe Innsights::Config::Report do
     end
     it 'sets the klass to param' do
       default_obj.klass.should == DummyClass
+    end
+    it 'Sets te condition based on the upon' do
+      default_obj.upon :create, if: lambda {|r| true}
+    end
+  end
+
+  describe '#upon' do
+    context 'When there is a condition' do
+      it 'sets the event name' do
+        report.upon :something
+        report.event_name.should == :something
+      end
+
+      it 'Set the condition' do
+        condition = lambda {|r| true }
+        report.upon :something, if: condition
+        report.instance_variable_get("@condition").should == condition
+      end
+    end
+    context 'When there is no condition' do
+      it 'sets the event name' do
+        report.upon :something
+        report.event_name.should == :something
+      end
+
+      it 'Does not set the condition' do
+        report.upon :something
+        report.instance_variable_get("@condition").should == true
+      end
     end
   end
   
@@ -69,8 +97,14 @@ describe Innsights::Config::Report do
       report.run(nil)
     end
 
-    it "doesnt call the report method when configuration is disabled" do
+    it "does not report to Innsights when configuration is disabled" do
       Innsights.stub!(:enabled?){false}
+      @client.should_not_receive(:report)
+      report.run(nil)
+    end
+    it 'does not report to Innsights when the report condition is not met' do
+      report.stub!(:valid?){false}
+      report.should_receive(:valid?)
       @client.should_not_receive(:report)
       report.run(nil)
     end
@@ -89,6 +123,29 @@ describe Innsights::Config::Report do
       report.measure :kg, with: :weight
       report.measure :money, with: :price
       report.metrics.should == {kg: :weight, money: :price}
+    end
+  end
+
+  describe '.valid?' do
+    it 'Returns false when the record is valid' do
+      condition = lambda{|r| true}
+      report.instance_variable_set("@condition", condition)
+      report.should_receive(:dsl_attr).with(condition, record: nil){true}
+      report.valid?(nil).should == true
+    end
+    it 'Returns true when the record is not valid' do
+      condition = lambda{|r| false}
+      report.instance_variable_set("@condition", condition)
+      report.should_receive(:dsl_attr).with(condition, record: nil){false}
+      report.valid?(nil).should == false
+    end
+    it 'Returns true when there is no condition' do
+      report.instance_variable_set("@condition", nil)
+      report.valid?(nil).should == true
+    end
+    it 'Returns true when the condition is explicitly true' do
+      report.instance_variable_set("@condition", true)
+      report.valid?(nil).should == true
     end
   end
 
