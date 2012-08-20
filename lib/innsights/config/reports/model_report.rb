@@ -16,6 +16,11 @@ module Innsights
       end
     end
 
+    def report(action, options={})
+      @action_name = action
+      @condition  = options[:if] if options[:if].present?
+    end
+
     def valid_for_push?
       [:create].include? self.event_name
     end

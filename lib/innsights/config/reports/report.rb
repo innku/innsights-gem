@@ -17,17 +17,11 @@ module Innsights
       @created_at = :created_at
       @event_name = :create
       @report_user = :user
-      @condition = true
       @metrics = {}
       unless klass.nil?
         @klass = klass
         @action_name = klass.name
       end
-    end
-
-    def report(action, options={})
-      @action_name = action
-      @condition  = options[:if] if options[:if].present?
     end
 
     def run(record=nil)

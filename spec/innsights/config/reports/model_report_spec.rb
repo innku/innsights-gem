@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'delayed_job'
 
 describe Innsights::Config::ModelReport do
   before do 
@@ -24,6 +23,32 @@ describe Innsights::Config::ModelReport do
     it 'send a block to after_create on the report klass' do
       report.klass.should_receive(:after_create)
       report.commit
+    end
+  end
+
+  describe '#report' do
+    context 'When there is a condition' do
+      it 'sets the event name' do
+        report.report :something
+        report.action_name.should == :something
+      end
+
+      it 'Set the condition' do
+        condition = lambda {|r| true }
+        report.report :something, if: condition
+        report.instance_variable_get("@condition").should == condition
+      end
+    end
+    context 'When there is no condition' do
+      it 'sets the event name' do
+        report.report :something
+        report.action_name.should == :something
+      end
+
+      it 'Does not set the condition' do
+        report.report :something
+        report.instance_variable_get("@condition").should == nil
+      end
     end
   end
 

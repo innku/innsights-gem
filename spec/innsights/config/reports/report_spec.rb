@@ -25,31 +25,6 @@ describe Innsights::Config::Report do
     end
   end
 
-  describe '#report' do
-    context 'When there is a condition' do
-      it 'sets the event name' do
-        report.report :something
-        report.action_name.should == :something
-      end
-
-      it 'Set the condition' do
-        condition = lambda {|r| true }
-        report.report :something, if: condition
-        report.instance_variable_get("@condition").should == condition
-      end
-    end
-    context 'When there is no condition' do
-      it 'sets the event name' do
-        report.report :something
-        report.action_name.should == :something
-      end
-
-      it 'Does not set the condition' do
-        report.report :something
-        report.instance_variable_get("@condition").should == true
-      end
-    end
-  end
   
   describe '#run' do
     before do
