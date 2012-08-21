@@ -36,7 +36,9 @@ module Innsights
         send  :after_filter,
           lambda {|record| 
             begin
-              self.innsights_reports[report_action].run(record.send(user)) 
+              report = self.innsights_reports[report_action]
+              report.report_user = record.send(user)
+              report.run
             rescue NoMethodError => e
               Innsights::ErrorMessage.log("#{record} has no method #{user}")
             end
