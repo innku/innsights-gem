@@ -22,10 +22,15 @@ describe Innsights::Action do
         Innsights::Action.new(report, post)
 
       end
-      it 'Sets the group form user when there is no explicit group' do
+      it 'Sets the group from user when there is no explicit group' do
         Innsights::Actions::Group.should_not_receive(:new).with(group)
         Innsights::Actions::Group.should_receive(:new)
                                  .with(instance_of(Innsights::Actions::User))
+        Innsights::Action.new(report, post)
+      end
+      it 'Sets an invalid group when report explictily sets report_group to nil' do
+        report.report_group = nil
+        Innsights::Actions::Group.should_receive(:new).with(nil)
         Innsights::Action.new(report, post)
       end
     end
