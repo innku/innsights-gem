@@ -39,7 +39,7 @@ module Innsights
       if @record.present? && (@report.report_group.is_a?(Symbol) || @report.report_group.is_a?(Proc))
         Actions::Group.new(@record, method: @report.report_group)
 
-      elsif @report && @report.report_group.present?
+      elsif @report && @report.instance_variables.include?(:@report_group)
         Actions::Group.new(@report.report_group)
 
       else
