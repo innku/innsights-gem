@@ -19,6 +19,11 @@ describe Innsights::Config::GenericReport do
       hash = Innsights.report("Mention").to_hash
       hash.should == {report: {name: "Mention" }}
     end
+    it 'renders the hash with a created_at' do
+      created_at = Time.now
+      hash = Innsights.report("Mention", created_at: created_at).to_hash
+      hash.should == {report: {name: "Mention", created_at: created_at }}
+    end
     it 'renders the hash with a user' do
       hash = Innsights.report("Mention", user: dude).to_hash
       hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id } }}
