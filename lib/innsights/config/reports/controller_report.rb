@@ -47,7 +47,7 @@ module Innsights
 
     # TODO: This is not the right way to require a controller
     def controller_class
-      "#{@controller.classify.pluralize}Controller".safe_constantize
+      "#{@controller.classify.pluralize}Controller".constantize
     end
 
     private
