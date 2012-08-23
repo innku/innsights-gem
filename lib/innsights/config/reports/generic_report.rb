@@ -9,6 +9,10 @@ module Innsights
     def commit
       Innsights.reports << self
     end
+    
+    def to_hash(options=nil)
+      Action.new(self, nil).as_hash
+    end
 
     private
     
