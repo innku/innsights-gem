@@ -36,7 +36,7 @@ module Innsights
       end
 
       def process_object(record=nil, value)
-        if value.is_a?(Fixnum)
+        if value.is_a?(Numeric)
           value
         elsif value.is_a?(Proc)
           value.call record rescue nil
