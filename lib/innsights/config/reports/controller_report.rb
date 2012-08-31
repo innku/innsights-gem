@@ -49,7 +49,11 @@ module Innsights
 
     # TODO: This is not the right way to require a controller
     def controller_class
-      "#{@controller.classify.pluralize}Controller".constantize
+      begin
+        "#{@controller.classify.pluralize}Controller".constantize
+      rescue NameError
+        nil
+      end
     end
 
     private
