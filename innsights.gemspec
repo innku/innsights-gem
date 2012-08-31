@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   # Runtime dependencies
   s.add_runtime_dependency "rails", '>=3.0.0'
   s.add_runtime_dependency "rest-client"
-  s.add_runtime_dependency "ruby-progressbar", '0.11.0'
+  s.add_runtime_dependency "ruby-progressbar", '~>0.0.10'
   s.add_runtime_dependency "highline"
   s.add_runtime_dependency "resque"
   s.add_runtime_dependency "delayed_job"
