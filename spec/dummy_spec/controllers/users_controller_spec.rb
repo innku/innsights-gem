@@ -3,7 +3,7 @@ require 'dummy_app_spec_helper'
 
 describe DudesController do
   before do 
-    Innsights::Config::ControllerReport.any_instance.stub(:run){true}
+    Innsights::Config::Controller.any_instance.stub(:run){true}
   end
 
   describe 'Innsights report proccess' do
@@ -25,7 +25,7 @@ describe DudesController do
       it 'It only adds the filter to the apropiate action' do
         get 'index'
         f = DudesController._process_action_callbacks.select{|f| f.kind == :after}.first
-        f.options[:only].should == :index
+        f.options[:only].to_sym.should == :index
       end
 
       it 'Can report from multiple actions' do
@@ -44,7 +44,7 @@ describe DudesController do
 
     context 'In other action' do
       it 'Does not reports to innsights' do
-        Innsights::Config::ControllerReport.any_instance.should_not_receive(:run)
+        Innsights::Config::Controller.any_instance.should_not_receive(:run)
         get 'new'
       end
     end

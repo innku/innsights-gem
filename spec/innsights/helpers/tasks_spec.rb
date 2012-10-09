@@ -8,7 +8,7 @@ describe Innsights::Helpers::Tasks do
       Post.create!
     end
     let(:action_hash) {{:report=>{:name=>"Post", :created_at=>Time.now}}}
-    let(:report){ Innsights::Config::ModelReport.new(Post) }
+    let(:report){ Innsights::Config::Model.new(Post) }
 
     context 'With a report valid for push' do
       before do
@@ -19,8 +19,8 @@ describe Innsights::Helpers::Tasks do
         Innsights::Helpers::Tasks.push(report)
       end
       it 'Creates a new action' do
-        Innsights::Action.stub_chain(:new, :as_hash){ action_hash }
-        Innsights::Action.should_receive(:new)
+        Innsights::Report.stub_chain(:new, :to_hash){ action_hash }
+        Innsights::Report.should_receive(:new)
         Innsights::Helpers::Tasks.push(report)
       end
       it 'Upload the contents when there are reports' do
@@ -47,7 +47,7 @@ describe Innsights::Helpers::Tasks do
   end
 
   describe '#progress_actions' do
-    let(:report){ Innsights::Config::ModelReport.new(Post) }
+    let(:report){ Innsights::Config::Model.new(Post) }
 
     it 'Sets up the progress bar' do
       progress_bar = ProgressBar.new(report.klass.to_s.pluralize, 100)
@@ -59,12 +59,12 @@ describe Innsights::Helpers::Tasks do
       Innsights::Helpers::Tasks.push(report)
     end
     it 'It displays an error if klass does not have a find_each' do
-      report = Innsights::Config::ModelReport.new(String)
+      report = Innsights::Config::Model.new(String)
       lambda{ Innsights::Helpers::Tasks.push(report) }.should_not raise_error
     end
     it 'Updates the bar even if an error is rescued' do
       ProgressBar.any_instance.should_receive(:finish)
-      report = Innsights::Config::ModelReport.new(String)
+      report = Innsights::Config::Model.new(String)
       Innsights::Helpers::Tasks.push(report)
     end
   end

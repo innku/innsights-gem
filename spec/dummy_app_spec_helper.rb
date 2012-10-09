@@ -3,6 +3,7 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../dummy/config/environment", __FILE__)
 require 'rubygems'
 require 'rails'
+require 'timecop'
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'bundler/setup'

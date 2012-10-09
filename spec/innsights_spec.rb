@@ -157,19 +157,15 @@ describe Innsights do
   describe '#watch' do
     before do 
       class DummyClass; end
-      @report = Innsights::Config::ModelReport.new(DummyClass)
-      Innsights::Config::ModelReport.stub!(:new){@report}
+      @report = Innsights::Config::Model.new(DummyClass)
+      Innsights::Config::Model.stub!(:new){@report}
     end
     it 'Creates the report with a class when there is a param' do
-      Innsights::Config::ModelReport.should_receive(:new).with(DummyClass)
+      Innsights::Config::Model.should_receive(:new).with(DummyClass)
       Innsights.watch('Foo',{class: DummyClass}){}
     end
     it 'Creates the report with a class when there is no param' do
-      Innsights::Config::ModelReport.should_receive(:new).with(DummyClass)
-      Innsights.watch(DummyClass){}
-    end
-    it 'Evals the report instance' do
-      @report.should_receive(:instance_eval)
+      Innsights::Config::Model.should_receive(:new).with(DummyClass)
       Innsights.watch(DummyClass){}
     end
     it 'Commit the report' do
@@ -181,17 +177,18 @@ describe Innsights do
   describe "#on" do
     before do
       Innsights.mode :test
+      class UsersController; end
     end
     it 'sets the apropiate methods'  do
-      Innsights::Config::ControllerReport.any_instance.should_receive(:report).with('User Created')
-      Innsights::Config::ControllerReport.any_instance.should_receive(:user).with(:current_user)
+      Innsights::Config::Controller.any_instance.should_receive(:report).with('User Created')
+      Innsights::Config::Controller.any_instance.should_receive(:user).with(:current_user)
       Innsights.on "users#create" do
         report 'User Created'
         user   :current_user
       end
     end
     it 'commits the report' do
-      Innsights::Config::ControllerReport.any_instance.should_receive(:commit)
+      Innsights::Config::Controller.any_instance.should_receive(:commit)
       Innsights.on "users#create" do
         report 'User Created'
         user   :current_user
@@ -218,15 +215,11 @@ describe Innsights do
   describe '#report' do
     let(:user) { User.create }
     before do
-      @report = Innsights::Config::GenericReport.new("Report name", user: user)
-      Innsights::Config::GenericReport.stub!(:new){@report}
+      @report = Innsights::Report.new("Report name", user: user)
+      Innsights::Report.stub!(:new){@report}
     end
     it 'Generates a Generic Report' do
-      Innsights::Config::GenericReport.should_receive(:new).with("Report Name", user: user)
-      Innsights.report("Report Name", user: user)
-    end
-    it 'Commits the report' do
-      @report.should_receive(:commit)
+      Innsights::Report.should_receive(:new).with("Report Name", user: user)
       Innsights.report("Report Name", user: user)
     end
     it 'Returns the report' do

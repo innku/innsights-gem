@@ -1,6 +1,6 @@
-require 'rubygems'
-require 'rspec'
 require 'bundler/setup'
+require 'rspec'
+require 'timecop'
 require 'active_record'
 require 'active_support'
 require 'vcr'
@@ -22,14 +22,13 @@ module Rails
     'test'
   end
 end
+
 RSpec.configure do |config|
   config.before(:each) do
     Innsights.mode :test
     Post.destroy_all
     User.destroy_all
     Company.destroy_all
-
-
   end
 end
 

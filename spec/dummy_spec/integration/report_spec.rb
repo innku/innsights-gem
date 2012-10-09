@@ -1,9 +1,11 @@
 require 'dummy_app_spec_helper'
 
-describe Innsights::Config::GenericReport do
-  let(:dude) { Dude.create(name: 'Adrian Cuadros') }
+describe Innsights::Report do
+  let(:dude) { User.create(name: 'Adrian Cuadros') }
   let(:company) { Company.create(name: 'Innku') }
   before do 
+    Innsights::Config::Model.any_instance.stub(:run){true}
+    Innsights::Config::Controller.any_instance.stub(:run){true}
     Innsights.stub_chain(:client, :report)
     Innsights.setup do
       user Dude do
@@ -16,8 +18,10 @@ describe Innsights::Config::GenericReport do
   end
   describe '#to_hash' do
     it 'renders the hash when there is no user' do
-      hash = Innsights.report("Mention").to_hash
-      hash.should == {report: {name: "Mention" }}
+      Timecop.freeze Time.now do
+        hash = Innsights.report("Mention").to_hash
+        hash.should == {report: {name: "Mention", created_at: Time.now }}
+      end
     end
     it 'renders the hash with a created_at' do
       created_at = Time.now
@@ -25,12 +29,16 @@ describe Innsights::Config::GenericReport do
       hash.should == {report: {name: "Mention", created_at: created_at }}
     end
     it 'renders the hash with a user' do
-      hash = Innsights.report("Mention", user: dude).to_hash
-      hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id } }}
+      Timecop.freeze Time.now do
+        hash = Innsights.report("Mention", user: dude).to_hash
+        hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id }, created_at: Time.now }}
+      end
     end
     it 'renders the hash with a user and a group' do
-      hash = Innsights.report("Mention", user: dude, group: company).to_hash
-      hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id }, group: {display: company.name, id: company.id} }}
+      Timecop.freeze Time.now do
+        hash = Innsights.report("Mention", user: dude, group: company).to_hash
+        hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id }, group: {display: company.name, id: company.id}, created_at: Time.now }}
+      end
     end
   end
   describe "#report" do
@@ -39,18 +47,13 @@ describe Innsights::Config::GenericReport do
       Innsights.report('Mention', dude).run
     end
     it 'Can create a custom create action' do
-      Dude.class_eval do
-        after_create :manual_create
-        def manual_create
-          Innsights.report('Mention', self).run
-        end
-      end
+      Dude.after_create lambda {|record| Innsights.report('Mention').run }
       Innsights.client.should_receive(:report)
       Dude.create!
     end
     context 'Generic report with dynamic Group name' do
-      let(:dude) { Dude.create!}
-      let(:company) { Company.create!}
+      let(:dude) { Dude.create name: 'Adrian'}
+      let(:company) { Company.create name: 'Innku'}
       before do
         @old_id = Innsights.group_id
         @old_display = Innsights.group_display

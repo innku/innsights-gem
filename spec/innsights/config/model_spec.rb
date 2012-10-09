@@ -1,11 +1,11 @@
 require 'spec_helper'
 
-describe Innsights::Config::ModelReport do
+describe Innsights::Config::Model do
   before do 
     class TestApp; end
     TestApp.stub!(:after_create)
   end
-  let(:report) { Innsights::Config::ModelReport.new(TestApp) }
+  let(:report) { Innsights::Config::Model.new(TestApp) }
   
   describe '#commit' do    
     it 'adds the report to applications reports array' do
@@ -18,7 +18,7 @@ describe Innsights::Config::ModelReport do
     end
     it 'associates event name with report object' do
       report.commit
-      TestApp.innsights_reports[report.action_name].should == report
+      TestApp.innsights_reports[report.name].should == report
     end
     it 'send a block to after_create on the report klass' do
       report.klass.should_receive(:after_create)
@@ -30,7 +30,7 @@ describe Innsights::Config::ModelReport do
     context 'When there is a condition' do
       it 'sets the event name' do
         report.report :something
-        report.action_name.should == :something
+        report.name.should == :something
       end
 
       it 'Set the condition' do
@@ -42,7 +42,7 @@ describe Innsights::Config::ModelReport do
     context 'When there is no condition' do
       it 'sets the event name' do
         report.report :something
-        report.action_name.should == :something
+        report.name.should == :something
       end
 
       it 'Does not set the condition' do
@@ -54,12 +54,12 @@ describe Innsights::Config::ModelReport do
 
   describe '.valid_for_push?' do
     it 'Returns false if not valid' do
-      report.should_receive(:event_name) {:upload}
+      report.event = :after_upload
       report.valid_for_push?.should == false
     end
 
     it 'Returns true if valid' do
-      report.should_receive(:event_name) {:create}
+      report.event = :after_create
       report.valid_for_push?.should == true
     end
   end

@@ -10,24 +10,22 @@ module Innsights
     autoload :Config,           'innsights/helpers/config'
   end
   
-  module Actions
-    autoload :User,             'innsights/actions/user'
-    autoload :Group,            'innsights/actions/group'
+  module Fetchers
+    autoload :User,             'innsights/fetchers/user'
+    autoload :Group,            'innsights/fetchers/group'
+    autoload :Record,           'innsights/fetchers/record'
   end
   
   module Config
-    autoload :Report,           'innsights/config/reports/report'
-    autoload :ModelReport,      'innsights/config/reports/model_report'
-    autoload :ControllerReport, 'innsights/config/reports/controller_report'
-    autoload :GenericReport,    'innsights/config/reports/generic_report'
+    autoload :Base,             'innsights/config/base'
+    autoload :Controller,       'innsights/config/controller'
+    autoload :Model,            'innsights/config/model'
     autoload :User,             'innsights/config/user'
     autoload :Group,            'innsights/config/group'
   end
 
-  autoload :ErrorMessage,       'innsights/error_message.rb'
-  
-  autoload :Action,             'innsights/action'
-  autoload :Metric,             'innsights/metric'
+  autoload :Report,             'innsights/report'
+  autoload :ErrorMessage,       'innsights/error_message'
   autoload :Client,             'innsights/client'
 
   ## Configuration defaults
@@ -179,7 +177,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.watch(klass, params={}, &block)
-    report = Config::ModelReport.new(params[:class] || klass)
+    report = Config::Model.new(params[:class] || klass)
     report.instance_eval(&block)
     report.commit
   end
@@ -191,7 +189,7 @@ module Innsights
   #   * User call
   #   * Event Trigger
   def self.on(catalyst, &block)
-    report = Config::ControllerReport.new(catalyst)
+    report = Config::Controller.new(catalyst)
     report.instance_eval(&block)
     report.commit
   end
@@ -208,9 +206,7 @@ module Innsights
   # @param [:name, :user]
   # @return [Innsights::Config::GenericReport]
   def self.report(name, options={})
-    report = Innsights::Config::GenericReport.new(name, options)
-    report.commit
-    report
+    Innsights::Report.new(name, options)
   end
 
   def self.enable(env=nil, param)

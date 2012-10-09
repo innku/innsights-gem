@@ -7,47 +7,60 @@ module Innsights
     end
     
     module ClassMethods
-      ## Creates a local variable that saves either a string or block
-      def dsl_attr(instance_var_name, method_name)
+      # Creates a local variable that saves either a string or block
+      # eases the process of defining attribute values through DSL
+      #
+      # @attr [Symbol, String] method name the name of the dsl method to be defined
+      # @attr [Symbol, String] instance_var_name the name of the instance variable that stores the result of the method call
+      # @example
+      #   class Man
+      #     dsl :walk, :meters
+      #     walk {|record| record.km * 1000 } # => Man
+      #     walk :meters # => Man
+      #   end
+      def dsl(method_name, instance_var_name)
         attr_accessor instance_var_name
         define_method method_name do |value=nil, &block|
           instance_var_value = block.nil? ? value : block
           instance_variable_set("@#{instance_var_name}", instance_var_value)
+          self
         end
       end
     end
     
     module InstanceMethods
-      ## Very poorly defined method, should refactor this
-      def dsl_attr(strat, params={})
-        params[:is_method] = params[:is_method].nil? ? true : params[:is_method]
-        if strat.is_a?(String) || strat.is_a?(Symbol)
+
+      # Calls the given method of the record or yields the given proc with the record.
+      #
+      # @param [Object] record the record that holds the information
+      # @param [Symbol, Proc, Object] strat
+      #   when Symbol it is the name of the method to call
+      #   when Proc it is a process to yield with the record as a param
+      #   when Object it is the primitive value of to be sent as the attribute
+      # @example
+      #   user = User.new(name: 'Adrian', email: 'adrian@innku.com')
+      #   attr_call(user, :name) # => 'Adrian'
+      #   attr_call(user, lambda {|u| u.email }) # => 'adrian@innku.com'
+      #   attr_call(user, 100) # 100
+      #   attr_call(user, "Some name") # => "Some name"
+      def dsl_call(record, strat)
+        if strat.is_a?(Symbol)
           begin
-            return strat unless params[:is_method]
-            return params[:record].send(:try, strat) if params[:record].present?
+            return record.send(:try, strat)
           rescue NoMethodError
-            nil
+            nil # Fail silently if the method doesn't exist
           end
         elsif strat.is_a?(Proc)
-          return strat.call(params[:record])
+          begin
+            return strat.call(record)
+          rescue
+            nil # Fail silently on runtime
+          end
         else
           return strat
         end
       end
 
-      def process_object(record=nil, value)
-        if value.is_a?(Numeric)
-          value
-        elsif value.is_a?(Proc)
-          value.call record rescue nil
-        elsif value.is_a?(String) || value.is_a?(Symbol)
-          begin
-            record.send(value.to_sym) 
-          rescue NoMethodError
-            nil
-          end
-        end
-      end
     end
 
   end
