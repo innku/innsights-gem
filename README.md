@@ -243,7 +243,7 @@ end
 
 * **Delayed_job:** Requires that you have [delayed_job](https://github.com/collectiveidea/delayed_job)  installed and delayed_job workers running.
 
-```ruby	
+```ruby 
 Innsights.setup do
     ...
     config do
@@ -253,7 +253,7 @@ Innsights.setup do
   end
 ```
 
-Also check out[other configuration Options](https://github.com/innku/innsights-gem/wiki/Configuration-Options) for details.
+Also check out [other configuration Options](https://github.com/innku/innsights-gem/wiki/Configuration-Options) for details.
 
 # License 
 

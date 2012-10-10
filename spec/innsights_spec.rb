@@ -170,6 +170,7 @@ describe Innsights do
     end
   end
 
+  # Deprecated
   describe "#on" do
     before do
       Innsights.mode :test
