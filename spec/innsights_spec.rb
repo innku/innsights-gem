@@ -160,10 +160,6 @@ describe Innsights do
       @report = Innsights::Config::Model.new(DummyClass)
       Innsights::Config::Model.stub!(:new){@report}
     end
-    it 'Creates the report with a class when there is a param' do
-      Innsights::Config::Model.should_receive(:new).with(DummyClass)
-      Innsights.watch('Foo',{class: DummyClass}){}
-    end
     it 'Creates the report with a class when there is no param' do
       Innsights::Config::Model.should_receive(:new).with(DummyClass)
       Innsights.watch(DummyClass){}
