@@ -1,17 +1,24 @@
-# @attr [Object] record the record from which the report's attributes will be fetched
-# @attr [Object] report the report with the configuration of how to reach the report's attributes
-# @attr [String, Symbol] name the fetched name value
-# @attr [Object] user the fetched user object
-# @attr [Object] group the fetched group object
-# @attr [Time] created_at the fetched timestamp value
-# @attr [Hash] metrics the prepared metrics hash
 module Innsights
   module Fetchers
+    # Stores the record instance that holds the key values that will be sent to the service
+    # the way to get these values from within the record is configured using the `watch` DSL
+    #
+    # @attr [Object] record the record from which the report's attributes will be fetched
+    # @attr [Object] report the report with the configuration of how to reach the report's attributes
+    # @attr [String, Symbol] name the fetched name value
+    # @attr [Object] user the fetched user object
+    # @attr [Object] group the fetched group object
+    # @attr [Time] created_at the fetched timestamp value
+    # @attr [Hash] metrics the prepared metrics hash
     class Record
       include Innsights::Helpers::Config
 
       attr_accessor :record, :report, :name, :user, :group, :metrics, :created_at, :condition
 
+      # Fetches the information from the record with the configuration set in report
+      # 
+      # @param [Innsights::Config::Model, Innsights::Config::Controller] report that holds the configuration
+      # @param [Object] record the record that holds the information
       def initialize(record, report)
         @record = record
         @report = report

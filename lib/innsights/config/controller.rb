@@ -1,11 +1,18 @@
-# @param [String] catalyst the catalyst formated as 'controller#action'
-# @param [String] controller_name the first part of the catalyst, the controller name without the word 'controller'
-# @param [String] action_name the action of the controller that will be injected with the after_filter
 module Innsights
   module Config
+    # Uses a DSL to configure a report in a Controller and prepares it to run on an after_filter
+    # @param [String] catalyst the catalyst formated as 'controller#action'
+    # @param [String] controller_name the first part of the catalyst, the controller name without the word 'controller'
+    # @param [String] action_name the action of the controller that will be injected with the after_filter
     class Controller < Config::Base
       attr_accessor :controller_name, :action_name, :catalyst
 
+      # Sets up the controller and action with the catalyst of the format "controller#action"
+      # 
+      # @param [String] catalyst the string catalyst that has both the controller and action names
+      # @example
+      #   # Will create a filter on UsersController, on the create action
+      #   Innsights::Config::Controller.new('users#create')
       def initialize(catalyst)
         @catalyst = catalyst
         @controller_name, @action_name = catalyst.split('#')

@@ -1,36 +1,34 @@
-# What is Innsights?
+# Innsights
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+This is the client gem to communicate with the Innsights API. 
 
-See [wiki](https://github.com/innku/innsights-gem/wiki) for full documentation. 
+Innsights is the service that gives you the power to answer:
+
+* ¿What are your users doing?
+* ¿Which ones are behaving the way you want?
+* ¿How can you replicate this behaviour?
+
+Innsights answers these questions by giving you an easy way to track the features in your application, the users getting involved with those features and the characteristics of those users.
 
 # Getting Started
 
-This tutorial assumes that you already have an Innsights account, if this isn't the case please proceed to [create](http://innsights.me) one.
+You have an Innsights account right? 
 
-## 1. Install it
+Not yet? [Get one right here](http://innsights.me).
 
-Add it to the **Gemfile**
+## 1. Get the gem
 
-```ruby
-gem 'innsights'
-```
-
-run:
-
-```
-bundle install
-```
-
-#### Using the latest version
-NOTE: This version may not be stable. It is recommended to use the sable one. 
+On your **Gemfile**
 
 ```ruby
-gem 'innsights', :git => "git://github.com/innku/innsights-gem", :branch => 'develop'
-
+gem 'innsights', :github => "innku/innsights-gem"
 ```
 
-See [Stand alone installation](https://github.com/innku/innsights-gem/wiki/Stand-alone-setup-and-installation) for details.
+#### Living on the edge (Gem's latest bells and whistles)
+
+```ruby
+gem 'innsights', :github => "innku/innsights-gem", :branch => 'develop'
+```
 
 ## 2. Set it up
 
@@ -38,156 +36,180 @@ See [Stand alone installation](https://github.com/innku/innsights-gem/wiki/Stand
 
 ```
 rails generate innsights:install 
-
 ```
 
-Enter your Innsights `email` and `password`.
+The generator will prompt for your `email` and `password`. Be kind and comply.
 
 Two files will be created:
 
-**config/innsights.yml**  It contains your credentials and application information.
+* **config/innsights.yml** (Credentials and configuration)
+* **config/initializers/innsights.rb** (Action tracking configuration)
 
-```ruby
-credentials:
-  app: application-subdomain
-  token: application-token    
-```
+Not using Rails? See [Stand alone setup](https://github.com/innku/innsights-gem/wiki/Stand-alone-setup-and-installation)
 
+## 3. Setup the users
 
-**config/initializers/innsights.rb** It contains the actions that will be reported to Innsights
-
+To relate the actions happening on your application with your actual users, we need you to specify the class that stores your users information and the methods that hold the pieces of data that Innsights needs.
 
 ```ruby
 Innsights.setup do
-  .
-  .
-  .
-  # Available options are listed below
-end
+  ...
+  user User do
+    display :name                  
+    id      :your_id
+    group   :group_class
+  end    
+  ...
+end    
 ```
 
-See [Stand alone setup](https://github.com/innku/innsights-gem/wiki/Stand-alone-setup-and-installation) for details.
-## 3. Setup the users
+The `user` DSL specifies:
 
-NOTE: Code in this section should be added within an `Innsights.setup` block.
+* `display`: Human readable string of your user. Defaults to: `:to_s`
+* `id`: Unique identifier. Defaults to: `:id`
 
-Describe the user object structure that will be used.
+Optionally, if your users belong to a group such as a company or a team and it has an attribute that relates the two you can specify it with:
 
-```ruby
-user UserClass  
-```
+* `group`: You'll need to specify the id and display for the group as well. More on that on the next section
 
-**Default behavior:**
-
-* `#to_s` method is used to get the user **display**.
-* `#id` method is used to get the user **id**.
-
-**Customization:**
+If your using the defaults and your users do not belong to any group, your user setup could look like this:
 
 ```ruby
-user User do
-  display :name                  
-  id      :your_id
-  group   :group_class
-end        
+Innsights.setup do
+  ...
+  user User  
+  ...
+end    
 ```
 
 ## 4. Setup the groups
 
-NOTE: Code in this section should be added within an `Innsights.setup` block.
-
-Describe the group object structure that will be used.
+If you want to group your users in a group model such as a company, or a team, you will also need to specify an id and display for that group.
 
 ```ruby
-group GroupClass
-```
-
-**Default behavior:**
-
-* `#to_s` method is used to get the group **display**.
-* `#id` method is used to get the group **id**.
-
-**Customization:**
-
-```ruby
-group GroupClass do
-  display  :name
-  id       :your_id
+Innsights.setup do
+  ...
+  group GroupClass do
+    display  :name
+    id       :your_id
+  end
+  ...
 end
 ```
-See [Multiple groups](https://github.com/innku/innsights-gem/wiki/Multiple-Groups) for details.
+The `group` DSL specifies:
 
-## 5. Setup the reports
+* `display`: Human readable string of your group. Defaults to: `:to_s`
+* `id`: Unique identifier. Defaults to: `:id`
 
-* Report: Lorem ipsum, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-* Action: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-* Metric: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-
-See [What are actions and metrics?](https://github.com/innku/innsights-gem/wiki/What-are-actions-and-metrics%3F) for details.
-
-### Report from a model
-
-This will send a report to Innsights whenever a Tweet is created.
+If your groups use both the specified defaults, the configuration might loook like:
 
 ```ruby
-watch Tweet do
+Innsights.setup do
+  ...
+  group GroupClass
+  ...
 end
 ```
 
-**Default behavior:**
+## 5. Track your actions
 
-* `report` it uses the object class name as the report name.
-* `#user` method is called to get the user
-* `#group` method is used to get the group
-* The action will be triggered upon object creation.
+There are three ways to report what your users are doing to Innsights.
 
-**Customization:**
+### The Fast way
+
+The only mandatory attribute is the name
 
 ```ruby
-watch Tweet do
-  report :tweet_deleted
-  user   :user
-  group  :company
-  upon   :delete
-  timestamp :time_method
-end  
+Innsights.report('Purchased Book').run
 ```
 
-### Report from a controller action
+Optional attributes can be added. The user is strongly encouraged to be:
+
+```ruby
+Innsights.report('Purchased Book', user: current_user, :created_at: 1.day.ago).run
+```
+
+If the tracked action moves any actionable metrics, you are encouraged to track them as well
+
+```ruby
+Innsights.report('Purchased Book', user: current_user, measure: {money: @book.price}).run
+```
+
+[What are metrics?](https://github.com/innku/innsights-gem/wiki/What-are-actions-and-metrics%3F)
+
+The attributes of an action are:
+
+* `name`
+* `created_at`
+* `user`
+* `measure` (hash of actionable metrics with numeric values)
+
+This Innsights.report method can be called anywhere in your application.
+
+Also important: a group can be explicitly set and it will supercede that of the user configuration. 
+
+### The DSL way
+
+A cleaner way of specifying the reports is at the initializer in: **config/initializers/innsights.rb**
+
+#### Report on model callbacks
+
+```ruby
+Innsights.setup do
+  ...
+  watch Tweet do
+    report      'New Tweet'
+    user        :user
+    created_at  :created_at
+    upon        :after_create
+  end
+  ...
+end
+```
+
+Every DSL method can receive a block that will yield the Model Record
+
+```ruby
+Innsights.setup do
+  ...
+  watch Tweet do
+    report      'Delete Tweet'
+    user        :user
+    created_at  :created_at
+    measure     :chars, with: lambda {|tweet| tweet.body.size }
+    upon        :after_destroy
+  end
+  ...
+end
+```
+
+The DSL has the same methods that the Innsights.report optional attributes, with the addition of:
+
+  * `upon`: Defaults to: `:after_create`
+
+#### Report after a controller action
 
 This will send a report to Innsights after accessing to the `users#new` action.
 
 ```ruby
-on 'users#new' do
-  report :new_user
+watch 'account#prices' do
+  report  'Upgrade intention'
+  user    :current_user
+  measure :
 end
 ```
-
-**Default behavior:**
-
-* **user:**       No user will be sent. 
-* **group:**     No group will be sent.
-* **created_at:** `Time.now` will be used for the timestamp.
-* **measure:**   No metric will be sent.
-
-**Customization:**
 
 ```ruby
-on 'users#new' do
-  report :new_user
-  user   :current_user
-  group  :company
-  upon   :delete
-  timestamp :time_method
+watch 'home#contact' do
+  report 'Seeking Information'
 end
 ```
 
-### Conditional Reports
-NOTE: Code in this section should be added within an `Innsights.setup` block.
+NOTE: if you pass a block to a dsl method, it will yield the controller instance
+
+#### Special cases
 
 A condition can be added to a report to specify when the action will be triggered. 
-
-This action will only be reported to Innsights when the tweet has a link.
 
 ```ruby
 watch Tweet do
@@ -195,63 +217,44 @@ watch Tweet do
 end
 ```
 
-### Add metrics to your reports
-
-Metrics are used to add measurements related to the report
-
-Metrics can be added to any report by using the `measure` attribute. 
+The measure attribute can be called more than once to add additional Actionable Metrics
 
 ```ruby
 watch Tweet do
-  report :new_tweet
+  report 'New Tweet'
   measure words:, with: :word_count          #calls tweet.word_count
   measure characters:, with: :char_count     #calls tweet.char_count
 end
 ```
-To get the total `words` and `characters` the specified methods will be called on the tweet object.
 
-See [Stand alone reports](https://github.com/innku/innsights-gem/wiki/Stand-alone-reports) for details.
+## 6. Queueing action reports
 
-## 6. Set configuration options
-
-NOTE: Code in this section should be added within an `Innsights.setup` block.
-
-Configuration options are set under the `config` block
+* **Resque:** Requires that you have [resque](https://github.com/defunkt/resque) installed and resque workers running.
 
 ```ruby
-config do
- .
- .
- .
-end
+  Innsights.setup do
+    ...
+    config do
+      queue :resque
+    end
+    ...
+  end
 ```
 
-### Queue system
-
-**Default behavior:**
-
-No queue system will be used to send the actions
-
-**Customization:**
-
-* **Resque:** This require you to have [resque](https://github.com/defunkt/resque) dependencies installed and resque workers running.
-
-```ruby
-config do
-  queue :resque
-end
-```
-
-* **Delayed_job:** This require you to have [delayed_job](https://github.com/collectiveidea/delayed_job) dependencies installed and delayed_job workers running.
+* **Delayed_job:** Requires that you have [delayed_job](https://github.com/collectiveidea/delayed_job)  installed and delayed_job workers running.
 
 ```ruby	
-config do
-  queue :delay_job
-end
+Innsights.setup do
+    ...
+    config do
+      queue :delayed_job
+    end
+    ...
+  end
 ```
 
-See [Configuration Options](https://github.com/innku/innsights-gem/wiki/Configuration-Options) for details.
+Also check out[other configuration Options](https://github.com/innku/innsights-gem/wiki/Configuration-Options) for details.
 
 # License 
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+We have a LICENSE File. Check it out.

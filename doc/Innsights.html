@@ -1,0 +1,1979 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Innsights
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (I)</a> &raquo;
+    
+    
+    <span class="title">Innsights</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Innsights
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/innsights.rb<span class="defines">,<br />
+  lib/innsights/client.rb,<br /> lib/innsights/report.rb,<br /> lib/innsights/railtie.rb,<br /> lib/innsights/version.rb,<br /> lib/innsights/config/base.rb,<br /> lib/innsights/config/user.rb,<br /> lib/innsights/config/group.rb,<br /> lib/innsights/config/model.rb,<br /> lib/innsights/helpers/tasks.rb,<br /> lib/innsights/error_message.rb,<br /> lib/innsights/fetchers/user.rb,<br /> lib/innsights/helpers/config.rb,<br /> lib/innsights/fetchers/group.rb,<br /> lib/innsights/jobs/run_report.rb,<br /> lib/innsights/fetchers/record.rb,<br /> lib/innsights/config/controller.rb,<br /> lib/generators/innsights/install/install_generator.rb</span>
+</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Innsights/Config.html" title="Innsights::Config (module)">Config</a></span>, <span class='object_link'><a href="Innsights/Fetchers.html" title="Innsights::Fetchers (module)">Fetchers</a></span>, <span class='object_link'><a href="Innsights/Helpers.html" title="Innsights::Helpers (module)">Helpers</a></span>, <span class='object_link'><a href="Innsights/Jobs.html" title="Innsights::Jobs (module)">Jobs</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Innsights/Client.html" title="Innsights::Client (class)">Client</a></span>, <span class='object_link'><a href="Innsights/ErrorMessage.html" title="Innsights::ErrorMessage (class)">ErrorMessage</a></span>, <span class='object_link'><a href="Innsights/InstallGenerator.html" title="Innsights::InstallGenerator (class)">InstallGenerator</a></span>, <span class='object_link'><a href="Innsights/Railtie.html" title="Innsights::Railtie (class)">Railtie</a></span>, <span class='object_link'><a href="Innsights/Report.html" title="Innsights::Report (class)">Report</a></span>, <span class='object_link'><a href="Innsights/RunReport.html" title="Innsights::RunReport (class)">RunReport</a></span>
+    
+  
+</p>
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Version of the client gem</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0.3.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="debugging-classvariable" class="">@@debugging =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>false</span></pre></dd>
+      
+        <dt id="enable_hash-classvariable" class="">@@enable_hash =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span> <span class='label'>development:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>test:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>staging:</span><span class='kw'>true</span><span class='comma'>,</span> <span class='label'>production:</span><span class='kw'>true</span> <span class='rbrace'>}</span></pre></dd>
+      
+        <dt id="group_call-classvariable" class="">@@group_call =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>nil</span></pre></dd>
+      
+        <dt id="group_class-classvariable" class="">@@group_class =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:group</span></pre></dd>
+      
+        <dt id="group_id-classvariable" class="">@@group_id =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:id</span></pre></dd>
+      
+        <dt id="group_display-classvariable" class="">@@group_display =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:to_s</span></pre></dd>
+      
+        <dt id="queue_system-classvariable" class="">@@queue_system =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>nil</span></pre></dd>
+      
+        <dt id="reports-classvariable" class="">@@reports =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="test_url-classvariable" class="">@@test_url =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>innsights.dev</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="url-classvariable" class="">@@url =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>innsights.me</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="user_call-classvariable" class="">@@user_call =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:user</span></pre></dd>
+      
+        <dt id="staging_url-classvariable" class="">@@staging_url =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>innsights.info</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+        <dt id="log_errors-classvariable" class="">@@log_errors =
+          
+        </dt>
+        <dd><pre class="code"><span class='kw'>true</span></pre></dd>
+      
+        <dt id="user_id-classvariable" class="">@@user_id =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:id</span></pre></dd>
+      
+        <dt id="user_display-classvariable" class="">@@user_display =
+          
+        </dt>
+        <dd><pre class="code"><span class='symbol'>:to_s</span></pre></dd>
+      
+        <dt id="supported_queue_systems-classvariable" class="">@@supported_queue_systems =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span><span class='symbol'>:delayed_job</span><span class='comma'>,</span> <span class='symbol'>:resque</span><span class='rbracket'>]</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app_subdomain-class_method" title="app_subdomain (class method)">+ (String) <strong>app_subdomain</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configured subdomain of the client app.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app_token-class_method" title="app_token (class method)">+ (String) <strong>app_token</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configured token of client app.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#app_url-class_method" title="app_url (class method)">+ (String) <strong>app_url</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Final url to post actions to, includes the rails app environment.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#config-class_method" title="config (class method)">+ (Object) <strong>config</strong>(*envs) { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>Configure specific behaviour on config/innsights.yml instead</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#credentials-class_method" title="credentials (class method)">+ (Hash) <strong>credentials</strong>(cred = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Configuration variables of client app.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#current_env-class_method" title="current_env (class method)">+ (Object) <strong>current_env</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Current app environment.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enable-class_method" title="enable (class method)">+ (Object) <strong>enable</strong>(env = nil, value) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Enables or disables reporting with client.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enabled%3F-class_method" title="enabled? (class method)">+ (Boolean) <strong>enabled?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Answers if the current environment is enabled or not.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#environment-class_method" title="environment (class method)">+ (Object) <strong>environment</strong>(env) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets the environment.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#group-class_method" title="group (class method)">+ (Object) <strong>group</strong>(klass) { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets up the group class and configures the display and id.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#mode-class_method" title="mode (class method)">+ (Object) <strong>mode</strong>(mode) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public deprecated">
+  <span class="summary_signature">
+    
+      <a href="#on-class_method" title="on (class method)">+ (Object) <strong>on</strong>(catalyst) { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  <span class="deprecated note title">deprecated</span>
+  
+
+  
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>User #<span class='object_link'><a href="#watch-class_method" title="Innsights.watch (method)">Innsights.watch</a></span> instead</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#queue-class_method" title="queue (class method)">+ (Object) <strong>queue</strong>(queue = '') </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets up the queue library used to report actions to Innsights.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#rails%3F-class_method" title="rails? (class method)">+ (Boolean) <strong>rails?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>True if Rails is defined in the contect.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#report-class_method" title="report (class method)">+ (Innsights::Report) <strong>report</strong>(name, options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Creates a report on the fly.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#setup-class_method" title="setup (class method)">+ (Object) <strong>setup</strong> { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Main configuration method to create all event watchers.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#user-class_method" title="user (class method)">+ (Object) <strong>user</strong>(klass) { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets up the user class and configures the id, display and group.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#watch-class_method" title="watch (class method)">+ (Object) <strong>watch</strong>(instance) { ... }</a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets up and active record callback for models or an after filter for controllers.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#test_mode-instance_method" title="#test_mode (instance method)">- (String) <strong>test_mode</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets testing environment on for local server development.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="app_subdomain-class_method">
+  
+    + (<tt>String</tt>) <strong>app_subdomain</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Configured subdomain of the client app</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>subdomain of current app</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_app_subdomain'>app_subdomain</span>
+  <span class='cvar'>@@app_subdomain</span> <span class='op'>||=</span> <span class='id identifier rubyid_credentials'>credentials</span><span class='lbracket'>[</span><span class='symbol'>:app</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="app_token-class_method">
+  
+    + (<tt>String</tt>) <strong>app_token</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Configured token of client app</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>authentication token of app</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+112
+113
+114</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 112</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_app_token'>app_token</span>
+  <span class='cvar'>@@app_token</span> <span class='op'>||=</span> <span class='id identifier rubyid_credentials'>credentials</span><span class='lbracket'>[</span><span class='symbol'>:token</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="app_url-class_method">
+  
+    + (<tt>String</tt>) <strong>app_url</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Final url to post actions to, includes the rails app environment</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>contains app subdomain, innsights url and client app environment</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+136
+137
+138</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 136</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_app_url'>app_url</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_app_subdomain'>app_subdomain</span><span class='rbrace'>}</span><span class='tstring_content'>.</span><span class='tstring_end'>&quot;</span></span> <span class='op'>&lt;&lt;</span> <span class='cvar'>@@url</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_env'>current_env</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="config-class_method">
+  
+    + (<tt>Object</tt>) <strong>config</strong>(*envs) { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Configure specific behaviour on config/innsights.yml instead</p>
+</div></div>
+<p>Extra configuration for custom experience</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* Queue system
+* Test mode</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+174
+175
+176
+177
+178
+179
+180
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 174</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_envs'>envs</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_envs'>envs</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_envs'>envs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_env'>env</span><span class='op'>|</span> 
+    <span class='cvar'>@@env_scope</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_env'>current_env</span> <span class='op'>==</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+    <span class='cvar'>@@env_scope</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="credentials-class_method">
+  
+    + (<tt>Hash</tt>) <strong>credentials</strong>(cred = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Configuration variables of client app</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code">Innsights.credentials {&quot;token&quot;: 'xxx-token', subdomain: 'my_app'} # =&gt; {token: 'xxx-token', subdomain: 'my_app'}
+Innsights.credentials # =&gt; {token: 'xxx-token', subdomain: 'my_app'}</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cred</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>hash of credentials containing both subdmain and token</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>containing the subdomain and authentication token of app</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+123
+124
+125
+126
+127
+128
+129
+130
+131</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 123</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_credentials'>credentials</span><span class='lparen'>(</span><span class='id identifier rubyid_cred'>cred</span><span class='op'>=</span><span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_cred'>cred</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span> <span class='const'>Hash</span>
+    <span class='cvar'>@@credentials</span> <span class='op'>=</span> <span class='id identifier rubyid_cred'>cred</span><span class='period'>.</span><span class='id identifier rubyid_symbolize_keys'>symbolize_keys</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_rails?'>rails?</span>
+    <span class='cvar'>@@credentials</span> <span class='op'>||=</span> <span class='id identifier rubyid_credentials_from_yaml'>credentials_from_yaml</span>
+  <span class='kw'>else</span>
+    <span class='cvar'>@@credentials</span> 
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="current_env-class_method">
+  
+    + (<tt>Object</tt>) <strong>current_env</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Current app environment. The order of priority is:
+* User set environment
+* Rails
+* RACK_ENV environment variable</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+303
+304
+305
+306
+307</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 303</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_env'>current_env</span>
+  <span class='kw'>return</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user_env'>user_env</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user_env'>user_env</span>
+  <span class='kw'>return</span> <span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_env'>env</span> <span class='kw'>if</span> <span class='id identifier rubyid_rails?'>rails?</span>
+  <span class='kw'>return</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>RACK_ENV</span><span class='tstring_end'>'</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enable-class_method">
+  
+    + (<tt>Object</tt>) <strong>enable</strong>(env = nil, value) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>clean this mess up when self.config goes away</p>
+</div>
+  </div>
+
+<p>Enables or disables reporting with client</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>env</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>the environment in which the enabling/disabling will take action</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>true if enabled, false if disabled</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 274</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_enable'>enable</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='op'>=</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_env'>env</span> <span class='op'>||=</span> <span class='cvar'>@@env_scope</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='cvar'>@@enable_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span> 
+  <span class='kw'>else</span>
+    <span class='cvar'>@@enable_hash</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_env'>env</span><span class='comma'>,</span> <span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+      <span class='cvar'>@@enable_hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_env'>env</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="enabled?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>enabled?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>should not be using a hash. config messed up with this implementation</p>
+</div>
+  </div>
+
+<p>Answers if the current environment is enabled or not</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+287
+288
+289</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 287</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_enabled?'>enabled?</span>
+  <span class='cvar'>@@enable_hash</span><span class='lbracket'>[</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_env'>current_env</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="environment-class_method">
+  
+    + (<tt>Object</tt>) <strong>environment</strong>(env) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The user set environment holds priority over all others</p>
+</div>
+  </div>
+
+<p>Sets the environment.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>env</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>environment set by user</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+295
+296
+297</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 295</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_environment'>environment</span> <span class='id identifier rubyid_env'>env</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user_env'>user_env</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="group-class_method">
+  
+    + (<tt>Object</tt>) <strong>group</strong>(klass) { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets up the group class and configures the display and id</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:id</span>
+  <span class='id identifier rubyid_display'>display</span> <span class='symbol'>:corp</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* display
+* id</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+209
+210
+211
+212</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 209</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_group_class'>group_class</span> <span class='op'>=</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_underscore'>underscore</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='const'>Config</span><span class='op'>::</span><span class='const'>Group</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="mode-class_method">
+  
+    + (<tt>Object</tt>) <strong>mode</strong>(mode) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+146
+147
+148
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 146</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span><span class='lparen'>(</span><span class='id identifier rubyid_mode'>mode</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:staging</span> <span class='op'>||</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:test</span>
+    <span class='cvar'>@@test_mode</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='cvar'>@@url</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mode'>mode</span><span class='rbrace'>}</span><span class='tstring_content'>_url</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on-class_method">
+  
+    + (<tt>Object</tt>) <strong>on</strong>(catalyst) { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>User #<span class='object_link'><a href="#watch-class_method" title="Innsights.watch (method)">watch</a></span> instead</p>
+</div></div>
+<p>Sets up an event observer for creating an custom action on Innsights</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* Action Name
+* Timestamp
+* User call
+* Event Trigger</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+246
+247
+248
+249
+250</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 246</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span><span class='lparen'>(</span><span class='id identifier rubyid_catalyst'>catalyst</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='op'>=</span> <span class='const'>Config</span><span class='op'>::</span><span class='const'>Controller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_catalyst'>catalyst</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_commit'>commit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="queue-class_method">
+  
+    + (<tt>Object</tt>) <strong>queue</strong>(queue = '') 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets up the queue library used to report actions to Innsights</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>queue</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>''</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>libraries available are :resque, and :delayed_job</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+255
+256
+257
+258
+259</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 255</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_queue'>queue</span><span class='lparen'>(</span><span class='id identifier rubyid_queue'>queue</span><span class='op'>=</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='cvar'>@@supported_queue_systems</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_queue'>queue</span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_queue_system'>queue_system</span> <span class='op'>=</span> <span class='id identifier rubyid_queue'>queue</span> 
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="rails?-class_method">
+  
+    + (<tt>Boolean</tt>) <strong>rails?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>True if Rails is defined in the contect</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+310
+311
+312</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 310</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rails?'>rails?</span>
+  <span class='kw'>defined?</span><span class='lparen'>(</span><span class='const'>Rails</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="report-class_method">
+  
+    + (<tt><span class='object_link'><a href="Innsights/Report.html" title="Innsights::Report (class)">Innsights::Report</a></span></tt>) <strong>report</strong>(name, options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Creates a report on the fly. Can be used from within any file</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>is the name of the action to be reported</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Innsights/Report.html" title="Innsights::Report (class)">Innsights::Report</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the report instance ready to run</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+265
+266
+267</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 265</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>Report</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="setup-class_method">
+  
+    + (<tt>Object</tt>) <strong>setup</strong> { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Main configuration method to create all event watchers</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_watch'>watch</span> <span class='const'>Post</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_report'>report</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>New Post</span><span class='tstring_end'>'</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* App user class
+* Appp action reports</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165
+166</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_client'>client</span> <span class='op'>=</span> <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_app_subdomain'>app_subdomain</span><span class='comma'>,</span> <span class='id identifier rubyid_app_token'>app_token</span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_current_env'>current_env</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="user-class_method">
+  
+    + (<tt>Object</tt>) <strong>user</strong>(klass) { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets up the user class and configures the id, display and group</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_id'>id</span> <span class='symbol'>:id</span>
+  <span class='id identifier rubyid_display'>display</span> <span class='symbol'>:name</span>
+  <span class='id identifier rubyid_group'>group</span> <span class='symbol'>:company</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* display
+* id
+* group</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197
+198</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 195</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user'>user</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_user_call'>user_call</span> <span class='op'>=</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='const'>Config</span><span class='op'>::</span><span class='const'>User</span><span class='period'>.</span><span class='id identifier rubyid_class_eval'>class_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span> 
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="watch-class_method">
+  
+    + (<tt>Object</tt>) <strong>watch</strong>(instance) { ... }
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets up and active record callback for models or an after filter for controllers</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='comment'># Configure callback for models
+</span><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_watch'>watch</span> <span class='const'>Order</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Purchase</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_event'>event</span> <span class='symbol'>:after_create</span>
+  <span class='id identifier rubyid_user'>user</span>  <span class='symbol'>:buyer</span>
+<span class='kw'>end</span>
+<span class='comment'># Configure callback for controllers
+</span><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_watch'>watch</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>account#prices</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Upgrade Intention</span><span class='tstring_end'>'</span></span>
+  <span class='id identifier rubyid_user'>user</span>   <span class='symbol'>:current_user</span>
+<span class='kw'>end</span></pre>
+    
+  </div>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Configuration for
+* Action Name
+* Timestamp
+* User call
+* Event Trigger</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+233
+234
+235
+236
+237</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 233</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_watch'>watch</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='op'>=</span> <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='const'>Config</span><span class='op'>::</span><span class='const'>Controller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Config</span><span class='op'>::</span><span class='const'>Model</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_instance'>instance</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_commit'>commit</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="test_mode-instance_method">
+  
+    - (<tt>String</tt>) <strong>test_mode</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets testing environment on for local server development</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_mode'>mode</span> <span class='symbol'>:test</span> <span class='comment'># =&gt; innsights.dev</span></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>on</span>
+      
+      
+        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>testing on or off</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>with local server url if on, nil if off</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights.rb', line 145</span>
+
+<span class='id identifier rubyid_mattr_reader'>mattr_reader</span> <span class='symbol'>:test_mode</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Oct 10 01:28:44 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

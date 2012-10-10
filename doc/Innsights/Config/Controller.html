@@ -1,0 +1,747 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Innsights::Config::Controller
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (C)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Innsights.html" title="Innsights (module)">Innsights</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Config.html" title="Innsights::Config (module)">Config</a></span></span>
+     &raquo; 
+    <span class="title">Controller</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Innsights::Config::Controller
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="Innsights::Config::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="Innsights::Config::Base (class)">Base</a></span></li>
+          
+            <li class="next">Innsights::Config::Controller</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/innsights/config/controller.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Uses a DSL to configure a report in a Controller and prepares it to run on an after_filter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#action_name-instance_method" title="#action_name (instance method)">- (Object) <strong>action_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute action_name.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#catalyst-instance_method" title="#catalyst (instance method)">- (Object) <strong>catalyst</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute catalyst.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#controller_name-instance_method" title="#controller_name (instance method)">- (Object) <strong>controller_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute controller_name.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="Base.html" title="Innsights::Config::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#condition-instance_method" title="Innsights::Config::Base#condition (method)">#condition</a></span>, <span class='object_link'><a href="Base.html#created_at_method-instance_method" title="Innsights::Config::Base#created_at_method (method)">#created_at_method</a></span>, <span class='object_link'><a href="Base.html#metrics-instance_method" title="Innsights::Config::Base#metrics (method)">#metrics</a></span>, <span class='object_link'><a href="Base.html#name-instance_method" title="Innsights::Config::Base#name (method)">#name</a></span>, <span class='object_link'><a href="Base.html#report_group-instance_method" title="Innsights::Config::Base#report_group (method)">#report_group</a></span>, <span class='object_link'><a href="Base.html#report_user-instance_method" title="Innsights::Config::Base#report_user (method)">#report_user</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#commit-instance_method" title="#commit (instance method)">- (Class) <strong>commit</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Records the configuration of the report into the controller and readies it with an after_filter
+this method will not work unless the controller class actually responds to after_filter.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#controller-instance_method" title="#controller (instance method)">- (Class) <strong>controller</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Controller to inject the after filter into.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (Controller) <strong>initialize</strong>(catalyst) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Sets up the controller and action with the catalyst of the format &quot;controller#action&quot;.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#valid%3F-instance_method" title="#valid? (instance method)">- (Boolean) <strong>valid?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Is the controller method valid to inject an after_filter?.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="Base.html" title="Innsights::Config::Base (class)">Base</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Base.html#created_at-instance_method" title="Innsights::Config::Base#created_at (method)">#created_at</a></span>, <span class='object_link'><a href="Base.html#group-instance_method" title="Innsights::Config::Base#group (method)">#group</a></span>, <span class='object_link'><a href="Base.html#measure-instance_method" title="Innsights::Config::Base#measure (method)">#measure</a></span>, <span class='object_link'><a href="Base.html#report-instance_method" title="Innsights::Config::Base#report (method)">#report</a></span>, <span class='object_link'><a href="Base.html#run-instance_method" title="Innsights::Config::Base#run (method)">#run</a></span>, <span class='object_link'><a href="Base.html#setup-instance_method" title="Innsights::Config::Base#setup (method)">#setup</a></span>, <span class='object_link'><a href="Base.html#user-instance_method" title="Innsights::Config::Base#user (method)">#user</a></span>, <span class='object_link'><a href="Base.html#valid_for_push%3F-instance_method" title="Innsights::Config::Base#valid_for_push? (method)">#valid_for_push?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Helpers/Config.html" title="Innsights::Helpers::Config (module)">Helpers::Config</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Helpers/Config.html#included-class_method" title="Innsights::Helpers::Config.included (method)">included</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Innsights::Config::Controller (class)">Controller</a></span></tt>) <strong>initialize</strong>(catalyst) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Sets up the controller and action with the catalyst of the format &quot;controller#action&quot;</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='comment'># Will create a filter on UsersController, on the create action
+</span><span class='const'>Innsights</span><span class='op'>::</span><span class='const'>Config</span><span class='op'>::</span><span class='const'>Controller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>users#create</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>catalyst</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the string catalyst that has both the controller and action names</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_catalyst'>catalyst</span><span class='rparen'>)</span>
+  <span class='ivar'>@catalyst</span> <span class='op'>=</span> <span class='id identifier rubyid_catalyst'>catalyst</span>
+  <span class='ivar'>@controller_name</span><span class='comma'>,</span> <span class='ivar'>@action_name</span> <span class='op'>=</span> <span class='id identifier rubyid_catalyst'>catalyst</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>#</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@name</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_action_name'>action_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span> <span class='id identifier rubyid_controller_name'>controller_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@metrics</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="action_name=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="action_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>action_name</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute action_name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_action_name'>action_name</span>
+  <span class='ivar'>@action_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="catalyst=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="catalyst-instance_method">
+  
+    - (<tt>Object</tt>) <strong>catalyst</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute catalyst</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_catalyst'>catalyst</span>
+  <span class='ivar'>@catalyst</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id="controller_name=-instance_method"></span>
+      <div class="method_details ">
+  <h3 class="signature " id="controller_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>controller_name</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns the value of attribute controller_name</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_controller_name'>controller_name</span>
+  <span class='ivar'>@controller_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="commit-instance_method">
+  
+    - (<tt>Class</tt>) <strong>commit</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Records the configuration of the report into the controller and readies it with an after_filter
+this method will not work unless the controller class actually responds to after_filter</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>controller class with the after_filter method embedded in it</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+27
+28
+29
+30
+31
+32
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 27</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_commit'>commit</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_valid?'>valid?</span>
+    <span class='id identifier rubyid_callback_process'>callback_process</span> <span class='op'>=</span> <span class='id identifier rubyid_setup'>setup</span><span class='lparen'>(</span><span class='id identifier rubyid_controller'>controller</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_after_filter'>after_filter</span> <span class='id identifier rubyid_callback_process'>callback_process</span><span class='comma'>,</span> <span class='symbol'>:only</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_action_name'>action_name</span>
+    <span class='id identifier rubyid_controller'>controller</span>
+  <span class='kw'>else</span>
+    <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>ErrorMessage</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_controller_name'>controller_name</span><span class='rbrace'>}</span><span class='tstring_content'> class has no valid method </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_action_name'>action_name</span><span class='rbrace'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="controller-instance_method">
+  
+    - (<tt>Class</tt>) <strong>controller</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Controller to inject the after filter into</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>controller class</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+40
+41
+42</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 40</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_controller'>controller</span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_controller_name'>controller_name</span><span class='period'>.</span><span class='id identifier rubyid_classify'>classify</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span> <span class='op'>&lt;&lt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Controller</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="valid?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>valid?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Is the controller method valid to inject an after_filter?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>true if valid, false if invalid</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/config/controller.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
+  <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:after_filter</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_action_methods'>action_methods</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_action_name'>action_name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Oct 10 01:28:45 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

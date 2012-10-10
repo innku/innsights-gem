@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><div id='filecontents'><h1>Innsights</h1>
+
+<p>This is the client gem to communicate with the Innsights API. </p>
+
+<p>Innsights is the service that gives you the power to answer:</p>
+
+<ul>
+<li>¿What are your users doing?</li>
+<li>¿Which ones are behaving the way you want?</li>
+<li>¿How can you replicate this behaviour?</li>
+</ul>
+
+<p>Innsights answers these questions by giving you an easy way to track the features in your application, the users getting involved with those features and the characteristics of those users.</p>
+
+<h1>Getting Started</h1>
+
+<p>You have an Innsights account right? </p>
+
+<p>Not yet? <a href="http://innsights.me">Get one right here</a>.</p>
+
+<h2>1. Get the gem</h2>
+
+<p>On your <strong>Gemfile</strong></p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>innsights</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>innku/innsights-gem</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<h4>Living on the edge (Gem's latest bells and whistles)</h4>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>innsights</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='symbol'>:github</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>innku/innsights-gem</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:branch</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>develop</span><span class='tstring_end'>'</span></span>
+</code></pre>
+
+<h2>2. Set it up</h2>
+
+<h3>Run the generator:</h3>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_rails'>rails</span> <span class='id identifier rubyid_generate'>generate</span> <span class='label'>innsights:</span><span class='id identifier rubyid_install'>install</span> 
+</code></pre>
+
+<p>The generator will prompt for your <code>email</code> and <code>password</code>. Be kind and comply.</p>
+
+<p>Two files will be created:</p>
+
+<ul>
+<li><strong>config/innsights.yml</strong> (Credentials and configuration)</li>
+<li><strong>config/initializers/innsights.rb</strong> (Action tracking configuration)</li>
+</ul>
+
+<p>Not using Rails? See <a href="https://github.com/innku/innsights-gem/wiki/Stand-alone-setup-and-installation">Stand alone setup</a></p>
+
+<h2>3. Setup the users</h2>
+
+<p>To relate the actions happening on your application with your actual users, we need you to specify the class that stores your users information and the methods that hold the pieces of data that Innsights needs.</p>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  user User do
+    display :name                  
+    id      :your_id
+    group   :group_class
+  end    
+  ...
+end    
+</code></pre>
+
+<p>The <code>user</code> DSL specifies:</p>
+
+<ul>
+<li><code>display</code>: Human readable string of your user. Defaults to: <code>:to_s</code></li>
+<li><code>id</code>: Unique identifier. Defaults to: <code>:id</code></li>
+</ul>
+
+<p>Optionally, if your users belong to a group such as a company or a team and it has an attribute that relates the two you can specify it with:</p>
+
+<ul>
+<li><code>group</code>: You'll need to specify the id and display for the group as well. More on that on the next section</li>
+</ul>
+
+<p>If your using the defaults and your users do not belong to any group, your user setup could look like this:</p>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  user User  
+  ...
+end    
+</code></pre>
+
+<h2>4. Setup the groups</h2>
+
+<p>If you want to group your users in a group model such as a company, or a team, you will also need to specify an id and display for that group.</p>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  group GroupClass do
+    display  :name
+    id       :your_id
+  end
+  ...
+end
+</code></pre>
+
+<p>The <code>group</code> DSL specifies:</p>
+
+<ul>
+<li><code>display</code>: Human readable string of your group. Defaults to: <code>:to_s</code></li>
+<li><code>id</code>: Unique identifier. Defaults to: <code>:id</code></li>
+</ul>
+
+<p>If your groups use both the specified defaults, the configuration might loook like:</p>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  group GroupClass
+  ...
+end
+</code></pre>
+
+<h2>5. Track your actions</h2>
+
+<p>There are three ways to report what your users are doing to Innsights.</p>
+
+<h3>The Fast way</h3>
+
+<p>The only mandatory attribute is the name</p>
+
+<pre class="code ruby"><code><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Purchased Book</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
+</code></pre>
+
+<p>Optional attributes can be added. The user is strongly encouraged to be:</p>
+
+<pre class="code ruby"><code>Innsights.report('Purchased Book', user: current_user, :created_at: 1.day.ago).run
+</code></pre>
+
+<p>If the tracked action moves any actionable metrics, you are encouraged to track them as well</p>
+
+<pre class="code ruby"><code><span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_report'>report</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Purchased Book</span><span class='tstring_end'>'</span></span><span class='comma'>,</span> <span class='label'>user:</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='comma'>,</span> <span class='label'>measure:</span> <span class='lbrace'>{</span><span class='label'>money:</span> <span class='ivar'>@book</span><span class='period'>.</span><span class='id identifier rubyid_price'>price</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span>
+</code></pre>
+
+<p><a href="https://github.com/innku/innsights-gem/wiki/What-are-actions-and-metrics%3F">What are metrics?</a></p>
+
+<p>The attributes of an action are:</p>
+
+<ul>
+<li><code>name</code></li>
+<li><code>created_at</code></li>
+<li><code>user</code></li>
+<li><code>measure</code> (hash of actionable metrics with numeric values)</li>
+</ul>
+
+<p>This Innsights module method can be called anywhere in your application.</p>
+
+<p>Also important: a group can be explicitly set and it will supercede that of the user configuration. </p>
+
+<h3>The DSL way</h3>
+
+<p>A cleaner way of specifying the reports is at the initializer in: <strong>config/initializers/innsights.rb</strong></p>
+
+<h4>Report on model callbacks</h4>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  watch Tweet do
+    report      'New Tweet'
+    user        :user
+    created_at  :created_at
+    upon        :after_create
+  end
+  ...
+end
+</code></pre>
+
+<p>Every DSL method can receive a block that will yield the Model Record</p>
+
+<pre class="code ruby"><code>Innsights.setup do
+  ...
+  watch Tweet do
+    report      'Delete Tweet'
+    user        :user
+    created_at  :created_at
+    measure     :chars, with: lambda {|tweet| tweet.body.size }
+    upon        :after_destroy
+  end
+  ...
+end
+</code></pre>
+
+<p>The DSL has the same methods that the Innsights.report optional attributes, with the addition of:</p>
+
+<ul>
+<li><code>upon</code> Defaults to: <code>:after_create</code></li>
+</ul>
+
+<h4>Report after a controller action</h4>
+
+<p>This will send a report to Innsights after accessing to the <code>users#new</code> action.</p>
+
+<pre class="code ruby"><code>watch 'account#prices' do
+  report  'Upgrade intention'
+  user    :current_user
+  measure :
+end
+</code></pre>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_watch'>watch</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>home#contact</span><span class='tstring_end'>'</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>Seeking Information</span><span class='tstring_end'>'</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>NOTE: if you pass a block to a dsl method, it will yield the controller instance</p>
+
+<h4>Special cases</h4>
+
+<p>A condition can be added to a report to specify when the action will be triggered. </p>
+
+<pre class="code ruby"><code><span class='id identifier rubyid_watch'>watch</span> <span class='const'>Tweet</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_report'>report</span> <span class='symbol'>:tweet_with_link</span><span class='comma'>,</span> <span class='label'>if:</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_tweet'>tweet</span><span class='op'>|</span> <span class='id identifier rubyid_tweet'>tweet</span><span class='period'>.</span><span class='id identifier rubyid_has_link?'>has_link?</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>The measure attribute can be called more than once to add additional Actionable Metrics</p>
+
+<pre class="code ruby"><code>watch Tweet do
+  report 'New Tweet'
+  measure words:, with: :word_count          #calls tweet.word_count
+  measure characters:, with: :char_count     #calls tweet.char_count
+end
+</code></pre>
+
+<h2>6. Queueing action reports</h2>
+
+<ul>
+<li><strong>Resque:</strong> Requires that you have <a href="https://github.com/defunkt/resque">resque</a> installed and resque workers running.</li>
+</ul>
+
+<pre class="code ruby"><code>  Innsights.setup do
+    ...
+    config do
+      queue :resque
+    end
+    ...
+  end
+</code></pre>
+
+<ul>
+<li><strong>Delayed_job:</strong> Requires that you have <a href="https://github.com/collectiveidea/delayed_job">delayed_job</a>  installed and delayed_job workers running.</li>
+</ul>
+
+<pre class="code ruby"><code>Innsights.setup do
+    ...
+    config do
+      queue :delayed_job
+    end
+    ...
+  end
+</code></pre>
+
+<p>Also check out<a href="https://github.com/innku/innsights-gem/wiki/Configuration-Options">other configuration Options</a> for details.</p>
+
+<h1>License</h1>
+
+<p>We have a LICENSE File. Check it out.</p>
+</div></div>
+
+    <div id="footer">
+  Generated on Wed Oct 10 01:28:43 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>

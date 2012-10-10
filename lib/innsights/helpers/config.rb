@@ -1,4 +1,5 @@
 module Innsights
+  # Module that helps build a DSL Around a given class and to consume the values of the user input
   module Helpers::Config
     
     def self.included(base)
@@ -29,7 +30,6 @@ module Innsights
     end
     
     module InstanceMethods
-
       # Calls the given method of the record or yields the given proc with the record.
       #
       # @param [Object] record the record that holds the information
@@ -60,7 +60,6 @@ module Innsights
           return strat
         end
       end
-
     end
 
   end

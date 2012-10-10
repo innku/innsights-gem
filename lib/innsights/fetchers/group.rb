@@ -1,8 +1,11 @@
-# @attr [Object] object contains the group object the user belongs to
 module Innsights
+  # Stores the group object and fetches the important parts for the API Service
+  # @attr [Object] object contains the group object the user belongs to
   class Fetchers::Group
     attr_accessor :object
     
+    # Sets the group object as the instance variable
+    # @param [Object] object the group object
     def initialize(object)
       @object = object
     end

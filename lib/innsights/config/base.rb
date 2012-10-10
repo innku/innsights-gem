@@ -1,9 +1,11 @@
-# @attr [String, Symbol] name report name being sent to Service
-# @attr [String, Symbol] created_at timestamp attribute of the watched class
-# @user [String, Symbol] user attribute of the watched class
-# @metrics [Hash] hash of metrics where the key is the name of the metric, and the value is the method of the record that gets the metric
 module Innsights
   module Config
+    # Parent class that holds the basic DSL information and how to setup a report within a controller or model
+    #
+    # @attr [String, Symbol] name report name being sent to Service
+    # @attr [String, Symbol] created_at_method timestamp attribute of the watched class
+    # @attr [String, Symbol] report_user attribute of the watched class
+    # @attr [Hash] metrics hash of metrics where the key is the name of the metric, and the value is the method of the record that gets the metric
     class Base
       include Helpers::Config
 

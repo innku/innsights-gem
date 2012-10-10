@@ -1,9 +1,12 @@
-# @attr [Object] object contains the user actor of the app's actions
 module Innsights
+  # Stores the user object and fetches the important parts for the API Service
+  # @attr [Object] object contains the user actor of the app's actions
   class Fetchers::User
-
+    
     attr_accessor :object
     
+    # Sets the user object as the instance variable
+    # @param [Object] object the user object
     def initialize(object)
       @object = object
     end

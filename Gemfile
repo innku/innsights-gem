@@ -8,6 +8,8 @@ group :development, :test do
   gem 'rake'
   gem 'rspec-rails'
   gem 'yard'
+  gem 'redcarpet', "~>1.17.2"
+  gem 'github-markup'
   gem 'sqlite3'
   gem 'timecop'
   gem 'webmock', '1.7.0'

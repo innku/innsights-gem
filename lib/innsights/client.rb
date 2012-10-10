@@ -1,6 +1,16 @@
 module Innsights
+  # Http client class that holds the Service API information
+  # 
+  # @attr [String] url the url of the service, can be production, staging or development
+  # @attr [String] subdomain the subdomain given to your application, by default the apps rails name
+  # @attr [String] token the key to posting and getting your information from the service
+  # @attr [String] env the environment in which the app is currently reporting, supports development, staging and production
+  # @example
+  #   client = Innsights::Client.new('innsights.me', 'my_application', 'xxx-my-token', 'development')
+  #   client.report({report: {:name: 'New post'}}) # => HTTP Response
   class Client
     
+    # Initialization method, sets up all the classes important attributes
     def initialize(service_url, subdomain, token, env)
       @url = service_url
       @subdomain = subdomain
@@ -8,12 +18,29 @@ module Innsights
       @env = env
     end
     
+    # Posts the given information to the actions service
+    # the action service is the main API Service, it receives the action params and creates
+    # * Stats graphics
+    # * User scoreboards
+    # * Group scoreboards
+    # @return [String] service API response
+    # @example 
+    #   client.report({report: {name: 'New post', user: {id: 1, name: 'Adrian'}, group: {id: 2, name: 'Innku'}}})
+    #   client.report({report: {name: 'Test actions'}}) # =>  JSON String of the created action
     def report(params)
       safe_app_access do
         api_client['/api/actions.json'].post(*processed_params(params, @token))
       end
     end
     
+    # Posts a given file for Innsights to process it in the background
+    # generally used for historic information
+    # 
+    # @param [File] file a file with a json formatted hash of every action to be processed
+    # @return [String] HTTP ok
+    # @note used in the rake task `rake innsights:push`
+    # @example
+    #   client.push(json_file)
     def push(file)
       safe_app_access do
         params = {:file => file}
@@ -21,6 +48,17 @@ module Innsights
       end
     end
     
+    # Creates an app for your account in Innsights
+    # this method will prompt for a username and password
+    #
+    # @param [String] app_name the application name
+    # @return [Hash] hash with the app subdomain and token
+    # @note this method is used with the `rails generate innsights:install method`
+    # @example
+    #   client.create('new_app')
+    #   $username: adrian@innku.com
+    #   $password: [hidden]
+    #   # => {subdomain: [subdomain], token: 'xxx-app-token'}
     def self.create(app_name)
       safe_access do
         params = {:name => app_name}

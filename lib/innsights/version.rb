@@ -1,3 +1,4 @@
 module Innsights
-  VERSION = "0.1.0"
-end 
+  # Version of the client gem
+  VERSION = "0.3.0"
+end

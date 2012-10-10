@@ -1,0 +1,521 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: Innsights::Helpers::Tasks
+  
+    &mdash; Documentation by YARD 0.8.2.1
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" media="screen" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" media="screen" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../../';
+  framesUrl = "../../frames.html#!" + escape(window.location.href);
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Innsights.html" title="Innsights (module)">Innsights</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Helpers.html" title="Innsights::Helpers (module)">Helpers</a></span></span>
+     &raquo; 
+    <span class="title">Tasks</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: Innsights::Helpers::Tasks
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">lib/innsights/helpers/tasks.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Helper methods to be used in Rake Taks <code>rake innsights:push</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#progress_actions-instance_method" title="#progress_actions (instance method)">- (nil) <strong>progress_actions</strong>(klass) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Iterates within the report of the class to build the JSON file
+while processing the actions it shows a progressbar.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#push-instance_method" title="#push (instance method)">- (True<sup>?</sup>) <strong>push</strong>(report) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Builds and uploads a JSON File with all the historic reports to innsights.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#upload_content-instance_method" title="#upload_content (instance method)">- (String<sup>?</sup>) <strong>upload_content</strong>(content) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Builds a JSON file from a string and uploads it to the API Service: push.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="progress_actions-instance_method">
+  
+    - (<tt>nil</tt>) <strong>progress_actions</strong>(klass) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Iterates within the report of the class to build the JSON file
+while processing the actions it shows a progressbar.</p>
+
+<p>=&gt; Posts:         100% |oooooooooooooooooooooooooooooooooooooooooo| Time: 00:00:00</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code">progress_actions(Post)
+==Preparing Post records==</pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>klass</span>
+      
+      
+        <span class='type'>(<tt>ActiveRecord</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>ActiveRecord class prepared for iteration with the find_each method</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>finishes uploading the bar</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/helpers/tasks.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_progress_actions'>progress_actions</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
+  <span class='kw'>begin</span>
+    <span class='id identifier rubyid_bar'>bar</span> <span class='op'>=</span> <span class='const'>ProgressBar</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_pluralize'>pluralize</span><span class='comma'>,</span> <span class='int'>100</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_percent'>percent</span> <span class='op'>=</span> <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>/</span> <span class='int'>100</span>
+    <span class='id identifier rubyid_count'>count</span>   <span class='op'>=</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_klass'>klass</span><span class='period'>.</span><span class='id identifier rubyid_find_each'>find_each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_record'>record</span><span class='op'>|</span>
+      <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_count'>count</span> <span class='op'>+=</span> <span class='int'>1</span>
+      <span class='id identifier rubyid_bar'>bar</span><span class='period'>.</span><span class='id identifier rubyid_inc'>inc</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_percent'>percent</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_count'>count</span> <span class='op'>%</span> <span class='id identifier rubyid_percent'>percent</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+    <span class='kw'>end</span>
+  <span class='kw'>rescue</span> <span class='const'>NoMethodError</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+    <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>ErrorMessage</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
+  <span class='kw'>ensure</span> 
+    <span class='id identifier rubyid_bar'>bar</span><span class='period'>.</span><span class='id identifier rubyid_finish'>finish</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="push-instance_method">
+  
+    - (<tt>True</tt><sup>?</sup>) <strong>push</strong>(report) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Builds and uploads a JSON File with all the historic reports to innsights</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><span class='id identifier rubyid_report'>report</span> <span class='op'>=</span> <span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_reports'>reports</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+<span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_report'>report</span><span class='rparen'>)</span> <span class='comment'># true</span></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>report</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Report.html" title="Innsights::Report (class)">Report</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the configured report to be pushed, currently it only supports models</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>True</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>returns true if the report was successful, if not outputs an error message</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/helpers/tasks.rb', line 14</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_report'>report</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_valid_for_push?'>valid_for_push?</span>
+    <span class='kw'>begin</span>
+      <span class='id identifier rubyid_actions'>actions</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>==Preparing </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_klass'>klass</span><span class='rbrace'>}</span><span class='tstring_content'> records==</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_progress_actions'>progress_actions</span> <span class='id identifier rubyid_report'>report</span><span class='period'>.</span><span class='id identifier rubyid_klass'>klass</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_record'>record</span><span class='op'>|</span>
+        <span class='id identifier rubyid_prepared_record'>prepared_record</span> <span class='op'>=</span> <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>Fetchers</span><span class='op'>::</span><span class='const'>Record</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='comma'>,</span> <span class='id identifier rubyid_report'>report</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_prepared_report'>prepared_report</span> <span class='op'>=</span> <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>Report</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_prepared_record'>prepared_record</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_prepared_record'>prepared_record</span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_actions'>actions</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_prepared_report'>prepared_report</span><span class='period'>.</span><span class='id identifier rubyid_to_hash'>to_hash</span>
+      <span class='kw'>end</span> 
+      <span class='id identifier rubyid_upload_content'>upload_content</span><span class='lparen'>(</span><span class='id identifier rubyid_actions'>actions</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_actions'>actions</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span>
+      <span class='kw'>true</span>
+    <span class='kw'>rescue</span> <span class='const'>Exception</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_e'>e</span>
+     <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>ErrorMessage</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='id identifier rubyid_e'>e</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="upload_content-instance_method">
+  
+    - (<tt>String</tt><sup>?</sup>) <strong>upload_content</strong>(content) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Builds a JSON file from a string and uploads it to the API Service: push</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>content</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>the string content of a json array of objects</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>response from the API Service or nil if fails to upload outputing an error</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/innsights/helpers/tasks.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_upload_content'>upload_content</span><span class='lparen'>(</span><span class='id identifier rubyid_content'>content</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_client'>client</span>
+    <span class='const'>Tempfile</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>'</span><span class='tstring_content'>innsights</span><span class='tstring_end'>'</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_file'>file</span><span class='op'>|</span>
+      <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_content'>content</span>
+      <span class='id identifier rubyid_file'>file</span><span class='period'>.</span><span class='id identifier rubyid_rewind'>rewind</span>
+      <span class='const'>Innsights</span><span class='period'>.</span><span class='id identifier rubyid_client'>client</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='const'>Innsights</span><span class='op'>::</span><span class='const'>ErrorMessage</span><span class='period'>.</span><span class='id identifier rubyid_log'>log</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No client for Innsights.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Wed Oct 10 01:28:44 2012 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.2.1 (ruby-1.9.3).
+</div>
+
+  </body>
+</html>
