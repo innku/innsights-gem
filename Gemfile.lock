@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    innsights (0.3.0)
+    innsights (0.4.0)
       daemons
       delayed_job
       highline
