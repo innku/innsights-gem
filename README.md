@@ -10,6 +10,8 @@ Innsights is the service that gives you the power to answer:
 
 Innsights answers these questions by giving you an easy way to track the features in your application, the users getting involved with those features and the characteristics of those users.
 
+This is the getting started guide, there is also the [Full code cocumentation](http://rubydoc.info/github/innku/innsights-gem/master/frames)
+
 # Getting Started
 
 You have an Innsights account right? 
