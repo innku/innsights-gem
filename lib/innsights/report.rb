@@ -1,3 +1,5 @@
+require 'resque'
+
 module Innsights
   # This class receives raw information and objects, then it formats them to be used with the service API
   # the class uses the configuration set through `Innsights.user` and `Innsights.group` methods to fetch
