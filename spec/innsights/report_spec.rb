@@ -66,5 +66,28 @@ describe Innsights::Report do
         report.run
       end
     end
+
+    it "does not enqueues the job when there is no option setted" do
+      Innsights.stub!(:enabled?){true}
+      Resque.should_not_receive(:enqueue)
+      Innsights.queue_system.should == nil
+      report.run
+    end
+
+    it "enqueues the job with resque when the option is set" do
+      Innsights.stub!(:enabled?){true}
+      Innsights.stub(:queue_system){:resque}
+      Resque.should_receive(:enqueue)
+      report.run
+    end
+
+    it "enqueues the job with delayed_job when the option is set" do
+      Innsights.stub!(:enabled?){true}
+      Innsights.stub(:queue_system){:delayed_job}
+      Innsights.client.stub_chain(:delay, :report).and_return(true)
+      Innsights.client.should_receive(:delay)
+      report.run
+    end
+    
   end
 end
