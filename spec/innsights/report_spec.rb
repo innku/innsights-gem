@@ -37,6 +37,28 @@ describe Innsights::Report do
       r = Innsights::Report.new("Mention", group: company)
       r.group.object.should == company
     end
+    it 'Takes the user group as default' do
+      company = Company.new
+      user.company = company
+      Innsights.group_call = :company
+      r = Innsights::Report.new("Mention", user: user)
+      r.group.object.should == company
+    end
+    it 'Can override the group if given' do
+      company = Company.new name: "Original"
+      user.company = company
+      company_override = Company.new name: "Override"
+      Innsights.group_call = :company
+      r = Innsights::Report.new("Mention", user: user, group: company_override)
+      r.group.object.should == company_override
+    end
+    it 'Can override the group with nil' do
+      company = Company.new name: "Original"
+      user.company = company
+      Innsights.group_call = :company
+      r = Innsights::Report.new("Mention", user: user, group: nil)
+      r.group.should == nil
+    end
     it 'Can add a created_at' do
       time = Time.now
       r = Innsights::Report.new("Mention", created_at: time)
