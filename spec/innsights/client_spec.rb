@@ -5,9 +5,10 @@ describe Innsights::Client do
 
   let(:client) { Innsights.client }
   let(:params) do
-    {:report => {:name => "Post", :created_at => '2012-02-23 08:11:00 -0600', 
-                 :user =>  {:app_id => 1, :display => 'Adrian'}, 
-                 :group => {:app_id => 1, :display => 'Innku'}}}
+    {:report => {:name => "Post", :created_at => '2012-02-23 08:11:00 -0600',
+                 :user =>  {:app_id => 1, :display => 'Adrian'},
+                 :group => {:app_id => 1, :display => 'Innku'},
+                 :source => 'tumblr' }}
   end
   let(:file) { json_fixture('test_upload.json') }
   
