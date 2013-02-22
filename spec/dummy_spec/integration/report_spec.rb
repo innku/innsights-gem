@@ -40,11 +40,17 @@ describe Innsights::Report do
         hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id }, group: {display: company.name, id: company.id}, created_at: Time.now }}
       end
     end
+    it 'renders the hash with a aggregates for the action' do
+      Timecop.freeze Time.now do
+        hash = Innsights.report("Mention", source: 'non-follower').to_hash
+        hash.should == {report: {name: "Mention", source: 'non-follower', created_at: Time.now }}
+      end
+    end
   end
   describe "#report" do
     it 'Can report a manual action' do
       Innsights.client.should_receive(:report)
-      Innsights.report('Mention', dude).run
+      Innsights.report('Mention', user: dude).run
     end
     it 'Can create a custom create action' do
       Dude.after_create lambda {|record| Innsights.report('Mention').run }

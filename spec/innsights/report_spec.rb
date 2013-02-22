@@ -54,6 +54,10 @@ describe Innsights::Report do
       r = Innsights::Report.new("Mention", created_at: Time.now, user: user)
       r.user.object.should == user
     end
+    it 'Can add aggregates to the action' do
+      r = Innsights::Report.new("Mention", source:"non-follower")
+      r.aggregates.should == {source: "non-follower"}
+    end
   end
   describe '.run' do
     before do

@@ -16,7 +16,7 @@ module Innsights
   #   Innsights::Report.new('Format Document', :measure => {:loc => 200}) # => [response from API service]
   class Report
 
-    attr_accessor :name, :user, :created_at, :metrics
+    attr_accessor :name, :user, :created_at, :metrics, :aggregates
 
     # Sets up every part of the report with the options given
     # @param [String] name the name of the action being reported
@@ -30,6 +30,7 @@ module Innsights
       @group_object = fetch_group(options[:group])
       @created_at = options[:created_at] || Time.now
       @metrics = options[:measure] || {}
+      @aggregates = options.except(:user,:group,:created_at,:measure)
     end
 
     # Hashed value prepared for posting to service via the client class
@@ -43,6 +44,7 @@ module Innsights
       value.merge!({user: user.to_hash})   if user.present?
       value.merge!({group: group.to_hash}) if group.present?
       value.merge!({metrics: metrics})     if metrics.present?
+      value.merge!(aggregates)             if aggregates.present?
       {:report => value}
     end
 
