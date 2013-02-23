@@ -35,7 +35,13 @@ describe Innsights::Report do
     it 'Can add a group' do
       company = Company.new
       r = Innsights::Report.new("Mention", group: company)
-      r.group.object.should == company
+      r.resources[:group].object.should == company
+    end
+    it 'Can add many groups' do
+      company = Company.new
+      r = Innsights::Report.new("Mention", resources: {company: company,
+                                                       company2: company})
+      r.resources.should == company
     end
     it 'Can add a created_at' do
       time = Time.now
@@ -65,6 +71,32 @@ describe Innsights::Report do
         Innsights.client.should_receive(:report).with(report.to_hash)
         report.run
       end
+    end
+  end
+  describe '.to_hash' do
+    it 'shows the report hash representation with group fallback' do
+      c = Company.create(name: "Innku")
+      r = Innsights::Report.new("Mention", user: user,
+                                group: c, source: "non-follower",
+                                measure: {kg: 100, money: 200})
+      r.to_hash.should == {report: {name: "Mention",
+                                    created_at: r.created_at,
+                                    user: {id: user.id, display: user.to_s},
+                                    resources: {group: {id: c.id, display: c.to_s}},
+                                    metrics: {kg: 100, money: 200},
+                                    source: "non-follower"}}
+    end
+    it 'shows the report hash representation' do
+      c = Company.create(name: "Innku")
+      r = Innsights::Report.new("Mention", user: user,
+                                resources: {company: c}, source: "non-follower",
+                                measure: {kg: 100, money: 200})
+      r.to_hash.should == {report: {name: "Mention",
+                                    created_at: r.created_at,
+                                    user: {id: user.id, display: user.to_s},
+                                    resources: {company: {id: c.id, display: c.to_s}},
+                                    metrics: {kg: 100, money: 200},
+                                    source: "non-follower"}}
     end
   end
 end

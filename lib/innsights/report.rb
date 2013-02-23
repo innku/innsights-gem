@@ -27,7 +27,8 @@ module Innsights
       options ||= {}
       @name = name
       @user_object = options[:user]
-      @group_object = fetch_group(options[:group])
+      groups_to_resources = { group: fetch_resources(options[:group]) }
+      @resources_collection = options[:resources] || groups_to_resources
       @created_at = options[:created_at] || Time.now
       @metrics = options[:measure] || {}
     end
@@ -41,7 +42,7 @@ module Innsights
     def to_hash
       value = {name: name, created_at: created_at}
       value.merge!({user: user.to_hash})   if user.present?
-      value.merge!({group: group.to_hash}) if group.present?
+      value.merge!({resources: resources_hash}) if resources.present?
       value.merge!({metrics: metrics})     if metrics.present?
       {:report => value}
     end
@@ -64,14 +65,18 @@ module Innsights
       end
     end
 
-    # An encapsulation object of the group that the user that performs the action belongs to.
-    # If the user configuration contains a group, it will call this method
-    # to get the user object, if the report explicitly sets the group attribute
-    # it will supercede the user configuration
+    # An encapsulation object of the resources that the user that performs the
+    # action belongs to. If the user configuration contains a group, it will 
+    # call this method to get the user object, if the report explicitly sets 
+    # the resources attribute it will supercede the user configuration
     #
-    # @return [Innsights::Fetchers::Group, nil] User group object, nil if no explicit or user configuration
-    def group
-      @group ||= Innsights::Fetchers::Group.new(@group_object) if @group_object
+    # @return [[Innsights::Fetchers::Group, ...], nil] User group object, nil if no explicit or user configuration
+    def resources
+      if @resources_collection
+        @resources ||= @resources_collection.map do | resource_group, resource |
+          Innsights::Fetchers::Group.new(resource, resource_group)
+        end
+      end
     end
 
     # An encapsulation object of the user that performs the action
@@ -81,12 +86,21 @@ module Innsights
       @user ||= Innsights::Fetchers::User.new(@user_object) if @user_object
     end
 
+
     private
 
-    def fetch_group(group_object)
-      return group_object if group_object.present?
+    def fetch_resources(resources_objects)
+      return resources_objects if resources_objects.present?
       return user.group if user.present?
       nil
+    end
+
+    def resources_hash
+      hash = {}
+      @resources.each do | resource |
+        hash.merge! resource.to_hash
+      end
+      hash
     end
 
   end
