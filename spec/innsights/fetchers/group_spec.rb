@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Innsights::Fetchers::Group do
 
   let(:group)   { Company.create(:name => 'New Company') }
-  let!(:action_group) { Innsights::Fetchers::Group.new(group)}
+  let!(:action_group) { Innsights::Fetchers::Group.new(group, "company")}
 
   describe '#initialize' do
     it 'Sets the object ' do
@@ -33,8 +33,8 @@ describe Innsights::Fetchers::Group do
 
   describe '#to_hash' do
     it 'returns the right group hash' do
-      action_group = Innsights::Fetchers::Group.new(group)
-      action_group.to_hash.should == {:id => group.id, :display => group.to_s}
+      action_group = Innsights::Fetchers::Group.new(group, "company")
+      action_group.to_hash.should == {:company => {:id => group.id, :display => group.to_s}}
     end
   end
   

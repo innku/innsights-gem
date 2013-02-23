@@ -35,13 +35,13 @@ describe Innsights::Report do
     it 'Can add a group' do
       company = Company.new
       r = Innsights::Report.new("Mention", group: company)
-      r.resources[:group].object.should == company
+      r.resources[0].object.should == company
     end
     it 'Can add many groups' do
       company = Company.new
       r = Innsights::Report.new("Mention", resources: {company: company,
                                                        company2: company})
-      r.resources.should == company
+      r.resources[0].object.should == company
     end
     it 'Can add a created_at' do
       time = Time.now
@@ -83,8 +83,7 @@ describe Innsights::Report do
                                     created_at: r.created_at,
                                     user: {id: user.id, display: user.to_s},
                                     resources: {group: {id: c.id, display: c.to_s}},
-                                    metrics: {kg: 100, money: 200},
-                                    source: "non-follower"}}
+                                    metrics: {kg: 100, money: 200}}}
     end
     it 'shows the report hash representation' do
       c = Company.create(name: "Innku")
@@ -95,8 +94,7 @@ describe Innsights::Report do
                                     created_at: r.created_at,
                                     user: {id: user.id, display: user.to_s},
                                     resources: {company: {id: c.id, display: c.to_s}},
-                                    metrics: {kg: 100, money: 200},
-                                    source: "non-follower"}}
+                                    metrics: {kg: 100, money: 200}}}
     end
   end
 end

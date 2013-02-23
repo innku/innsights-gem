@@ -27,7 +27,7 @@ module Innsights
       options ||= {}
       @name = name
       @user_object = options[:user]
-      groups_to_resources = { group: fetch_resources(options[:group]) }
+      groups_to_resources = { group: fetch_resources(options[:group]) } if options[:group]
       @resources_collection = options[:resources] || groups_to_resources
       @created_at = options[:created_at] || Time.now
       @metrics = options[:measure] || {}

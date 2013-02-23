@@ -37,7 +37,9 @@ describe Innsights::Report do
     it 'renders the hash with a user and a group' do
       Timecop.freeze Time.now do
         hash = Innsights.report("Mention", user: dude, group: company).to_hash
-        hash.should == {report: {name: "Mention", user: {display: dude.name, id: dude.id }, group: {display: company.name, id: company.id}, created_at: Time.now }}
+        hash.should == {report: {name: "Mention", 
+                                 user: {display: dude.name, id: dude.id }, 
+                                 resources: { group: { display: company.name, id: company.id}}, created_at: Time.now }}
       end
     end
   end
