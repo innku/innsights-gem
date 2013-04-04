@@ -19,12 +19,12 @@ module Innsights
           progress_actions report.klass do |record|
             prepared_record = Innsights::Fetchers::Record.new(record, report)
             prepared_report = Innsights::Report.new(prepared_record.name, prepared_record.options)
-            actions << prepared_report.to_hash
+            actions << prepared_report.to_hash if prepared_record.run?
           end 
           upload_content(actions.to_json) if actions.any?
           true
         rescue Exception => e
-         Innsights::ErrorMessage.log(e)
+          Innsights::ErrorMessage.log(e)
         end
       end
     end

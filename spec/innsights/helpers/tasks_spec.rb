@@ -32,6 +32,11 @@ describe Innsights::Helpers::Tasks do
         Innsights::Helpers::Tasks.should_not_receive(:upload_content)
         Innsights::Helpers::Tasks.push(report)
       end
+      it 'shouldnt add the action to the final array' do
+        report.condition = lambda {|record| false}
+        Innsights::Helpers::Tasks.should_not_receive(:upload_content)
+        Innsights::Helpers::Tasks.push(report)
+      end
     end
     context 'With a report not valid for push' do
       before do
