@@ -29,7 +29,7 @@ module Innsights
       options ||= {}
       @name = name
       @user_object = options[:user]
-      @group_object = fetch_group(options[:group])
+      @group_object = fetch_group(options)
       @created_at = options[:created_at] || Time.now
       @metrics = options[:measure] || {}
     end
@@ -85,8 +85,8 @@ module Innsights
 
     private
 
-    def fetch_group(group_object)
-      return group_object if group_object.present?
+    def fetch_group(options)
+      return options[:group] if options.has_key? :group
       return user.group if user.present?
       nil
     end

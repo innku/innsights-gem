@@ -44,7 +44,7 @@ describe Innsights::Report do
   describe "#report" do
     it 'Can report a manual action' do
       Innsights.client.should_receive(:report)
-      Innsights.report('Mention', dude).run
+      Innsights.report('Mention', user: dude).run
     end
     it 'Can create a custom create action' do
       Dude.after_create lambda {|record| Innsights.report('Mention').run }
